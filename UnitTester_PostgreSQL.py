@@ -1,6 +1,5 @@
 __author__ = 'Shiraga-P'
 
-import sys
 import psycopg2
 
 def main():
