@@ -4,58 +4,59 @@ import psycopg2
 import DatabaseInfo
 
 def main():
-    try:
-        conn = psycopg2.connect("dbname='%s' user='%s' host='localhost' password='admin' port='5432'" % ('database SE Y2', 'postgres'))
-    except:
-        print('I am unable to connect to the database')
-        return
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     cur = conn.cursor()
-    cur.execute("SELECT pres_name from president")
+    cur.execute("SELECT * from users")
     rows = cur.fetchall()
     print('\nShow me the databases:\n')
     for row in rows:
-        print('   ', row[0])
+        print('   ,', row)
 
 
 def createDatabase():
-    con = psycopg2.connect("host='%s' user='%s' password='%s'" %
+    conn = psycopg2.connect("host='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.user, DatabaseInfo.password))
-    con.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
-    cur = con.cursor()
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = conn.cursor()
     cur.execute("CREATE DATABASE " + DatabaseInfo.dbname)
     cur.close()
-    con.close()
+    conn.close()
 
 
 def deleteTable():
-    con = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-    cur = con.cursor()
+    cur = conn.cursor()
     cur.execute("DROP TABLE users CASCADE")
     cur.close()
-    con.close()
+    conn.close()
 
 
 def createTable():
-    con = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-    con.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
-    cur = con.cursor()
-    cur.execute("""CREATE TABLE users(
-                    id INT,
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
+    statement = ""
+    statement += """CREATE TABLE users(
+                    id serial PRIMARY KEY,
                     username VARCHAR (15),
                     password VARCHAR (15),
-                    firstName VARCHAR (31),
-                    lastNmae VARCHAR (31),
+                    firstname VARCHAR (31),
+                    lastname VARCHAR (31),
                     address1 VARCHAR (31),
                     address2 VARCHAR (31),
                     province VARCHAR (31),
                     country VARCHAR (31),
-                    zipcode VARCHAR (15),
-                    PRIMARY KEY (id)
-                    );""")
+                    zipcode VARCHAR (15)
+                    );
+                    """
+    cur = conn.cursor()
+    cur.execute(statement)
+    conn.commit()
     cur.close()
-    con.close()
+    conn.close()
 
 
 if __name__ == '__main__':

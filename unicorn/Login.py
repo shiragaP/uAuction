@@ -31,6 +31,7 @@ class LoginWidget(QtGui.QWidget):
 
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
+        self.setWindowTitle('Login')
 
     def loginActionListener(self):
         if(self.DEBUGMODE):

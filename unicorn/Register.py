@@ -1,12 +1,5 @@
 
 
-## To waterslider
-
-# create widget ui from ui/register.ui
-# link every lineEdit to string
-# when button pressed validate for each string according to example and explaination
-# have bool to store for validation
-
 __author__ = 'Shiraga-P'
 
 import sys
@@ -27,7 +20,9 @@ class RegisterWidget(QtGui.QWidget):
 
         self.lineEdit_username = form.findChild(QtGui.QLineEdit, 'lineEdit_01_username')
         self.lineEdit_password = form.findChild(QtGui.QLineEdit, 'lineEdit_02_password')
+        self.lineEdit_password.setEchoMode(QtGui.QLineEdit.Password)
         self.lineEdit_repassword = form.findChild(QtGui.QLineEdit, 'lineEdit_03_repassword')
+        self.lineEdit_repassword.setEchoMode(QtGui.QLineEdit.Password)
         self.lineEdit_firstname = form.findChild(QtGui.QLineEdit, 'lineEdit_04_firstname')
         self.lineEdit_lastname = form.findChild(QtGui.QLineEdit, 'lineEdit_05_lastname')
         self.lineEdit_address1 = form.findChild(QtGui.QLineEdit, 'lineEdit_06_address1')
@@ -49,21 +44,35 @@ class RegisterWidget(QtGui.QWidget):
 
     def registerActionListener(self):
         #TODO: validation
-        pass
+        self.register(self.lineEdit_username.text(),
+                 self.lineEdit_password.text(),
+                 self.lineEdit_firstname.text(),
+                 self.lineEdit_lastname.text(),
+                 self.lineEdit_address1.text(),
+                 self.lineEdit_address2.text(),
+                 self.lineEdit_province.text(),
+                 self.lineEdit_country.text(),
+                 self.lineEdit_zipcode.text())
 
     def register(self, username, password, firstname, lastname, address1, address2, province, country, zipcode):
-        con = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
+        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-        cur = con.cursor()
+        cur = conn.cursor()
 
         statement = ""
         statement += """INSERT INTO users (username, password, firstname, lastname, address1, address2, province, country, zipcode)
-                        VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')""" \
-                     % (username, password, firstname, lastname, address1, address2, province, country, zipcode)
+                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                        """ % (username, password, firstname, lastname, address1, address2, province, country, zipcode)
+
+        if(self.DEBUGMODE):
+            print("Sql Statement")
+            print(statement)
 
         cur.execute(statement)
+        conn.commit()
         cur.close()
-        con.close()
+        conn.close()
+        self.close()
 
 
 if __name__ == '__main__':

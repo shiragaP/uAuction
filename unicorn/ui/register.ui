@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_01_iusername">
+  <widget class="QLabel" name="label_01_username">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -472,6 +472,38 @@
     </rect>
    </property>
   </widget>
+  <zorder>label_02_password</zorder>
+  <zorder>label_01_username</zorder>
+  <zorder>lineEdit_01_username</zorder>
+  <zorder>pushButton_register</zorder>
+  <zorder>label_04_firstname</zorder>
+  <zorder>label_03_repassword</zorder>
+  <zorder>label_07_address2</zorder>
+  <zorder>label_08_province</zorder>
+  <zorder>label_06_address1</zorder>
+  <zorder>label_05_lastname</zorder>
+  <zorder>label_10_zipcode</zorder>
+  <zorder>label_09_country</zorder>
+  <zorder>label_09_country_detail</zorder>
+  <zorder>label_06_address1_detail</zorder>
+  <zorder>label_05_lastname_detail</zorder>
+  <zorder>label_04_firstname_detail</zorder>
+  <zorder>label_08_province_detail</zorder>
+  <zorder>label_07_address2_detail</zorder>
+  <zorder>label_03_repassword_detail</zorder>
+  <zorder>label_02_password_detail</zorder>
+  <zorder>label_10_zipcode_detail</zorder>
+  <zorder>label_01_username_detail</zorder>
+  <zorder>lineEdit_02_password</zorder>
+  <zorder>lineEdit_04_firstname</zorder>
+  <zorder>lineEdit_03_repassword</zorder>
+  <zorder>lineEdit_07_address2</zorder>
+  <zorder>lineEdit_06_address1</zorder>
+  <zorder>lineEdit_05_lastname</zorder>
+  <zorder>lineEdit_08_province</zorder>
+  <zorder>lineEdit_09_country</zorder>
+  <zorder>lineEdit_10_zipcode</zorder>
+  <zorder>label_00_title</zorder>
  </widget>
  <resources/>
  <connections/>
