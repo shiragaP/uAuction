@@ -5,8 +5,8 @@ import sys
 from PySide import QtGui
 from PySide import QtUiTools
 
-class LoginWidget(QtGui.QWidget):
 
+class LoginWidget(QtGui.QWidget):
     def __init__(self, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.DEBUGMODE = DEBUGMODE
@@ -34,10 +34,11 @@ class LoginWidget(QtGui.QWidget):
         self.setWindowTitle('Login')
 
     def loginActionListener(self):
-        if(self.DEBUGMODE):
+        if (self.DEBUGMODE):
             print("Login")
             print("\tUsername: " + self.lineEdit_username.text())
             print("\tPassword: " + self.lineEdit_password.text())
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
