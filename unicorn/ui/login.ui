@@ -119,7 +119,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushButton_login">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -159,7 +159,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_03_register_2">
+  <widget class="QLabel" name="label_03_clickhere">
    <property name="geometry">
     <rect>
      <x>360</x>
