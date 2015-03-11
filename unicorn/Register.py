@@ -22,3 +22,17 @@ class RegisterWidget(QtGui.QWidget):
 
         loader = QtUiTools.QUiLoader(self)
         form = loader.load('ui\\register.ui')
+
+        layout = QtGui.QGridLayout()
+        layout.addWidget(form)
+
+        self.setLayout(layout)
+
+        self.setFixedWidth(form.width() + 15)
+        self.setFixedHeight(form.height() + 15)
+
+if __name__ == '__main__':
+    app = QtGui.QApplication(sys.argv)
+    registerWidget = RegisterWidget(DEBUGMODE=True)
+    registerWidget.show()
+    sys.exit(app.exec_())
