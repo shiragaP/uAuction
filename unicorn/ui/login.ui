@@ -176,6 +176,11 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_01_username</tabstop>
+  <tabstop>lineEdit_02_password</tabstop>
+  <tabstop>pushButton_login</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
