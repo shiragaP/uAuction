@@ -505,6 +505,19 @@
   <zorder>lineEdit_10_zipcode</zorder>
   <zorder>label_00_title</zorder>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_01_username</tabstop>
+  <tabstop>lineEdit_02_password</tabstop>
+  <tabstop>lineEdit_03_repassword</tabstop>
+  <tabstop>lineEdit_04_firstname</tabstop>
+  <tabstop>lineEdit_05_lastname</tabstop>
+  <tabstop>lineEdit_06_address1</tabstop>
+  <tabstop>lineEdit_07_address2</tabstop>
+  <tabstop>lineEdit_08_province</tabstop>
+  <tabstop>lineEdit_09_country</tabstop>
+  <tabstop>lineEdit_10_zipcode</tabstop>
+  <tabstop>pushButton_register</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
