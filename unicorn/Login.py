@@ -20,8 +20,9 @@ class LoginWidget(QtGui.QWidget):
         self.lineEdit_username = form.findChild(QtGui.QLineEdit, 'lineEdit_01_username')
         self.lineEdit_password = form.findChild(QtGui.QLineEdit, 'lineEdit_02_password')
         self.lineEdit_password.setEchoMode(QtGui.QLineEdit.Password)
+
         self.pushButton_login = form.findChild(QtGui.QPushButton, 'pushButton_login')
-        self.pushButton_login.clicked.connect(self.loginAction)
+        self.pushButton_login.clicked.connect(self.loginActionListener)
 
         layout = QtGui.QGridLayout()
         layout.addWidget(form)
@@ -31,7 +32,7 @@ class LoginWidget(QtGui.QWidget):
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
 
-    def loginAction(self):
+    def loginActionListener(self):
         if(self.DEBUGMODE):
             print("Login")
             print("\tUsername: " + self.lineEdit_username.text())

@@ -39,7 +39,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_submit">
+  <widget class="QPushButton" name="pushButton_register">
    <property name="geometry">
     <rect>
      <x>84</x>
@@ -48,8 +48,13 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>Submit</string>
+    <string>Register</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_00_title">
