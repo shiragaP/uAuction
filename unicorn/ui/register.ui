@@ -554,6 +554,7 @@
   <tabstop>lineEdit_01_username</tabstop>
   <tabstop>lineEdit_02_password</tabstop>
   <tabstop>lineEdit_03_repassword</tabstop>
+  <tabstop>lineEdit_04_email</tabstop>
   <tabstop>lineEdit_05_firstname</tabstop>
   <tabstop>lineEdit_06_lastname</tabstop>
   <tabstop>lineEdit_07_address1</tabstop>

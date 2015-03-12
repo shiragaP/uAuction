@@ -27,15 +27,15 @@ class RegisterWidget(QtGui.QWidget):
         self.lineEdit_repassword.setMaxLength(12)
         self.lineEdit_repassword.setEchoMode(QtGui.QLineEdit.Password)
         self.lineEdit_email = form.findChild(QtGui.QLineEdit, 'lineEdit_04_email')
-        self.lineEdit_email.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
+        self.lineEdit_email.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9@_-+*/]{0,28}"), self))
         self.lineEdit_firstname = form.findChild(QtGui.QLineEdit, 'lineEdit_05_firstname')
         self.lineEdit_firstname.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_lastname = form.findChild(QtGui.QLineEdit, 'lineEdit_06_lastname')
         self.lineEdit_lastname.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_address1 = form.findChild(QtGui.QLineEdit, 'lineEdit_07_address1')
-        self.lineEdit_address1.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
+        self.lineEdit_address1.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9]{0,28}"), self))
         self.lineEdit_address2 = form.findChild(QtGui.QLineEdit, 'lineEdit_08_address2')
-        self.lineEdit_address2.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
+        self.lineEdit_address2.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9]{0,28}"), self))
         self.lineEdit_province = form.findChild(QtGui.QLineEdit, 'lineEdit_09_province')
         self.lineEdit_province.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_country = form.findChild(QtGui.QLineEdit, 'lineEdit_10_country')
@@ -53,9 +53,9 @@ class RegisterWidget(QtGui.QWidget):
 
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
+        self.setWindowTitle('Register')
 
     def registerActionListener(self):
-        # TODO: validation
         invalidFlags = list()
 
         username = self.lineEdit_username.text()
@@ -113,6 +113,9 @@ class RegisterWidget(QtGui.QWidget):
         conn.commit()
         cur.close()
         conn.close()
+
+        QtGui.QMessageBox.information(self, "Notification", "Register complete!")
+
         self.close()
 
 

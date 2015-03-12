@@ -1,14 +1,17 @@
 __author__ = 'Shiraga-P'
 
 import sys
+import psycopg2
+import DatabaseInfo
 
 from PySide import QtGui
 from PySide import QtUiTools
 
 
-class LoginWidget(QtGui.QWidget):
+class LoginWidget(QtGui.QDialog):
     def __init__(self, parent=None, DEBUGMODE=False):
         super().__init__(parent)
+        self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
         loader = QtUiTools.QUiLoader(self)
@@ -34,10 +37,39 @@ class LoginWidget(QtGui.QWidget):
         self.setWindowTitle('Login')
 
     def loginActionListener(self):
+        username = self.lineEdit_username.text()
+        password = self.lineEdit_password.text()
+
         if (self.DEBUGMODE):
             print("Login")
-            print("\tUsername: " + self.lineEdit_username.text())
-            print("\tPassword: " + self.lineEdit_password.text())
+            print("\tUsername: " + username)
+            print("\tPassword: " + password)
+
+        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+        cur = conn.cursor()
+        cur.execute("SELECT * from users")
+        rows = cur.fetchall()
+
+        if (self.DEBUGMODE):
+            print('Show me the databases:')
+            for row in rows:
+                print(row)
+
+        loginValid = False
+        for row in rows:
+            print("Comparing username:", row[1], username, str(row[1]) == username)
+            print("Comparing password:", row[2], password, str(row[2]) == password)
+            if str(row[1]) == username and str(row[2]) == password:
+                loginValid = True
+                break
+
+        if loginValid:
+            self.parent.show()
+            self.close()
+        else:
+            QtGui.QMessageBox.warning(self, "Notification", "Invalid username and/or password")
+
 
 
 if __name__ == '__main__':
