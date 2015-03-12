@@ -65,7 +65,8 @@ class LoginWidget(QtGui.QDialog):
                 break
 
         if loginValid:
-            self.parent.show()
+            if __name__ != '__main__':
+                self.parent.run(username)
             self.close()
         else:
             QtGui.QMessageBox.warning(self, "Notification", "Invalid username and/or password")

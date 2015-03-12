@@ -29,6 +29,7 @@ def deleteTable():
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     cur = conn.cursor()
     cur.execute("DROP TABLE users CASCADE")
+    conn.commit()
     cur.close()
     conn.close()
 
@@ -43,6 +44,7 @@ def createTable():
                     id serial PRIMARY KEY,
                     username VARCHAR (15),
                     password VARCHAR (15),
+                    email VARCHAR(63),
                     firstname VARCHAR (31),
                     lastname VARCHAR (31),
                     address1 VARCHAR (31),
@@ -58,6 +60,9 @@ def createTable():
     cur.close()
     conn.close()
 
+def rebuildTable():
+    deleteTable()
+    createTable()
 
 if __name__ == '__main__':
-    createTable()
+    rebuildTable()

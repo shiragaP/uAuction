@@ -68,6 +68,10 @@ class RegisterWidget(QtGui.QWidget):
         if 'password' not in invalidFlags and password != self.lineEdit_repassword.text():
             invalidFlags.append('repassword')
 
+        email = self.lineEdit_email.text()
+        if not email:
+            invalidFlags.append('email')
+
         firstname = self.lineEdit_firstname.text()
         if not firstname:
             invalidFlags.append('firstname')
@@ -93,17 +97,17 @@ class RegisterWidget(QtGui.QWidget):
         if not zipcode:
             invalidFlags.append('zipcode')
 
-        self.register(username, password, firstname, lastname, address1, address2, province, country, zipcode)
+        self.register(username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
 
-    def register(self, username, password, firstname, lastname, address1, address2, province, country, zipcode):
+    def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
         statement = ""
-        statement += """INSERT INTO users (username, password, firstname, lastname, address1, address2, province, country, zipcode)
-                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
-                        """ % (username, password, firstname, lastname, address1, address2, province, country, zipcode)
+        statement += """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
+                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                        """ % (username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
 
         if (self.DEBUGMODE):
             print("Sql Statement")
