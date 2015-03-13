@@ -8,7 +8,7 @@ from PySide import QtGui
 from PySide import QtUiTools
 
 
-class LoginWidget(QtGui.QDialog):
+class LoginDialog(QtGui.QDialog):
     def __init__(self, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.parent = parent
@@ -75,6 +75,6 @@ class LoginWidget(QtGui.QDialog):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    loginWidget = LoginWidget(DEBUGMODE=True)
+    loginWidget = LoginDialog(DEBUGMODE=True)
     loginWidget.show()
     sys.exit(app.exec_())

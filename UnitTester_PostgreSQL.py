@@ -97,6 +97,7 @@ def createItemsTable():
     statement += """CREATE TABLE items(
                     id serial PRIMARY KEY,
                     name VARCHAR (63),
+                    buyoutavailable BOOLEAN,
                     buyoutprice FLOAT,
                     bidprice FLOAT,
                     bidnumber INTEGER,
@@ -159,4 +160,4 @@ def rebuildItemImagesTable():
     createItemImagesTable()
 
 if __name__ == '__main__':
-    printItemsImage()
+    rebuildItemsTable()

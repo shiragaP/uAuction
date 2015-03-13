@@ -23,7 +23,7 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
 
     def login(self):
-        loginWidget = Login.LoginWidget(self)
+        loginWidget = Login.LoginDialog(self)
         loginWidget.exec_()
 
 

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_01_image">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -34,7 +34,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushButton_01_addimage">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -55,7 +55,7 @@
     <string>+</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="pushButton_02_deleteimage">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -75,7 +75,7 @@
     <string>-</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="pushButton_03_additem">
    <property name="geometry">
     <rect>
      <x>480</x>
@@ -93,7 +93,7 @@
     <string>Add Item</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="listWidget_thunbnail">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -103,7 +103,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="pushButton_04_cancel">
    <property name="geometry">
     <rect>
      <x>560</x>
@@ -121,7 +121,7 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_02_itemname">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -142,7 +142,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_03_buyoutprice">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -157,13 +157,13 @@
     </font>
    </property>
    <property name="text">
-    <string>Buy Price:</string>
+    <string>Buyout Price:</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_04_bidprice">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -184,7 +184,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineEdit_02_itemname">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -194,7 +194,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="lineEdit_03_buyoutprice">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -204,7 +204,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="lineEdit_04_bidprice">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -214,10 +214,10 @@
     </rect>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QCheckBox" name="checkBox_buyoutavailable">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>410</x>
      <y>50</y>
      <width>21</width>
      <height>21</height>
@@ -227,7 +227,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_06_description">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -248,7 +248,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="textEdit_06_description">
    <property name="geometry">
     <rect>
      <x>420</x>
@@ -258,7 +258,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="label_05_categories">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -279,7 +279,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="lineEdit_05_categories">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -293,6 +293,19 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_02_itemname</tabstop>
+  <tabstop>checkBox_buyoutavailable</tabstop>
+  <tabstop>lineEdit_03_buyoutprice</tabstop>
+  <tabstop>lineEdit_04_bidprice</tabstop>
+  <tabstop>lineEdit_05_categories</tabstop>
+  <tabstop>textEdit_06_description</tabstop>
+  <tabstop>listWidget_thunbnail</tabstop>
+  <tabstop>pushButton_01_addimage</tabstop>
+  <tabstop>pushButton_02_deleteimage</tabstop>
+  <tabstop>pushButton_03_additem</tabstop>
+  <tabstop>pushButton_04_cancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
