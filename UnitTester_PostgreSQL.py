@@ -3,7 +3,7 @@ __author__ = 'Shiraga-P'
 import psycopg2
 import DatabaseInfo
 
-def main():
+def printUsers():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     cur = conn.cursor()
@@ -11,8 +11,27 @@ def main():
     rows = cur.fetchall()
     print('\nShow me the databases:\n')
     for row in rows:
-        print('   ,', row)
+        print(row)
 
+def printItems():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    cur = conn.cursor()
+    cur.execute("SELECT * from items")
+    rows = cur.fetchall()
+    print('\nShow me the databases:\n')
+    for row in rows:
+        print(row)
+
+def printItemsImage():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    cur = conn.cursor()
+    cur.execute("SELECT * from item_images")
+    rows = cur.fetchall()
+    print('\nShow me the databases:\n')
+    for row in rows:
+        print(row)
 
 def createDatabase():
     conn = psycopg2.connect("host='%s' user='%s' password='%s'" %
@@ -24,7 +43,7 @@ def createDatabase():
     conn.close()
 
 
-def deleteTable():
+def deleteUsersTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     cur = conn.cursor()
@@ -33,8 +52,7 @@ def deleteTable():
     cur.close()
     conn.close()
 
-
-def createTable():
+def createUsersTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
@@ -60,9 +78,85 @@ def createTable():
     cur.close()
     conn.close()
 
-def rebuildTable():
-    deleteTable()
-    createTable()
+
+def deleteItemsTable():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                           (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    cur = conn.cursor()
+    cur.execute("DROP TABLE items CASCADE")
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def createItemsTable():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                           (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
+    statement = ""
+    statement += """CREATE TABLE items(
+                    id serial PRIMARY KEY,
+                    name VARCHAR (63),
+                    buyoutprice FLOAT,
+                    bidprice FLOAT,
+                    bidnumber INTEGER,
+                    description VARCHAR (127)
+                    );
+                    """
+    cur = conn.cursor()
+    cur.execute(statement)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+def deleteItemImagesTable():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                           (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    cur = conn.cursor()
+    cur.execute("DROP TABLE item_images CASCADE")
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def createItemImagesTable():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                           (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
+    statement = ""
+    statement += """CREATE TABLE item_images(
+                    id serial PRIMARY KEY,
+                    directory VARCHAR (127),
+                    itemid serial
+                    );
+                    """
+    cur = conn.cursor()
+    cur.execute(statement)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def rebuildUsersTable():
+    try:
+        deleteUsersTable()
+    except:
+        pass
+    createUsersTable()
+
+def rebuildItemsTable():
+    try:
+        deleteItemsTable()
+    except:
+        pass
+    createItemsTable()
+
+def rebuildItemImagesTable():
+    try:
+        deleteItemImagesTable()
+    except:
+        pass
+    createItemImagesTable()
 
 if __name__ == '__main__':
-    rebuildTable()
+    printItemsImage()

@@ -248,7 +248,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Ex: 99 Abc Rd.) up to 28 characters</string>
+    <string>up to 28 characters (Ex: 99 Abc Rd.)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -264,7 +264,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Ex: Troyard) up to 28 characters</string>
+    <string>up to 28 characters (Ex: Troyard)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -280,7 +280,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Ex: Smith) up to 28 characters</string>
+    <string>up to 28 characters (Ex: Smith)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -312,7 +312,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(optional)</string>
+    <string>up to 28 characters (optional)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -344,7 +344,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Ex: 004#Smith) 4-12 characters</string>
+    <string>4-12 characters (Ex: 004#Smith)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -376,7 +376,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>(Ex: smith) 4-12 characters</string>
+    <string>4-12 characters (Ex: smith)</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
