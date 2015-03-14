@@ -18,6 +18,9 @@ class AddItemDialog(QtGui.QDialog):
         loader = QtUiTools.QUiLoader(self)
         form = loader.load('ui\\additem.ui')
 
+        self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
+        self.listWidget_thunbnail = form.findChild(QtGui.QListWidget, 'listWidget_thunbnail')
+
         self.lineEdit_itemname = form.findChild(QtGui.QLineEdit, 'lineEdit_02_itemname')
         self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
         self.lineEdit_buyoutprice.setReadOnly(True)
@@ -27,6 +30,7 @@ class AddItemDialog(QtGui.QDialog):
         self.checkBox_buyoutavailable = form.findChild(QtGui.QCheckBox, 'checkBox_buyoutavailable')
         self.checkBox_buyoutavailable.setChecked(False)
         self.checkBox_buyoutavailable.stateChanged.connect(self.checkBoxActionListener)
+
         self.textEdit_description = form.findChild(QtGui.QTextEdit, 'textEdit_06_description')
 
         self.pushButton_addimage = form.findChild(QtGui.QPushButton, 'pushButton_01_addimage')
