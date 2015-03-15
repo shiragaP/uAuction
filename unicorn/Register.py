@@ -42,6 +42,8 @@ class RegisterWidget(QtGui.QWidget):
         self.lineEdit_country.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_zipcode = form.findChild(QtGui.QLineEdit, 'lineEdit_11_zipcode')
         self.lineEdit_zipcode.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[0-9]{0,28}"), self))
+        self.lineEdit_phonenumber = form.findChild(QtGui.QLineEdit, 'lineEdit_12_phonenumber')
+        self.lineEdit_phonenumber.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[0-9]{0,28}"), self))
 
         self.pushButton_register = form.findChild(QtGui.QPushButton, 'pushButton_register')
         self.pushButton_register.clicked.connect(self.registerActionListener)
@@ -97,17 +99,21 @@ class RegisterWidget(QtGui.QWidget):
         if not zipcode:
             invalidFlags.append('zipcode')
 
-        self.register(username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
+        phonenumber = self.lineEdit_phonenumber.text()
+        if not phonenumber:
+            invalidFlags.append('zipcode')
 
-    def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode):
+        self.register(username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
+
+    def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
         statement = ""
-        statement += """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
-                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
-                        """ % (username, password, email, firstname, lastname, address1, address2, province, country, zipcode)
+        statement += """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
+                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                        """ % (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
 
         if (self.DEBUGMODE):
             print("Sql Statement")
@@ -117,9 +123,7 @@ class RegisterWidget(QtGui.QWidget):
         conn.commit()
         cur.close()
         conn.close()
-
         QtGui.QMessageBox.information(self, "Notification", "Register complete!")
-
         self.close()
 
 

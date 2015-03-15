@@ -12,6 +12,9 @@ def printUsers():
     print('\nShow me the databases:\n')
     for row in rows:
         print(row)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def printItems():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
@@ -22,6 +25,9 @@ def printItems():
     print('\nShow me the databases:\n')
     for row in rows:
         print(row)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def printItemsImage():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
@@ -32,6 +38,9 @@ def printItemsImage():
     print('\nShow me the databases:\n')
     for row in rows:
         print(row)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def createDatabase():
     conn = psycopg2.connect("host='%s' user='%s' password='%s'" %
@@ -39,6 +48,7 @@ def createDatabase():
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
     cur.execute("CREATE DATABASE " + DatabaseInfo.dbname)
+    conn.commit()
     cur.close()
     conn.close()
 
@@ -69,7 +79,8 @@ def createUsersTable():
                     address2 VARCHAR (31),
                     province VARCHAR (31),
                     country VARCHAR (31),
-                    zipcode VARCHAR (15)
+                    zipcode VARCHAR (15),
+                    phonenumber VARCHAR (15)
                     );
                     """
     cur = conn.cursor()
@@ -97,6 +108,7 @@ def createItemsTable():
     statement += """CREATE TABLE items(
                     id serial PRIMARY KEY,
                     name VARCHAR (63),
+                    seller serial,
                     buyoutavailable BOOLEAN,
                     buyoutprice FLOAT,
                     bidprice FLOAT,
@@ -159,5 +171,21 @@ def rebuildItemImagesTable():
         pass
     createItemImagesTable()
 
+def sqlExecute():
+    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                           (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
+    statement = input()
+    cur = conn.cursor()
+    cur.execute(statement)
+    rows = cur.fetchall()
+    print('\nShow me the databases:\n')
+    for row in rows:
+        print(row)
+    conn.commit()
+    cur.close()
+    conn.close()
+
 if __name__ == '__main__':
-    rebuildItemsTable()
+    printItems()

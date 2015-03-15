@@ -10,7 +10,7 @@ from PySide import QtUiTools
 
 class AddItemDialog(QtGui.QDialog):
 
-    def __init__(self, parent=None, DEBUGMODE=False):
+    def __init__(self, user_id, item_id, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE

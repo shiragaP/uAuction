@@ -10,8 +10,9 @@ from PySide import QtUiTools
 
 class AddItemDialog(QtGui.QDialog):
 
-    def __init__(self, parent=None, DEBUGMODE=False):
+    def __init__(self, user_id = 0, parent=None, DEBUGMODE=False):
         super().__init__(parent)
+        self.user_id = user_id
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
@@ -70,6 +71,7 @@ class AddItemDialog(QtGui.QDialog):
             buyoutprice = self.lineEdit_buyoutprice.text()
         else:
             buyoutprice = 0
+        seller = self.user_id
         bidprice = self.lineEdit_bidprice.text()
         bidnumber = 0
         categories = self.lineEdit_categories.text()
@@ -78,20 +80,20 @@ class AddItemDialog(QtGui.QDialog):
         bidprice=0
         bidnumber=0
 
-        self.addItem(name, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
+        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, buyoutavailable, buyoutprice, bidprice, bidnumber, description):
+    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
         statement = ""
-        statement += """INSERT INTO items (name, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
-                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s');
-                        """ % (name, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
+        statement += """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
+                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                        """ % (name.replace("'", "''"), seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
 
         if (self.DEBUGMODE):
             print("Sql Statement")

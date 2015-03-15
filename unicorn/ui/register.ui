@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>473</width>
-    <height>437</height>
+    <width>493</width>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
    <property name="geometry">
     <rect>
      <x>84</x>
-     <y>390</y>
+     <y>410</y>
      <width>311</width>
      <height>31</height>
     </rect>
@@ -61,7 +61,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>0</y>
+     <y>10</y>
      <width>451</width>
      <height>31</height>
     </rect>
@@ -514,6 +514,48 @@
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QLineEdit" name="lineEdit_12_phonenumber">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>380</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12_phonenumber_detail">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>380</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>(Ex: 0812345678)</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12_phonenumber">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>380</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Phone:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
   <zorder>label_02_password</zorder>
   <zorder>label_01_username</zorder>
   <zorder>lineEdit_01_username</zorder>
@@ -549,6 +591,9 @@
   <zorder>lineEdit_04_email</zorder>
   <zorder>label_04_email</zorder>
   <zorder>label_04_email_detail</zorder>
+  <zorder>lineEdit_12_phonenumber</zorder>
+  <zorder>label_12_phonenumber_detail</zorder>
+  <zorder>label_12_phonenumber</zorder>
  </widget>
  <tabstops>
   <tabstop>lineEdit_01_username</tabstop>
@@ -562,6 +607,7 @@
   <tabstop>lineEdit_09_province</tabstop>
   <tabstop>lineEdit_10_country</tabstop>
   <tabstop>lineEdit_11_zipcode</tabstop>
+  <tabstop>lineEdit_12_phonenumber</tabstop>
   <tabstop>pushButton_register</tabstop>
  </tabstops>
  <resources/>
