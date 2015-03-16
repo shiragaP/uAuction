@@ -121,7 +121,8 @@ class RegisterWidget(QtGui.QWidget):
             print(statement)
 
         cur.execute(statement, (
-        username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber))
+            username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+            phonenumber))
         conn.commit()
         cur.close()
         conn.close()

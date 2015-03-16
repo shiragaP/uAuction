@@ -52,6 +52,7 @@ class AddItemDialog(QtGui.QDialog):
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
         self.setWindowTitle('Add Item')
+        self.setAcceptDrops(True)
 
     def checkBoxActionListener(self):
         if self.checkBox_buyoutavailable.isChecked():
@@ -120,23 +121,30 @@ class AddItemDialog(QtGui.QDialog):
         if (event.mimeData().hasUrls()):
             event.acceptProposedAction()
 
-    def dropEvent(self, event):
-        droppedUrls = event.mimeData().urls()
-        droppedUrlCnt = droppedUrls.size()
+    def imageFileFilter(self, droppedUrls):
+        droppedUrlCnt = len(droppedUrls)
         for i in range(droppedUrlCnt):
             localPath = droppedUrls[i].toLocalFile()
             fileInfo = QtCore.QFileInfo(localPath)
             if (fileInfo.isFile()):
                 # file
-                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped file"), fileInfo.absoluteFilePath())
+                if fileInfo.suffix() in ["png", "jpg"]:
+                    QtGui.QMessageBox.information(self, self.tr("Dropped image file"), fileInfo.absoluteFilePath())
+                QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
-                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped directory"), fileInfo.absoluteFilePath())
+                urls = list()
+                self.imageFileFilter(QtCore.QUrl.fromLocalFile(fileInfo.absoluteFilePath()))
+                QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
             else:
                 # none
-                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped, but unknown"),
-                                              QtCore.QObject.tr("Unknown: %1").arg(fileInfo.absoluteFilePath()))
+                QtGui.QMessageBox.information(self, self.tr("Dropped, but unknown"),
+                                              self.tr("Unknown: %1").arg(fileInfo.absoluteFilePath()))
 
+    def dropEvent(self, event):
+        droppedUrls = event.mimeData().urls()
+        print(droppedUrls)
+        self.imageFileFilter(droppedUrls)
         event.acceptProposedAction()
 
 
