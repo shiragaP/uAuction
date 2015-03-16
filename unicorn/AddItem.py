@@ -22,6 +22,7 @@ class AddItemDialog(QtGui.QDialog):
         self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
         self.listWidget_thunbnail = form.findChild(QtGui.QListWidget, 'listWidget_thunbnail')
         self.listWidget_thunbnail.setFlow(QtGui.QListWidget.LeftToRight)
+        self.listWidget_thunbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
 
         self.lineEdit_itemname = form.findChild(QtGui.QLineEdit, 'lineEdit_02_itemname')
         self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
@@ -125,6 +126,9 @@ class AddItemDialog(QtGui.QDialog):
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
         # self.close()
+
+    def itemSelectionChangedListener(self):
+        self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thunbnail.selectedItems()[0].thumbnailImage))
 
     def dragEnterEvent(self, event):
         if (event.mimeData().hasUrls()):
