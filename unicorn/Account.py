@@ -1,13 +1,14 @@
 __author__ = 'Shiraga-P'
 
 import psycopg2
+
 import DatabaseInfo
 
 
 class User:
     def __init__(self, username):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
         cur.execute("SELECT * from users")
         rows = cur.fetchall()

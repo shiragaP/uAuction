@@ -1,13 +1,10 @@
 __author__ = 'Shiraga-P'
 
 import sys
-import psycopg2
-import DatabaseInfo
-
-from unicorn import Login, Account
 
 from PySide import QtGui
-from PySide import QtUiTools
+
+from unicorn import Login, Account
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -25,9 +22,6 @@ class MainWindow(QtGui.QMainWindow):
     def login(self):
         loginWidget = Login.LoginDialog(self)
         loginWidget.exec_()
-
-
-
 
 
 if __name__ == '__main__':

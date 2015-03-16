@@ -103,9 +103,11 @@ class RegisterWidget(QtGui.QWidget):
         if not phonenumber:
             invalidFlags.append('zipcode')
 
-        self.register(username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
+        self.register(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+                      phonenumber)
 
-    def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber):
+    def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+                 phonenumber):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
@@ -118,7 +120,8 @@ class RegisterWidget(QtGui.QWidget):
             print("Sql Statement")
             print(statement)
 
-        cur.execute(statement, (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber))
+        cur.execute(statement, (
+        username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber))
         conn.commit()
         cur.close()
         conn.close()

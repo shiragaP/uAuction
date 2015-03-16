@@ -1,16 +1,16 @@
 __author__ = 'Shiraga-P'
 
 import sys
-import psycopg2
-import DatabaseInfo
 
+import psycopg2
 from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
+import DatabaseInfo
+
 
 class AddItemDialog(QtGui.QDialog):
-
-    def __init__(self, user_id = 0, parent=None, DEBUGMODE=False):
+    def __init__(self, user_id=0, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
         self.parent = parent
@@ -21,6 +21,7 @@ class AddItemDialog(QtGui.QDialog):
 
         self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
         self.listWidget_thunbnail = form.findChild(QtGui.QListWidget, 'listWidget_thunbnail')
+        self.listWidget_thunbnail.setFlow(QtGui.QListWidget.LeftToRight)
 
         self.lineEdit_itemname = form.findChild(QtGui.QLineEdit, 'lineEdit_02_itemname')
         self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
@@ -77,9 +78,9 @@ class AddItemDialog(QtGui.QDialog):
         categories = self.lineEdit_categories.text()
         description = self.textEdit_description.toPlainText()
 
-        thumbnail = '..\\resources\\img\\logo.png' #TODO:
+        thumbnail = '..\\resources\\img\\logo.png'  # TODO:
 
-        bidnumber=0
+        bidnumber = 0
 
         self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail)
 
@@ -95,26 +96,48 @@ class AddItemDialog(QtGui.QDialog):
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
                         """
 
-
         if (self.DEBUGMODE):
             print("Sql Statement")
             print(statement)
 
         cur.execute(statement, (name,
-                               seller,
-                               buyoutavailable,
-                               buyoutprice,
-                               bidprice,
-                               bidnumber,
-                               description,
-                               thumbnail,))
+                                seller,
+                                buyoutavailable,
+                                buyoutprice,
+                                bidprice,
+                                bidnumber,
+                                description,
+                                thumbnail,))
         conn.commit()
         cur.close()
         conn.close()
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
-        #self.close()
+        # self.close()
+
+    def dragEnterEvent(self, event):
+        if (event.mimeData().hasUrls()):
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        droppedUrls = event.mimeData().urls()
+        droppedUrlCnt = droppedUrls.size()
+        for i in range(droppedUrlCnt):
+            localPath = droppedUrls[i].toLocalFile()
+            fileInfo = QtCore.QFileInfo(localPath)
+            if (fileInfo.isFile()):
+                # file
+                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped file"), fileInfo.absoluteFilePath())
+            elif (fileInfo.isDir()):
+                # directory
+                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped directory"), fileInfo.absoluteFilePath())
+            else:
+                # none
+                QtGui.QMessageBox.information(self, QtCore.QObject.tr("Dropped, but unknown"),
+                                              QtCore.QObject.tr("Unknown: %1").arg(fileInfo.absoluteFilePath()))
+
+        event.acceptProposedAction()
 
 
 if __name__ == '__main__':

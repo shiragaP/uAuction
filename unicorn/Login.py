@@ -1,11 +1,12 @@
 __author__ = 'Shiraga-P'
 
 import sys
-import psycopg2
-import DatabaseInfo
 
+import psycopg2
 from PySide import QtGui
 from PySide import QtUiTools
+
+import DatabaseInfo
 
 
 class LoginDialog(QtGui.QDialog):
@@ -46,7 +47,7 @@ class LoginDialog(QtGui.QDialog):
             print("\tPassword: " + password)
 
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
         cur.execute("SELECT * from users")
         rows = cur.fetchall()
@@ -70,7 +71,6 @@ class LoginDialog(QtGui.QDialog):
             self.close()
         else:
             QtGui.QMessageBox.warning(self, "Notification", "Invalid username and/or password")
-
 
 
 if __name__ == '__main__':

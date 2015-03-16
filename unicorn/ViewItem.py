@@ -1,15 +1,15 @@
 __author__ = 'Shiraga-P'
 
 import sys
-import psycopg2
-import DatabaseInfo
 
-from PySide import QtGui, QtCore
+import psycopg2
+from PySide import QtGui
 from PySide import QtUiTools
+
+import DatabaseInfo
 
 
 class ViewItemDialog(QtGui.QDialog):
-
     def __init__(self, user_id, item_id, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
@@ -48,7 +48,7 @@ class ViewItemDialog(QtGui.QDialog):
 
     def loadItem(self):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
         cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
 
@@ -82,7 +82,7 @@ class ViewItemDialog(QtGui.QDialog):
 
     def loadSeller(self):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
         cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
 
