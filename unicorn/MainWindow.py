@@ -3,6 +3,9 @@ import sys
 from PySide import QtCore
 from PySide import QtGui
 
+from unicorn.User import UserWidget
+
+
 class MainWindow(QtGui.QMainWindow):
 
     def __init__(self, user_id, parent=None, DEBUGMODE=False):
@@ -17,18 +20,13 @@ class MainWindow(QtGui.QMainWindow):
         #======================== Menu Bar ========================
         self.menu_bar = QtGui.QMenuBar(self)
         self.menu_bar.setGeometry(QtCore.QRect(0, 0, 650, 20))
-        self.menu_bar.setObjectName("menu_bar")
 
-        self.menu_file = QtGui.QMenu(self.menu_bar)
-        self.menu_file.setObjectName("menu_file")
-        self.menu_help = QtGui.QMenu(self.menu_bar)
-        self.menu_help.setObjectName("menu_help")
+        self.menu_file = QtGui.QMenu("File", self.menu_bar)
+        self.menu_help = QtGui.QMenu("Help", self.menu_bar)
         self.setMenuBar(self.menu_bar)
 
-        self.action_exit = QtGui.QAction(self)
-        self.action_exit.setObjectName("action_exit")
-        self.action_about = QtGui.QAction(self)
-        self.action_about.setObjectName("action_about")
+        self.action_exit = QtGui.QAction("Exit", self)
+        self.action_about = QtGui.QAction("About", self)
 
         self.menu_file.addAction(self.action_exit)
         self.menu_help.addAction(self.action_about)
@@ -37,7 +35,7 @@ class MainWindow(QtGui.QMainWindow):
         self.menu_bar.addAction(self.menu_help.menuAction())
 
         #======================== Menu Bar Connection ========================
-        self.action_exit.triggered.connect(super().close)
+        self.action_exit.triggered.connect(self.close)
 
         #QtCore.QObject.connect(self.action_exit, QtCore.SIGNAL("triggered()"), super().close)
         #QtCore.QObject.connect(self.action_about, QtCore.SIGNAL("triggered()"), self.about)
@@ -48,14 +46,14 @@ class MainWindow(QtGui.QMainWindow):
 
 
         self.banner = QtGui.QLabel(self.centralwidget)
-        self.banner.setGeometry(QtCore.QRect(10, 10, 590, 145))
+        self.banner.setGeometry(QtCore.QRect(10, 15, 590, 140))
         self.banner.setAlignment(QtCore.Qt.AlignCenter)
 
         self.table_widget = QtGui.QLabel(self.centralwidget)
-        self.table_widget.setGeometry(QtCore.QRect(10, 170, 590, 400))
+        self.table_widget.setGeometry(QtCore.QRect(10, 175, 590, 395))
 
-        self.user_widget = QtGui.QWidget(self.centralwidget)
-        self.user_widget.setGeometry(QtCore.QRect(160, 10, 160, 560))
+        self.user_widget = UserWidget(self.user_id, self)
+        self.user_widget.setGeometry(QtCore.QRect(610, 15, 160, 555))
 
         self.resize(780, 580)
         self.setWindowTitle("uAuction")

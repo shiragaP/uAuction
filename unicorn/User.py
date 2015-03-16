@@ -63,7 +63,7 @@ class UserWidget(QtGui.QWidget):
         self.label_email.setText(self.user.email)
         self.label_firstname.setText(self.user.firstname)
         self.label_lastname.setText(self.user.lastname)
-        self.label_address1.setText(self.user.address1 + "sdfsf11 1sdf6s5df .121 / 43534 ,")
+        self.label_address1.setText(self.user.address1)
         self.label_address2.setText(self.user.address2)
         self.label_province.setText(self.user.province)
         self.label_country.setText(self.user.country)
