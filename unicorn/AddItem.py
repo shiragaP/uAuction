@@ -10,7 +10,7 @@ import DatabaseInfo
 from unicorn.uThumbnailDetailItem import UThumbnailDetailItem
 
 class AddItemDialog(QtGui.QDialog):
-    def __init__(self, user_id=0, parent=None, DEBUGMODE=False):
+    def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
         self.parent = parent

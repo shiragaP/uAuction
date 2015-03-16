@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_thunbnail">
+  <widget class="QLabel" name="label_thumbnail">
    <property name="geometry">
     <rect>
      <x>15</x>
@@ -29,7 +29,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_name">
+  <widget class="QLabel" name="label_itemname">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -47,7 +47,7 @@
     <string>&lt;Name&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_buyout_head">
+  <widget class="QLabel" name="label_buyoutprice_head">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -63,7 +63,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_bid_head">
+  <widget class="QLabel" name="label_bidprice_head">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -79,7 +79,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_bid">
+  <widget class="QLabel" name="label_bidprice">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -92,7 +92,7 @@
     <string>&lt;Bid&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_buyout">
+  <widget class="QLabel" name="label_buyoutprice">
    <property name="geometry">
     <rect>
      <x>90</x>

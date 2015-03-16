@@ -2,13 +2,11 @@ __author__ = 'Shiraga-P'
 
 import sys
 
-import psycopg2
 from PySide import QtGui
 from PySide import QtUiTools
 
 from unicorn.Item import Item
 from unicorn.User import User
-import DatabaseInfo
 
 
 class ViewItemDialog(QtGui.QDialog):
@@ -53,7 +51,6 @@ class ViewItemDialog(QtGui.QDialog):
         self.loadItem()
 
     def loadItem(self):
-        self.loadSeller()
 
         self.label_itemname.setText(self.item.itemname)
         self.label_buyoutprice.setText(str(self.item.buyoutprice))
@@ -67,6 +64,6 @@ class ViewItemDialog(QtGui.QDialog):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    addItemWidget = ViewItemDialog(1, 8, DEBUGMODE=True)
+    addItemWidget = ViewItemDialog(1, 9, DEBUGMODE=True)
     addItemWidget.show()
     sys.exit(app.exec_())
