@@ -112,14 +112,13 @@ class RegisterWidget(QtGui.QWidget):
 
         statement = ""
         statement += """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
-                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');
-                        """ % (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
 
         if (self.DEBUGMODE):
             print("Sql Statement")
             print(statement)
 
-        cur.execute(statement)
+        cur.execute(statement, (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber))
         conn.commit()
         cur.close()
         conn.close()

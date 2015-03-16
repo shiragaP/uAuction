@@ -113,7 +113,8 @@ def createItemsTable():
                     buyoutprice FLOAT,
                     bidprice FLOAT,
                     bidnumber INTEGER,
-                    description VARCHAR (127)
+                    description VARCHAR (255),
+                    thumbnail VARCHAR (127)
                     );
                     """
     cur = conn.cursor()

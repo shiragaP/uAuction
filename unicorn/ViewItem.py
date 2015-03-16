@@ -8,10 +8,12 @@ from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 
-class AddItemDialog(QtGui.QDialog):
+class ViewItemDialog(QtGui.QDialog):
 
     def __init__(self, user_id, item_id, parent=None, DEBUGMODE=False):
         super().__init__(parent)
+        self.user_id = user_id
+        self.item_id = item_id
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
@@ -40,13 +42,61 @@ class AddItemDialog(QtGui.QDialog):
 
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
-        self.setWindowTitle('Add Item')
+        self.setWindowTitle('View Item')
 
+        self.loadItem()
 
+    def loadItem(self):
+        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+        cur = conn.cursor()
+        cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
+
+        row = cur.fetchall()[0]
+
+        self.itemname = row[1]
+        self.seller_id = row[2]
+        self.buyoutavailable = row[3]
+        self.buyoutprice = row[4]
+        self.bidprice = row[5]
+        self.bidnumber = row[6]
+        self.description = row[7]
+        self.thumbnail = row[8]
+
+        self.loadImages()
+        self.loadSeller()
+
+        self.label_itemname.setText(self.itemname)
+        self.label_image.setPixmap(QtGui.QPixmap(self.thumbnail))
+        self.label_buyoutprice.setText(str(self.buyoutprice))
+        self.label_bidprice.setText(str(self.bidprice))
+
+        self.textEdit_description.setText(self.description)
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def loadImages(self):
+        pass
+
+    def loadSeller(self):
+        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
+                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+        cur = conn.cursor()
+        cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
+
+        row = cur.fetchall()[0]
+
+        self.seller_username = row[1]
+
+        conn.commit()
+        cur.close()
+        conn.close()
 
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    addItemWidget = AddItemDialog(DEBUGMODE=True)
+    addItemWidget = ViewItemDialog(1, 8, DEBUGMODE=True)
     addItemWidget.show()
     sys.exit(app.exec_())

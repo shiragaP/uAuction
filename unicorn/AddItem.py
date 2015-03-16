@@ -77,36 +77,44 @@ class AddItemDialog(QtGui.QDialog):
         categories = self.lineEdit_categories.text()
         description = self.textEdit_description.toPlainText()
 
-        bidprice=0
+        thumbnail = '..\\resources\\img\\logo.png' #TODO:
+
         bidnumber=0
 
-        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
+        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail)
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description):
+    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        statement = ""
-        statement += """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
-                        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');
-                        """ % (name.replace("'", "''"), seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description)
+        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+                        """
+
 
         if (self.DEBUGMODE):
             print("Sql Statement")
             print(statement)
 
-        cur.execute(statement)
+        cur.execute(statement, (name,
+                               seller,
+                               buyoutavailable,
+                               buyoutprice,
+                               bidprice,
+                               bidnumber,
+                               description,
+                               thumbnail,))
         conn.commit()
         cur.close()
         conn.close()
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
-        self.close()
+        #self.close()
 
 
 if __name__ == '__main__':
