@@ -7,7 +7,7 @@ from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 import DatabaseInfo
-
+from unicorn.uThumbnailDetailItem import UThumbnailDetailItem
 
 class AddItemDialog(QtGui.QDialog):
     def __init__(self, user_id=0, parent=None, DEBUGMODE=False):
@@ -61,10 +61,19 @@ class AddItemDialog(QtGui.QDialog):
             self.lineEdit_buyoutprice.setReadOnly(True)
 
     def addImageActionListener(self):
-        pass
+        filepath = QtGui.QFileDialog.getOpenFileName(self)[0]
+        if filepath != '':
+            self.addImage(filepath)
+
+    def addImage(self, filepath):
+        item = UThumbnailDetailItem(filepath)
+        self.listWidget_thunbnail.addItem(item)
+        self.listWidget_thunbnail.setItemWidget(item, item.thumbnailWidget)
 
     def deleteImageActionListener(self):
-        pass
+        items = self.listWidget_thunbnail.selectedItems()
+        for item in items:
+            self.listWidget_thunbnail.takeItem(self.uImagelistWidget_thunbnailList.row(item))
 
     def addItemActionListener(self):
         name = self.lineEdit_itemname.text()
@@ -130,11 +139,12 @@ class AddItemDialog(QtGui.QDialog):
                 # file
                 if fileInfo.suffix() in ["png", "jpg"]:
                     QtGui.QMessageBox.information(self, self.tr("Dropped image file"), fileInfo.absoluteFilePath())
-                QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
+                    self.addImage(fileInfo.absoluteFilePath())
+                else:
+                    QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
-                urls = list()
-                self.imageFileFilter(QtCore.QUrl.fromLocalFile(fileInfo.absoluteFilePath()))
+                #TODO: image files
                 QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
             else:
                 # none
