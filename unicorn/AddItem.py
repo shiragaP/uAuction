@@ -89,7 +89,7 @@ class AddItemDialog(QtGui.QDialog):
         categories = self.lineEdit_categories.text()
         description = self.textEdit_description.toPlainText()
 
-        thumbnail = '..\\resources\\img\\logo.png'  # TODO:
+        thumbnail = '..\\resources\\img\\noimage.png'  # TODO:
 
         bidnumber = 0
 

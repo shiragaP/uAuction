@@ -10,8 +10,9 @@ import DatabaseInfo
 
 
 class LoginDialog(QtGui.QDialog):
-    def __init__(self, parent=None, DEBUGMODE=False):
+    def __init__(self, main=None, parent=None, DEBUGMODE=False):
         super().__init__(parent)
+        self.main = main
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
@@ -51,6 +52,9 @@ class LoginDialog(QtGui.QDialog):
         cur = conn.cursor()
         cur.execute("SELECT * from users")
         rows = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
 
         if (self.DEBUGMODE):
             print('Show me the databases:')
@@ -63,11 +67,12 @@ class LoginDialog(QtGui.QDialog):
             print("Comparing password:", row[2], password, str(row[2]) == password)
             if str(row[1]) == username and str(row[2]) == password:
                 loginValid = True
+                self.user_id = row[0]
                 break
 
         if loginValid:
             if __name__ != '__main__':
-                self.parent.run(username)
+                self.main.run(self.user_id)
             self.close()
         else:
             QtGui.QMessageBox.warning(self, "Notification", "Invalid username and/or password")
