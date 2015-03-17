@@ -114,7 +114,8 @@ def createItemsTable():
                     bidprice FLOAT,
                     bidnumber INTEGER,
                     description VARCHAR (255),
-                    thumbnail VARCHAR (127)
+                    thumbnail VARCHAR (127),
+                    expirytime TIMESTAMP
                     );
                     """
     cur = conn.cursor()
@@ -189,4 +190,4 @@ def sqlExecute():
     conn.close()
 
 if __name__ == '__main__':
-    printUsers()
+    rebuildItemsTable()

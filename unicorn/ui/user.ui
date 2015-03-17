@@ -386,6 +386,66 @@
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_01_sellitem">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>420</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sell Item</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_02_seeallbiditems">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>455</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>See all bid items</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_03_logout">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>490</y>
+     <width>130</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

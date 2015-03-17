@@ -6,6 +6,7 @@ import psycopg2
 from PySide import QtGui
 from PySide import QtUiTools
 
+from unicorn.AddItem import AddItemDialog
 import DatabaseInfo
 
 
@@ -59,6 +60,10 @@ class UserWidget(QtGui.QWidget):
         self.label_zipcode = form.findChild(QtGui.QLabel, 'label_11_zipcode')
         self.label_phonenumber = form.findChild(QtGui.QLabel, 'label_12_phonenumber')
 
+        self.pushButton_sellitem = form.findChild(QtGui.QPushButton, 'pushButton_01_sellitem')
+        self.pushButton_seeallbiditems = form.findChild(QtGui.QPushButton, 'pushButton_02_seeallbiditems')
+        self.pushButton_logout = form.findChild(QtGui.QPushButton, 'pushButton_03_logout')
+
         self.label_username.setText(self.user.username)
         self.label_email.setText(self.user.email)
         self.label_firstname.setText(self.user.firstname)
@@ -75,6 +80,8 @@ class UserWidget(QtGui.QWidget):
         self.label_address2.setText('<p style=\"line-height:125\">' + self.label_address2.text() + '<p>')
         self.label_address2.setWordWrap(True)
 
+        self.pushButton_sellitem.clicked.connect(self.sellItemActionListener)
+
         layout = QtGui.QGridLayout()
         layout.addWidget(form)
 
@@ -83,6 +90,10 @@ class UserWidget(QtGui.QWidget):
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
         self.setWindowTitle('User ' + str(self.user_id))
+
+    def sellItemActionListener(self):
+        addItemWidget = AddItemDialog(user_id=self.user_id, DEBUGMODE=True)
+        addItemWidget.exec_()
 
 
 if __name__ == '__main__':

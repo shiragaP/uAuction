@@ -46,18 +46,21 @@ class MainWindow(QtGui.QMainWindow):
 
 
         self.banner = QtGui.QLabel(self)
-        self.banner.setGeometry(QtCore.QRect(10 + 2, 15 + 12, 600, 140))
+        self.banner.setGeometry(QtCore.QRect(165 + 2, 15 + 12, 600, 140))
+        #self.banner.setGeometry(QtCore.QRect(10 + 2, 15 + 12, 600, 140))
         self.banner.setPixmap(QtGui.QPixmap('..\\resources\\img\\nobanner.png'))
         self.banner.setAlignment(QtCore.Qt.AlignCenter)
 
         self.table_widget = QtGui.QTableWidget(self)
-        self.table_widget.setGeometry(QtCore.QRect(10, 175, 590 + 17, 395))
+        self.table_widget.setGeometry(QtCore.QRect(165, 175, 590 + 17, 395))
+        #self.table_widget.setGeometry(QtCore.QRect(10, 175, 590 + 17, 395))
         self.table_widget.horizontalHeader().setVisible(False)
         self.table_widget.verticalHeader().setVisible(False)
         self.table_widget.setVerticalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
 
         self.user_widget = UserWidget(self.user_id, self)
-        self.user_widget.setGeometry(QtCore.QRect(615, 15, 160, 555))
+        self.user_widget.setGeometry(QtCore.QRect(5, 15, 160, 555))
+        #self.user_widget.setGeometry(QtCore.QRect(615, 15, 160, 555))
 
         self.loadRecentItems()
 
@@ -75,14 +78,29 @@ class MainWindow(QtGui.QMainWindow):
         cur.close()
         conn.close()
 
+        self.table_widget.clear()
         self.itemCount = min(len(rows), 20)
-        self.table_columnCount = int(590/196)
-        self.table_widget.setRowCount(int(self.itemCount/self.table_columnCount) + 1)
+        print(self.itemCount)
+        if self.itemCount <= int((self.width() - 190)/196):
+            self.table_columnCount = self.itemCount
+            self.table_widget.setRowCount(1)
+        else:
+            self.table_columnCount = int((self.width() - 190)/196)
+            self.table_widget.setRowCount(int(self.itemCount/self.table_columnCount) + 1)
+        print(self.itemCount)
         self.table_widget.setColumnCount(self.table_columnCount)
         for i in range(self.itemCount):
             self.table_widget.setCellWidget(int(i/self.table_columnCount), i%self.table_columnCount, ThumbnailDetailWidget(i + 1, DEBUGMODE=True))
         self.table_widget.resizeColumnsToContents()
         self.table_widget.resizeRowsToContents()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.banner.setGeometry(QtCore.QRect(165 + 2, 15 + 12, self.width() - 190 + 17 + 10, 140))
+        self.table_widget.setGeometry(QtCore.QRect(165, 175, self.width() - 190 + 17, self.height() - 185))
+
+        self.loadRecentItems()
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

@@ -1,6 +1,7 @@
 __author__ = 'Shiraga-P'
 
 import sys
+from datetime import datetime, timedelta
 
 import psycopg2
 from PySide import QtGui, QtCore
@@ -91,20 +92,21 @@ class AddItemDialog(QtGui.QDialog):
 
         thumbnail = '..\\resources\\img\\noimage.png'  # TODO:
 
-        bidnumber = 0
+        expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=3))
+        print(expirytime)
 
-        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail)
+        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime)
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail):
+    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
                         """
 
         if (self.DEBUGMODE):
@@ -118,7 +120,8 @@ class AddItemDialog(QtGui.QDialog):
                                 bidprice,
                                 bidnumber,
                                 description,
-                                thumbnail,))
+                                thumbnail,
+                                expirytime,))
         conn.commit()
         cur.close()
         conn.close()

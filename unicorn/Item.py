@@ -13,7 +13,6 @@ class Item():
                                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        print(self.item_id)
         cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
         row = cur.fetchall()[0]
         self.itemname = row[1]
@@ -24,6 +23,7 @@ class Item():
         self.bidnumber = row[6]
         self.description = row[7]
         self.thumbnail = row[8]
+        self.expirytime = row[9]
         conn.commit()
 
         #TODO: load all item's images
