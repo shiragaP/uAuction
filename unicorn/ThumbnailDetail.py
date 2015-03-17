@@ -8,10 +8,13 @@ from PySide import QtGui
 from PySide import QtUiTools
 
 from unicorn.Item import Item
+from unicorn.ViewItem import ViewItemDialog
+
 
 class ThumbnailDetailWidget(QtGui.QWidget):
-    def __init__(self, item_id, parent=None, DEBUGMODE=False):
+    def __init__(self, user_id, item_id, parent=None, DEBUGMODE=False):
         super().__init__(parent)
+        self.user_id = user_id
         self.item_id = item_id
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
@@ -46,10 +49,14 @@ class ThumbnailDetailWidget(QtGui.QWidget):
         height = self.label_thumbnail.height()
         self.label_thumbnail.setPixmap(QtGui.QPixmap(self.item.thumbnail).scaled(width, height, QtCore.Qt.KeepAspectRatio))
 
+    def mouseDoubleClickEvent(self, event):
+        viewItemDialog = ViewItemDialog(self.user_id, self.item_id, self.parent)
+        viewItemDialog.show()
+
 
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    loginWidget = ThumbnailDetailWidget(9, DEBUGMODE=True)
+    loginWidget = ThumbnailDetailWidget(1, 1, DEBUGMODE=True)
     loginWidget.show()
     sys.exit(app.exec_())

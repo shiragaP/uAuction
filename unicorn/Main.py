@@ -17,8 +17,8 @@ class Main():
         self.mainWindow.show()
 
     def login(self):
-        loginWidget = LoginDialog(self)
-        loginWidget.exec_()
+        loginDialog = LoginDialog(self)
+        loginDialog.exec_()
 
 
 if __name__ == '__main__':

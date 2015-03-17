@@ -4,8 +4,8 @@ import psycopg2
 from PySide import QtCore
 from PySide import QtGui
 
-from unicorn.User import UserWidget
 from unicorn.ThumbnailDetail import ThumbnailDetailWidget
+from unicorn.User import UserWidget
 import DatabaseInfo
 
 
@@ -82,15 +82,14 @@ class MainWindow(QtGui.QMainWindow):
         self.itemCount = min(len(rows), 20)
         print(self.itemCount)
         if self.itemCount <= int((self.width() - 190)/196):
-            self.table_columnCount = self.itemCount
+            self.table_columnCount = self.itemCountwd
             self.table_widget.setRowCount(1)
         else:
             self.table_columnCount = int((self.width() - 190)/196)
             self.table_widget.setRowCount(int(self.itemCount/self.table_columnCount) + 1)
-        print(self.itemCount)
         self.table_widget.setColumnCount(self.table_columnCount)
         for i in range(self.itemCount):
-            self.table_widget.setCellWidget(int(i/self.table_columnCount), i%self.table_columnCount, ThumbnailDetailWidget(i + 1, DEBUGMODE=True))
+            self.table_widget.setCellWidget(int(i/self.table_columnCount), i%self.table_columnCount, ThumbnailDetailWidget(self.user_id, i + 1, self, DEBUGMODE=True))
         self.table_widget.resizeColumnsToContents()
         self.table_widget.resizeRowsToContents()
 
