@@ -38,8 +38,8 @@ class ThumbnailDetailWidget(QtGui.QWidget):
         self.loadItem()
 
     def loadItem(self):
-
-        self.label_itemname.setText(self.item.itemname[:10] + ('...' if len(self.item.itemname) > 10 else ''))
+        #self.label_itemname.setText(self.item.itemname[:10] + ('...' if len(self.item.itemname) > 10 else ''))
+        self.label_itemname.setText(self.item.itemname)
         self.label_buyoutprice.setText(str(self.item.buyoutprice))
         self.label_bidprice.setText(str(self.item.bidprice))
 

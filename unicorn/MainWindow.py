@@ -75,10 +75,11 @@ class MainWindow(QtGui.QMainWindow):
         cur.close()
         conn.close()
 
+        self.itemCount = min(len(rows), 20)
         self.table_columnCount = int(590/196)
-        self.table_widget.setRowCount(int(20/self.table_columnCount) + 1)
+        self.table_widget.setRowCount(int(self.itemCount/self.table_columnCount) + 1)
         self.table_widget.setColumnCount(self.table_columnCount)
-        for i in range(min(len(rows), 20)):
+        for i in range(self.itemCount):
             self.table_widget.setCellWidget(int(i/self.table_columnCount), i%self.table_columnCount, ThumbnailDetailWidget(i + 1, DEBUGMODE=True))
         self.table_widget.resizeColumnsToContents()
         self.table_widget.resizeRowsToContents()
