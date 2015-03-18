@@ -98,6 +98,6 @@ class UserWidget(QtGui.QWidget):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    loginWidget = UserWidget(1, DEBUGMODE=True)
+    loginWidget = UserWidget(2, DEBUGMODE=True)
     loginWidget.show()
     sys.exit(app.exec_())

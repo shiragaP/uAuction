@@ -70,8 +70,13 @@ class ViewItemDialog(QtGui.QDialog):
         pixmap = QtGui.QPixmap(self.item.thumbnailpath)
         self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
+        if len(self.item.imagepathes) > 5:
+            thumbnailWidth = thumbnailHeight = 60
+        else:
+            thumbnailWidth = thumbnailHeight = 75
+
         for imagepath in self.item.imagepathes:
-            widgetiItem = ThumbnailWidgetItem(imagepath, 60, 60)
+            widgetiItem = ThumbnailWidgetItem(imagepath, thumbnailWidth, thumbnailHeight)
             self.listWidget_thumbnail.addItem(widgetiItem)
             self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
 

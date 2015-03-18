@@ -47,7 +47,7 @@ class ThumbnailDetailWidget(QtGui.QWidget):
 
         width = self.label_thumbnail.width()
         height = self.label_thumbnail.height()
-        self.label_thumbnail.setPixmap(QtGui.QPixmap(self.item.thumbnail).scaled(width, height, QtCore.Qt.KeepAspectRatio))
+        self.label_thumbnail.setPixmap(QtGui.QPixmap(self.item.thumbnailpath).scaled(width, height, QtCore.Qt.KeepAspectRatio))
 
     def mouseDoubleClickEvent(self, event):
         viewItemDialog = ViewItemDialog(self.user_id, self.item_id, self.parent)
