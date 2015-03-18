@@ -136,6 +136,9 @@ class AddItemDialog(QtGui.QDialog):
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
+        if self.parent:
+            self.parent.loadRecentItems()
+
         self.close()
 
     def addItemImages(self):

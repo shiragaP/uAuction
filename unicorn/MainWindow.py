@@ -50,6 +50,7 @@ class MainWindow(QtGui.QMainWindow):
         self.banner.setGeometry(QtCore.QRect(170 + 2, 15 + 12, 600, 140))
         #self.banner.setGeometry(QtCore.QRect(10 + 2, 15 + 12, 600, 140))
         self.banner.setPixmap(QtGui.QPixmap('..\\resources\\img\\nobanner.png'))
+
         self.banner.setAlignment(QtCore.Qt.AlignCenter)
 
         self.table_widget = QtGui.QTableWidget(self)

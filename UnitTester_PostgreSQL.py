@@ -113,7 +113,7 @@ def createItemsTable():
                     buyoutprice INTEGER,
                     bidprice INTEGER,
                     bidnumber INTEGER,
-                    description VARCHAR (4095),
+                    description VARCHAR (8191),
                     thumbnail VARCHAR (127),
                     expirytime TIMESTAMP,
                     soldout BOOLEAN
