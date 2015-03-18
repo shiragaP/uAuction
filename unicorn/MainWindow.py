@@ -48,21 +48,18 @@ class MainWindow(QtGui.QMainWindow):
 
         self.banner = QtGui.QLabel(self)
         self.banner.setGeometry(QtCore.QRect(170 + 2, 15 + 12, 600, 140))
-        #self.banner.setGeometry(QtCore.QRect(10 + 2, 15 + 12, 600, 140))
         self.banner.setPixmap(QtGui.QPixmap('..\\resources\\img\\nobanner.png'))
 
         self.banner.setAlignment(QtCore.Qt.AlignCenter)
 
         self.table_widget = QtGui.QTableWidget(self)
         self.table_widget.setGeometry(QtCore.QRect(170, 175, 590 + 17, 395))
-        #self.table_widget.setGeometry(QtCore.QRect(10, 175, 590 + 17, 395))
         self.table_widget.horizontalHeader().setVisible(False)
         self.table_widget.verticalHeader().setVisible(False)
         self.table_widget.setVerticalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
 
         self.user_widget = UserWidget(self.user_id, self)
         self.user_widget.setGeometry(QtCore.QRect(5, 15, 160, 555))
-        #self.user_widget.setGeometry(QtCore.QRect(615, 15, 160, 555))
 
         self.loadRecentItems()
 
