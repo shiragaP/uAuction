@@ -38,9 +38,9 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>320</y>
+     <y>330</y>
      <width>41</width>
-     <height>41</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -59,9 +59,9 @@
    <property name="geometry">
     <rect>
      <x>350</x>
-     <y>320</y>
+     <y>330</y>
      <width>41</width>
-     <height>41</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -93,13 +93,13 @@
     <string>Add Item</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget_thunbnail">
+  <widget class="QListWidget" name="listWidget_thumbnail">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>240</y>
      <width>391</width>
-     <height>71</height>
+     <height>81</height>
     </rect>
    </property>
   </widget>
@@ -242,7 +242,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Discription:</string>
+    <string>Description:</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -254,7 +254,7 @@
      <x>420</x>
      <y>160</y>
      <width>271</width>
-     <height>151</height>
+     <height>161</height>
     </rect>
    </property>
   </widget>
@@ -300,7 +300,7 @@
   <tabstop>lineEdit_04_bidprice</tabstop>
   <tabstop>lineEdit_05_categories</tabstop>
   <tabstop>textEdit_06_description</tabstop>
-  <tabstop>listWidget_thunbnail</tabstop>
+  <tabstop>listWidget_thumbnail</tabstop>
   <tabstop>pushButton_01_addimage</tabstop>
   <tabstop>pushButton_02_deleteimage</tabstop>
   <tabstop>pushButton_03_additem</tabstop>

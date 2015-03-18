@@ -1,5 +1,7 @@
 __author__ = 'Shiraga-P'
 
+from datetime import datetime
+
 import psycopg2
 
 import DatabaseInfo
@@ -22,12 +24,30 @@ class Item():
         self.bidprice = row[5]
         self.bidnumber = row[6]
         self.description = row[7]
-        self.thumbnail = row[8]
+        self.thumbnailpath = row[8]
         self.expirytime = row[9]
+        self.soldout = row[10]
+        self.imagepathes = list()
+
+        cur.execute("SELECT * from item_images WHERE itemid=%s", (self.item_id,))
+        rows = cur.fetchall()
+        for row in rows:
+            self.imagepathes += (row[1],)
+
         conn.commit()
-
-        #TODO: load all item's images
-        self.images = list()
-
         cur.close()
         conn.close()
+
+    def printInfo(self):
+        print(self.itemname)
+        print(self.seller_id)
+        print(self.buyoutavailable)
+        print(self.buyoutprice)
+        print(self.bidprice)
+        print(self.bidnumber)
+        print(self.description)
+        print(self.thumbnail)
+        print(self.expirytime)
+
+if __name__ == '__main__':
+    item = Item(11)

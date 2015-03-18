@@ -110,12 +110,13 @@ def createItemsTable():
                     name VARCHAR (63),
                     seller serial,
                     buyoutavailable BOOLEAN,
-                    buyoutprice FLOAT,
-                    bidprice FLOAT,
+                    buyoutprice INTEGER,
+                    bidprice INTEGER,
                     bidnumber INTEGER,
-                    description VARCHAR (255),
+                    description VARCHAR (4095),
                     thumbnail VARCHAR (127),
-                    expirytime TIMESTAMP
+                    expirytime TIMESTAMP,
+                    soldout BOOLEAN
                     );
                     """
     cur = conn.cursor()
@@ -173,6 +174,15 @@ def rebuildItemImagesTable():
         pass
     createItemImagesTable()
 
+def rebuildAll():
+    try:
+        createDatabase()
+    except:
+        pass
+    rebuildUsersTable()
+    rebuildItemsTable()
+    rebuildItemImagesTable()
+
 def sqlExecute():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
@@ -190,4 +200,4 @@ def sqlExecute():
     conn.close()
 
 if __name__ == '__main__':
-    rebuildItemsTable()
+    printItemsImage()

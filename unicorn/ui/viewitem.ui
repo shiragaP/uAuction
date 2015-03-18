@@ -52,7 +52,7 @@
     <string>Buy it now</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget_thunbnail">
+  <widget class="QListWidget" name="listWidget_thumbnail">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -85,7 +85,7 @@
     <rect>
      <x>10</x>
      <y>0</y>
-     <width>681</width>
+     <width>541</width>
      <height>31</height>
     </rect>
    </property>
@@ -262,10 +262,31 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_00_timeleft">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>0</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>0d 0hr 0m 0s</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>textEdit_05_description</tabstop>
-  <tabstop>listWidget_thunbnail</tabstop>
+  <tabstop>listWidget_thumbnail</tabstop>
   <tabstop>pushButton_02_buyitnow</tabstop>
   <tabstop>pushButton_01_bid</tabstop>
  </tabstops>

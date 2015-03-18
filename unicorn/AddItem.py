@@ -8,7 +8,8 @@ from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 import DatabaseInfo
-from unicorn.uThumbnailDetailItem import UThumbnailDetailItem
+from unicorn.Item import Item
+from unicorn.Thumbnail import ThumbnailWidgetItem
 
 class AddItemDialog(QtGui.QDialog):
     def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
@@ -21,9 +22,10 @@ class AddItemDialog(QtGui.QDialog):
         form = loader.load('ui\\additem.ui')
 
         self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
-        self.listWidget_thunbnail = form.findChild(QtGui.QListWidget, 'listWidget_thunbnail')
-        self.listWidget_thunbnail.setFlow(QtGui.QListWidget.LeftToRight)
-        self.listWidget_thunbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
+        self.listWidget_thumbnail = form.findChild(QtGui.QListWidget, 'listWidget_thumbnail')
+        self.listWidget_thumbnail.setFlow(QtGui.QListWidget.LeftToRight)
+        self.listWidget_thumbnail.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
+        self.listWidget_thumbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
 
         self.lineEdit_itemname = form.findChild(QtGui.QLineEdit, 'lineEdit_02_itemname')
         self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
@@ -40,7 +42,7 @@ class AddItemDialog(QtGui.QDialog):
         self.pushButton_addimage = form.findChild(QtGui.QPushButton, 'pushButton_01_addimage')
         self.pushButton_addimage.clicked.connect(self.addImageActionListener)
         self.pushButton_deleteimage = form.findChild(QtGui.QPushButton, 'pushButton_02_deleteimage')
-        self.pushButton_addimage.clicked.connect(self.deleteImageActionListener)
+        self.pushButton_deleteimage.clicked.connect(self.deleteImageActionListener)
         self.pushButton_additem = form.findChild(QtGui.QPushButton, 'pushButton_03_additem')
         self.pushButton_additem.clicked.connect(self.addItemActionListener)
         self.pushButton_cancel = form.findChild(QtGui.QPushButton, 'pushButton_04_cancel')
@@ -68,14 +70,14 @@ class AddItemDialog(QtGui.QDialog):
             self.addImage(filepath)
 
     def addImage(self, filepath):
-        item = UThumbnailDetailItem(filepath)
-        self.listWidget_thunbnail.addItem(item)
-        self.listWidget_thunbnail.setItemWidget(item, item.thumbnailWidget)
+        widgetiItem = ThumbnailWidgetItem(filepath, 60, 60)
+        self.listWidget_thumbnail.addItem(widgetiItem)
+        self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
 
     def deleteImageActionListener(self):
-        items = self.listWidget_thunbnail.selectedItems()
+        items = self.listWidget_thumbnail.selectedItems()
         for item in items:
-            self.listWidget_thunbnail.takeItem(self.uImagelistWidget_thunbnailList.row(item))
+            self.listWidget_thumbnail.takeItem(self.listWidget_thumbnail.row(item))
 
     def addItemActionListener(self):
         name = self.lineEdit_itemname.text()
@@ -88,25 +90,28 @@ class AddItemDialog(QtGui.QDialog):
         bidprice = self.lineEdit_bidprice.text()
         bidnumber = 0
         categories = self.lineEdit_categories.text()
-        description = self.textEdit_description.toPlainText()
+        description = self.textEdit_description.toHtml()
 
-        thumbnail = '..\\resources\\img\\noimage.png'  # TODO:
+        if self.listWidget_thumbnail.count() == 0:
+            thumbnail = '..\\resources\\img\\noimage.png'
+        else:
+            thumbnail = self.listWidget_thumbnail.item(0).filepath
 
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=3))
-        print(expirytime)
+        soldout = False
 
-        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime)
+        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime):
+    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                         """
 
         if (self.DEBUGMODE):
@@ -121,17 +126,47 @@ class AddItemDialog(QtGui.QDialog):
                                 bidnumber,
                                 description,
                                 thumbnail,
-                                expirytime,))
+                                expirytime,
+                                soldout,))
         conn.commit()
         cur.close()
         conn.close()
 
+        self.addItemImages()
+
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
-        # self.close()
+        self.close()
+
+    def addItemImages(self):
+        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
+                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+        cur = conn.cursor()
+
+        cur.execute("SELECT max(id) from items")
+        item_id = cur.fetchall()[0][0]
+
+        for i in range(self.listWidget_thumbnail.count()):
+            item = self.listWidget_thumbnail.item(i)
+
+            statement = """INSERT INTO item_images (directory, itemid)
+                            VALUES (%s, %s);
+                            """
+
+            if (self.DEBUGMODE):
+                print("Sql Statement")
+                print(statement)
+
+            cur.execute(statement, (item.filepath,
+                                    item_id,))
+
+        conn.commit()
+        cur.close()
+        conn.close()
 
     def itemSelectionChangedListener(self):
-        self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thunbnail.selectedItems()[0].thumbnailImage))
+        if len(self.listWidget_thumbnail.selectedItems()) > 0:
+            self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
 
     def dragEnterEvent(self, event):
         if (event.mimeData().hasUrls()):

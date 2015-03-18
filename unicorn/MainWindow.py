@@ -1,4 +1,5 @@
-import sys
+import sys, math
+from datetime import datetime, timedelta
 
 import psycopg2
 from PySide import QtCore
@@ -46,13 +47,13 @@ class MainWindow(QtGui.QMainWindow):
 
 
         self.banner = QtGui.QLabel(self)
-        self.banner.setGeometry(QtCore.QRect(165 + 2, 15 + 12, 600, 140))
+        self.banner.setGeometry(QtCore.QRect(170 + 2, 15 + 12, 600, 140))
         #self.banner.setGeometry(QtCore.QRect(10 + 2, 15 + 12, 600, 140))
         self.banner.setPixmap(QtGui.QPixmap('..\\resources\\img\\nobanner.png'))
         self.banner.setAlignment(QtCore.Qt.AlignCenter)
 
         self.table_widget = QtGui.QTableWidget(self)
-        self.table_widget.setGeometry(QtCore.QRect(165, 175, 590 + 17, 395))
+        self.table_widget.setGeometry(QtCore.QRect(170, 175, 590 + 17, 395))
         #self.table_widget.setGeometry(QtCore.QRect(10, 175, 590 + 17, 395))
         self.table_widget.horizontalHeader().setVisible(False)
         self.table_widget.verticalHeader().setVisible(False)
@@ -64,15 +65,16 @@ class MainWindow(QtGui.QMainWindow):
 
         self.loadRecentItems()
 
-        self.resize(780, 580)
-        self.setMinimumSize(780, 580)
+        self.resize(790, 580)
+        self.setMinimumSize(790, 580)
         self.setWindowTitle("uAuction")
 
     def loadRecentItems(self):
+        current_time = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now())
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
-        cur.execute("SELECT * from items ORDER BY id DESC")
+        cur.execute("SELECT * from items WHERE expirytime>%s", (current_time,))
         rows = cur.fetchall()
         conn.commit()
         cur.close()
@@ -80,23 +82,29 @@ class MainWindow(QtGui.QMainWindow):
 
         self.table_widget.clear()
         self.itemCount = min(len(rows), 20)
-        print(self.itemCount)
         if self.itemCount <= int((self.width() - 190)/196):
-            self.table_columnCount = self.itemCountwd
-            self.table_widget.setRowCount(1)
+            self.table_columnCount = self.itemCount
+            self.table_rowCount = 1
         else:
             self.table_columnCount = int((self.width() - 190)/196)
-            self.table_widget.setRowCount(int(self.itemCount/self.table_columnCount) + 1)
+            self.table_rowCount = math.ceil(self.itemCount/self.table_columnCount)
+
+        self.table_widget.setRowCount(self.table_rowCount)
         self.table_widget.setColumnCount(self.table_columnCount)
         for i in range(self.itemCount):
-            self.table_widget.setCellWidget(int(i/self.table_columnCount), i%self.table_columnCount, ThumbnailDetailWidget(self.user_id, i + 1, self, DEBUGMODE=True))
+            self.table_widget.setCellWidget(int(i/self.table_columnCount), i % self.table_columnCount, ThumbnailDetailWidget(self.user_id, i + 1, self, DEBUGMODE=True))
+
+        remainCellCount = (self.table_columnCount - self.itemCount%self.table_columnCount) % self.table_columnCount
+        for i in range(remainCellCount):
+            self.table_widget.setCellWidget(self.table_rowCount - 1, self.table_columnCount - i - 1, QtGui.QLabel())
+
         self.table_widget.resizeColumnsToContents()
         self.table_widget.resizeRowsToContents()
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
-        self.banner.setGeometry(QtCore.QRect(165 + 2, 15 + 12, self.width() - 190 + 17 + 10, 140))
-        self.table_widget.setGeometry(QtCore.QRect(165, 175, self.width() - 190 + 17, self.height() - 185))
+        self.banner.setGeometry(QtCore.QRect(165 + 2, 15 + 12, self.width() - 195 + 17 + 10, 140))
+        self.table_widget.setGeometry(QtCore.QRect(170, 175, self.width() - 195 + 17, self.height() - 185))
 
         self.loadRecentItems()
 
