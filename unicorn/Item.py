@@ -50,4 +50,4 @@ class Item():
         print(self.expirytime)
 
 if __name__ == '__main__':
-    item = Item(11)
+    item = Item(1)
