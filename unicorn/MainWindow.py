@@ -80,6 +80,11 @@ class MainWindow(QtGui.QMainWindow):
 
         self.table_widget.clear()
         self.itemCount = min(len(rows), 20)
+
+        print(self.itemCount)
+        if self.itemCount == 0:
+            return
+
         if self.itemCount <= int((self.width() - 190)/196):
             self.table_columnCount = self.itemCount
             self.table_rowCount = 1
@@ -90,7 +95,7 @@ class MainWindow(QtGui.QMainWindow):
         self.table_widget.setRowCount(self.table_rowCount)
         self.table_widget.setColumnCount(self.table_columnCount)
         for i in range(self.itemCount):
-            self.table_widget.setCellWidget(int(i/self.table_columnCount), i % self.table_columnCount, ThumbnailDetailWidget(self.user_id, i + 1, self, DEBUGMODE=True))
+            self.table_widget.setCellWidget(int(i/self.table_columnCount), i % self.table_columnCount, ThumbnailDetailWidget(self.user_id, rows[i][0], self, DEBUGMODE=True))
 
         remainCellCount = (self.table_columnCount - self.itemCount%self.table_columnCount) % self.table_columnCount
         for i in range(remainCellCount):

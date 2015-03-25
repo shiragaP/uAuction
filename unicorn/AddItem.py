@@ -97,7 +97,7 @@ class AddItemDialog(QtGui.QDialog):
         else:
             thumbnail = self.listWidget_thumbnail.item(0).filepath
 
-        expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=3))
+        expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
 
         self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
@@ -169,7 +169,8 @@ class AddItemDialog(QtGui.QDialog):
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
+            pixmap = QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage)
+            self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
     def dragEnterEvent(self, event):
         if (event.mimeData().hasUrls()):

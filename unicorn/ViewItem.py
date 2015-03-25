@@ -68,7 +68,7 @@ class ViewItemDialog(QtGui.QDialog):
     def loadItem(self):
         self.item = Item(self.item_id)
         self.label_itemname.setText(self.item.itemname)
-        self.label_buyoutprice.setText(str(self.item.buyoutprice))
+        self.label_buyoutprice.setText(str(self.item.buyoutprice if self.item.buyoutprice != 0 else '-'))
         self.label_bidprice.setText(str(self.item.bidprice))
         self.label_seller.setText(self.seller.username)
 
