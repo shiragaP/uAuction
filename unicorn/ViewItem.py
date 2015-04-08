@@ -1,6 +1,6 @@
 __author__ = 'Shiraga-P'
 
-import sys , psycopg2
+import sys, psycopg2
 from datetime import datetime
 
 from PySide import QtCore
