@@ -38,7 +38,7 @@ class MainWindow(QtGui.QMainWindow):
         self.menu_bar.addAction(self.menu_file.menuAction())
         self.menu_bar.addAction(self.menu_help.menuAction())
 
-        #======================== Menu Bar Connection ========================
+        # ======================== Menu Bar Connection ========================
         self.action_exit.triggered.connect(self.close)
 
         #======================== Statue Bar ========================

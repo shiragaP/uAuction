@@ -130,7 +130,7 @@ class ViewItemDialog(QtGui.QDialog):
                 QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(
                     self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
-            #self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
+            # self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
 
 
 if __name__ == '__main__':
