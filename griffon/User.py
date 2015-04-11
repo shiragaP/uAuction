@@ -1,4 +1,3 @@
-
 __author__ = 'Fujiwara'
 
 import sys
@@ -100,7 +99,7 @@ class UserWidget(QtGui.QWidget):
         addAuctioDialog.exec_()
 
     def seeBidHistoryActionListener(self):
-        #todo
+        # todo
         #bidHistoryDialog = BidHistoryDialog(user_id=self.user_id, DEBUGMODE=True)
         #bidHistoryDialog.exec_()
         pass

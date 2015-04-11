@@ -8,8 +8,8 @@ from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 import DatabaseInfo
-from unicorn.Item import Item
 from unicorn.Thumbnail import ThumbnailWidgetItem
+
 
 class AddItemDialog(QtGui.QDialog):
     def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
@@ -100,12 +100,14 @@ class AddItemDialog(QtGui.QDialog):
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
 
-        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
+                     expirytime, soldout)
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout):
+    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
+                expirytime, soldout):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
@@ -190,7 +192,7 @@ class AddItemDialog(QtGui.QDialog):
                     QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
-                #TODO: image files
+                # TODO: image files
                 QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
             else:
                 # none

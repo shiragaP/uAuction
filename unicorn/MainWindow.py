@@ -1,5 +1,6 @@
-import sys, math
-from datetime import datetime, timedelta
+import sys
+import math
+from datetime import datetime
 
 import psycopg2
 from PySide import QtCore
@@ -11,7 +12,6 @@ import DatabaseInfo
 
 
 class MainWindow(QtGui.QMainWindow):
-
     def __init__(self, user_id, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
@@ -21,7 +21,7 @@ class MainWindow(QtGui.QMainWindow):
         self.centralwidget = QtGui.QWidget(parent)
         self.centralwidget.setObjectName("centralwidget")
 
-        #======================== Menu Bar ========================
+        # ======================== Menu Bar ========================
         self.menu_bar = QtGui.QMenuBar(self)
         self.menu_bar.setGeometry(QtCore.QRect(0, 0, 780, 20))
 
@@ -44,7 +44,6 @@ class MainWindow(QtGui.QMainWindow):
         #======================== Statue Bar ========================
         self.status_bar = QtGui.QStatusBar(parent)
         self.setStatusBar(self.status_bar)
-
 
         self.banner = QtGui.QLabel(self)
         self.banner.setGeometry(QtCore.QRect(170 + 2, 15 + 12, 600, 140))
@@ -85,19 +84,20 @@ class MainWindow(QtGui.QMainWindow):
         if self.itemCount == 0:
             return
 
-        if self.itemCount <= int((self.width() - 190)/196):
+        if self.itemCount <= int((self.width() - 190) / 196):
             self.table_columnCount = self.itemCount
             self.table_rowCount = 1
         else:
-            self.table_columnCount = int((self.width() - 190)/196)
-            self.table_rowCount = math.ceil(self.itemCount/self.table_columnCount)
+            self.table_columnCount = int((self.width() - 190) / 196)
+            self.table_rowCount = math.ceil(self.itemCount / self.table_columnCount)
 
         self.table_widget.setRowCount(self.table_rowCount)
         self.table_widget.setColumnCount(self.table_columnCount)
         for i in range(self.itemCount):
-            self.table_widget.setCellWidget(int(i/self.table_columnCount), i % self.table_columnCount, ThumbnailDetailWidget(self.user_id, rows[i][0], self, DEBUGMODE=True))
+            self.table_widget.setCellWidget(int(i / self.table_columnCount), i % self.table_columnCount,
+                                            ThumbnailDetailWidget(self.user_id, rows[i][0], self, DEBUGMODE=True))
 
-        remainCellCount = (self.table_columnCount - self.itemCount%self.table_columnCount) % self.table_columnCount
+        remainCellCount = (self.table_columnCount - self.itemCount % self.table_columnCount) % self.table_columnCount
         for i in range(remainCellCount):
             self.table_widget.setCellWidget(self.table_rowCount - 1, self.table_columnCount - i - 1, QtGui.QLabel())
 

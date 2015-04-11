@@ -10,6 +10,7 @@ from PySide import QtUiTools
 import DatabaseInfo
 from griffon.Thumbnail import ThumbnailWidgetItem
 
+
 class AddAuctionDialog(QtGui.QDialog):
     def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
         super().__init__(parent)
@@ -100,14 +101,16 @@ class AddAuctionDialog(QtGui.QDialog):
         soldout = False
 
         try:
-            self.addAuction(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+            self.addAuction(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
+                            expirytime, soldout)
         except:
             QtGui.QMessageBox.warning(self, "Warning", "Invalid input.")
 
     def cancelActionListener(self):
         self.close()
 
-    def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout):
+    def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
+                   expirytime, soldout):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
@@ -192,7 +195,8 @@ class AddAuctionDialog(QtGui.QDialog):
                     QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
-                it = QtCore.QDirIterator(fileInfo.absoluteFilePath(), ("*.png", "*.jpg"), QtCore.QDir.Files, QtCore.QDirIterator.Subdirectories)
+                it = QtCore.QDirIterator(fileInfo.absoluteFilePath(), ("*.png", "*.jpg"), QtCore.QDir.Files,
+                    QtCore.QDirIterator.Subdirectories)
                 while it.hasNext():
                     self.addImage(it.next())
                 QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())

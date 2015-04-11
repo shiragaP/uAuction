@@ -1,7 +1,5 @@
 __author__ = 'Shiraga-P'
 
-from datetime import datetime
-
 import psycopg2
 
 import DatabaseInfo
@@ -48,6 +46,7 @@ class Item():
         print(self.description)
         print(self.thumbnail)
         print(self.expirytime)
+
 
 if __name__ == '__main__':
     item = Item(1)

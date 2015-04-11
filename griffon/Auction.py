@@ -1,7 +1,5 @@
 __author__ = 'Shiraga-P'
 
-from datetime import datetime
-
 import psycopg2
 
 import DatabaseInfo
@@ -48,6 +46,7 @@ class Auction():
         print("Description: " + str(self.description))
         print("Thumbnail Path: " + str(self.thumbnailpath))
         print("Expirytime: " + str(self.expirytime))
+
 
 if __name__ == '__main__':
     auction = Auction(1)

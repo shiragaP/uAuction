@@ -2,7 +2,6 @@ __author__ = 'Shiraga-P'
 
 import sys
 
-import psycopg2
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtUiTools
@@ -47,12 +46,12 @@ class ThumbnailDetailWidget(QtGui.QWidget):
 
         width = self.label_thumbnail.width()
         height = self.label_thumbnail.height()
-        self.label_thumbnail.setPixmap(QtGui.QPixmap(self.auction.thumbnailpath).scaled(width, height, QtCore.Qt.KeepAspectRatio))
+        self.label_thumbnail.setPixmap(
+            QtGui.QPixmap(self.auction.thumbnailpath).scaled(width, height, QtCore.Qt.KeepAspectRatio))
 
     def mouseDoubleClickEvent(self, event):
         viewAuctionDialog = ViewAuctionDialog(self.user_id, self.auction_id, self.parent)
         viewAuctionDialog.exec_()
-
 
 
 if __name__ == '__main__':

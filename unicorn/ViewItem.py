@@ -1,8 +1,9 @@
 __author__ = 'Shiraga-P'
 
-import sys, psycopg2
+import sys
 from datetime import datetime
 
+import psycopg2
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtUiTools
@@ -10,7 +11,7 @@ from PySide import QtUiTools
 from unicorn.Item import Item
 from unicorn.Thumbnail import ThumbnailWidgetItem
 from unicorn.User import User
-import  DatabaseInfo
+import DatabaseInfo
 
 
 class ViewItemDialog(QtGui.QDialog):
@@ -91,12 +92,12 @@ class ViewItemDialog(QtGui.QDialog):
     def bidActionListener(self):
         newbid = self.lineEdit_bidprice.text()
         if int(newbid) > int(self.label_bidprice.text()):
-            #self.label_bidprice.setText(newbid)
+            # self.label_bidprice.setText(newbid)
             conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                    (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
             cur = conn.cursor()
 
-            cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" %(newbid, self.item_id,))
+            cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" % (newbid, self.item_id,))
 
             conn.commit()
             cur.close()
@@ -105,7 +106,7 @@ class ViewItemDialog(QtGui.QDialog):
 
     def reloadTimeLeft(self):
         time_left = self.item.expirytime - datetime.now()
-        time_left = (time_left.days, time_left.seconds//3600, (time_left.seconds//60)%60, time_left.seconds%60)
+        time_left = (time_left.days, time_left.seconds // 3600, (time_left.seconds // 60) % 60, time_left.seconds % 60)
 
         if time_left[0] < 0 or self.item.soldout == True:
             time_left_str = "END"
@@ -124,8 +125,10 @@ class ViewItemDialog(QtGui.QDialog):
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            #pixmap = QtGui.QPixmap(self.item.thumbnail)
-            self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
+            # pixmap = QtGui.QPixmap(self.item.thumbnail)
+            self.label_image.setPixmap(
+                QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(
+                    self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
             #self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
 
