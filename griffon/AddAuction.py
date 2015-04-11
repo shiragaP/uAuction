@@ -8,10 +8,9 @@ from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 import DatabaseInfo
-from unicorn.Item import Item
-from unicorn.Thumbnail import ThumbnailWidgetItem
+from griffon.Thumbnail import ThumbnailWidgetItem
 
-class AddItemDialog(QtGui.QDialog):
+class AddAuctionDialog(QtGui.QDialog):
     def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
@@ -27,7 +26,7 @@ class AddItemDialog(QtGui.QDialog):
         self.listWidget_thumbnail.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
         self.listWidget_thumbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
 
-        self.lineEdit_itemname = form.findChild(QtGui.QLineEdit, 'lineEdit_02_itemname')
+        self.lineEdit_name = form.findChild(QtGui.QLineEdit, 'lineEdit_02_name')
         self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
         self.lineEdit_buyoutprice.setReadOnly(True)
         self.lineEdit_bidprice = form.findChild(QtGui.QLineEdit, 'lineEdit_04_bidprice')
@@ -43,8 +42,8 @@ class AddItemDialog(QtGui.QDialog):
         self.pushButton_addimage.clicked.connect(self.addImageActionListener)
         self.pushButton_deleteimage = form.findChild(QtGui.QPushButton, 'pushButton_02_deleteimage')
         self.pushButton_deleteimage.clicked.connect(self.deleteImageActionListener)
-        self.pushButton_additem = form.findChild(QtGui.QPushButton, 'pushButton_03_additem')
-        self.pushButton_additem.clicked.connect(self.addItemActionListener)
+        self.pushButton_sell = form.findChild(QtGui.QPushButton, 'pushButton_03_sell')
+        self.pushButton_sell.clicked.connect(self.sellActionListener)
         self.pushButton_cancel = form.findChild(QtGui.QPushButton, 'pushButton_04_cancel')
         self.pushButton_cancel.clicked.connect(self.cancelActionListener)
 
@@ -55,7 +54,7 @@ class AddItemDialog(QtGui.QDialog):
 
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
-        self.setWindowTitle('Add Item')
+        self.setWindowTitle('Add Auction')
         self.setAcceptDrops(True)
 
     def checkBoxActionListener(self):
@@ -79,8 +78,8 @@ class AddItemDialog(QtGui.QDialog):
         for item in items:
             self.listWidget_thumbnail.takeItem(self.listWidget_thumbnail.row(item))
 
-    def addItemActionListener(self):
-        name = self.lineEdit_itemname.text()
+    def sellActionListener(self):
+        name = self.lineEdit_name.text()
         buyoutavailable = self.checkBox_buyoutavailable.isChecked()
         if buyoutavailable:
             buyoutprice = self.lineEdit_buyoutprice.text()
@@ -100,17 +99,20 @@ class AddItemDialog(QtGui.QDialog):
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
 
-        self.addItem(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+        try:
+            self.addAuction(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+        except:
+            QtGui.QMessageBox.warning(self, "Warning", "Invalid input.")
 
     def cancelActionListener(self):
         self.close()
 
-    def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout):
+    def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+        statement = """INSERT INTO auctions (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                         """
 
@@ -132,7 +134,7 @@ class AddItemDialog(QtGui.QDialog):
         cur.close()
         conn.close()
 
-        self.addItemImages()
+        self.addAuctionImages()
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
@@ -141,18 +143,18 @@ class AddItemDialog(QtGui.QDialog):
 
         self.close()
 
-    def addItemImages(self):
+    def addAuctionImages(self):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
                                 % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        cur.execute("SELECT max(id) from items")
-        item_id = cur.fetchall()[0][0]
+        cur.execute("SELECT max(id) from auctions")
+        auction_id = cur.fetchall()[0][0]
 
         for i in range(self.listWidget_thumbnail.count()):
             item = self.listWidget_thumbnail.item(i)
 
-            statement = """INSERT INTO item_images (directory, itemid)
+            statement = """INSERT INTO auction_images (directory, auctionid)
                             VALUES (%s, %s);
                             """
 
@@ -161,7 +163,7 @@ class AddItemDialog(QtGui.QDialog):
                 print(statement)
 
             cur.execute(statement, (item.filepath,
-                                    item_id,))
+                                    auction_id,))
 
         conn.commit()
         cur.close()
@@ -206,6 +208,6 @@ class AddItemDialog(QtGui.QDialog):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    addItemWidget = AddItemDialog(DEBUGMODE=True)
-    addItemWidget.show()
+    addAuctionDialog = AddAuctionDialog(DEBUGMODE=True)
+    addAuctionDialog.show()
     sys.exit(app.exec_())

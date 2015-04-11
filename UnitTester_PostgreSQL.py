@@ -16,11 +16,11 @@ def printUsers():
     cur.close()
     conn.close()
 
-def printItems():
+def printAuctions():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     cur = conn.cursor()
-    cur.execute("SELECT * from items")
+    cur.execute("SELECT * from auctions")
     rows = cur.fetchall()
     print('\nShow me the databases:\n')
     for row in rows:
@@ -200,4 +200,4 @@ def sqlExecute():
     conn.close()
 
 if __name__ == '__main__':
-    rebuildAll()
+    printAuctions()

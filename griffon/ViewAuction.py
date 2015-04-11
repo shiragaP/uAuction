@@ -7,27 +7,27 @@ from PySide import QtCore
 from PySide import QtGui
 from PySide import QtUiTools
 
-from unicorn.Item import Item
+import DatabaseInfo
+from griffon.Auction import Auction
 from unicorn.Thumbnail import ThumbnailWidgetItem
-from unicorn.User import User
-import  DatabaseInfo
+from griffon.User import User
 
 
-class ViewItemDialog(QtGui.QDialog):
-    def __init__(self, user_id, item_id, parent=None, DEBUGMODE=False):
+class ViewAuctionDialog(QtGui.QDialog):
+    def __init__(self, user_id=1, auction_id=1, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
-        self.item_id = item_id
+        self.auction_id = auction_id
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
-        self.item = Item(self.item_id)
-        self.seller = User(self.item.seller_id)
+        self.auction = Auction(self.auction_id)
+        self.seller = User(self.auction.seller_id)
 
         loader = QtUiTools.QUiLoader(self)
         form = loader.load('ui\\viewauction.ui')
 
-        self.label_itemname = form.findChild(QtGui.QLabel, 'label_00_itemname')
+        self.label_name = form.findChild(QtGui.QLabel, 'label_00_name')
         self.label_timeleft = form.findChild(QtGui.QLabel, 'label_00_timeleft')
         self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
         self.label_buyoutprice = form.findChild(QtGui.QLabel, 'label_02_buyoutprice')
@@ -57,57 +57,57 @@ class ViewItemDialog(QtGui.QDialog):
 
         self.setFixedWidth(form.width() + 15)
         self.setFixedHeight(form.height() + 15)
-        self.setWindowTitle('View Item')
+        self.setWindowTitle('View Auction')
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.reloadTimeLeft)
-        self.timer.start(1000)
+        self.timer.start(200)
 
-        self.loadItem()
+        self.loadAuction()
 
-    def loadItem(self):
-        self.item = Item(self.item_id)
-        self.label_itemname.setText(self.item.itemname)
-        self.label_buyoutprice.setText(str(self.item.buyoutprice if self.item.buyoutprice != 0 else '-'))
-        self.label_bidprice.setText(str(self.item.bidprice))
+    def loadAuction(self):
+        self.auction = Auction(self.auction_id)
+        self.label_name.setText(self.auction.name)
+        self.label_buyoutprice.setText(str(self.auction.buyoutprice if self.auction.buyoutprice != 0 else '-'))
+        self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
 
-        pixmap = QtGui.QPixmap(self.item.thumbnailpath)
+        pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
         self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
-        if len(self.item.imagepathes) > 5:
+        if len(self.auction.imagepathes) > 5:
             thumbnailWidth = thumbnailHeight = 60
         else:
             thumbnailWidth = thumbnailHeight = 75
 
         self.listWidget_thumbnail.clear()
-        for imagepath in self.item.imagepathes:
+        for imagepath in self.auction.imagepathes:
             widgetiItem = ThumbnailWidgetItem(imagepath, thumbnailWidth, thumbnailHeight)
             self.listWidget_thumbnail.addItem(widgetiItem)
             self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
 
-        self.textEdit_description.setText(self.item.description)
+        self.textEdit_description.setText(self.auction.description)
 
     def bidActionListener(self):
-        newbid = self.lineEdit_bidprice.text()
-        if int(newbid) > int(self.label_bidprice.text()):
-            #self.label_bidprice.setText(newbid)
+        self.loadAuction()
+        newBidPrice = self.lineEdit_bidprice.text()
+        if int(newBidPrice) > int(self.auction.bidprice):
             conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
             cur = conn.cursor()
 
-            cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" %(newbid, self.item_id,))
+            cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" %(newBidPrice, self.auction_id,))
 
             conn.commit()
             cur.close()
             conn.close()
-            self.loadItem()
+            self.loadAuction()
 
     def reloadTimeLeft(self):
-        time_left = self.item.expirytime - datetime.now()
+        time_left = self.auction.expirytime - datetime.now()
         time_left = (time_left.days, time_left.seconds//3600, (time_left.seconds//60)%60, time_left.seconds%60)
 
-        if time_left[0] < 0 or self.item.soldout == True:
+        if time_left[0] < 0 or self.auction.soldout == True:
             time_left_str = "END"
         elif time_left[0] > 0:
             time_left_str = "%dd %dhr %dm %ds" % time_left[0:]
@@ -124,14 +124,11 @@ class ViewItemDialog(QtGui.QDialog):
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            #pixmap = QtGui.QPixmap(self.item.thumbnail)
             self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
-
-            #self.label_image.setPixmap(QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage))
 
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    addItemWidget = ViewItemDialog(1, 1, DEBUGMODE=True)
+    addItemWidget = ViewAuctionDialog(auction_id=3, DEBUGMODE=True)
     addItemWidget.show()
     sys.exit(app.exec_())
