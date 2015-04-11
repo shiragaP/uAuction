@@ -192,7 +192,9 @@ class AddAuctionDialog(QtGui.QDialog):
                     QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
-                #TODO: image files
+                it = QtCore.QDirIterator(fileInfo.absoluteFilePath(), ("*.png", "*.jpg"), QtCore.QDir.Files, QtCore.QDirIterator.Subdirectories)
+                while it.hasNext():
+                    self.addImage(it.next())
                 QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
             else:
                 # none
@@ -201,7 +203,6 @@ class AddAuctionDialog(QtGui.QDialog):
 
     def dropEvent(self, event):
         droppedUrls = event.mimeData().urls()
-        print(droppedUrls)
         self.imageFileFilter(droppedUrls)
         event.acceptProposedAction()
 
