@@ -19,7 +19,7 @@ class AddItemDialog(QtGui.QDialog):
         self.DEBUGMODE = DEBUGMODE
 
         loader = QtUiTools.QUiLoader(self)
-        form = loader.load('ui\\addauction.ui')
+        form = loader.load('ui\\additem.ui')
 
         self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
         self.listWidget_thumbnail = form.findChild(QtGui.QListWidget, 'listWidget_thumbnail')
