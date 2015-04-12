@@ -101,7 +101,7 @@ class UserWidget(QtGui.QWidget):
     def seeBidHistoryActionListener(self):
         # todo
         # bidHistoryDialog = BidHistoryDialog(user_id=self.user_id, DEBUGMODE=True)
-        #bidHistoryDialog.exec_()
+        # bidHistoryDialog.exec_()
         pass
 
     def logoutActionListener(self):
