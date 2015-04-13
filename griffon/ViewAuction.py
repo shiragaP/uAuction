@@ -9,8 +9,8 @@ from PySide import QtGui
 from PySide import QtUiTools
 
 import DatabaseInfo
-from griffon.Auction import Auction
-from unicorn.Thumbnail import ThumbnailWidgetItem
+from griffon.Auctions import Auctions
+from griffon.Thumbnail import ThumbnailWidgetItem
 from griffon.User import User
 
 
@@ -22,7 +22,7 @@ class ViewAuctionDialog(QtGui.QDialog):
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
-        self.auction = Auction(self.auction_id)
+        self.auction = Auctions.getAuction(self.auction_id)
         self.seller = User(self.auction.seller_id)
 
         loader = QtUiTools.QUiLoader(self)
@@ -67,7 +67,7 @@ class ViewAuctionDialog(QtGui.QDialog):
         self.loadAuction()
 
     def loadAuction(self):
-        self.auction = Auction(self.auction_id)
+        self.auction = Auctions.getAuction(self.auction_id)
         self.label_name.setText(self.auction.name)
         self.label_buyoutprice.setText(str(self.auction.buyoutprice if self.auction.buyoutprice != 0 else '-'))
         self.label_bidprice.setText(str(self.auction.bidprice))
@@ -76,13 +76,13 @@ class ViewAuctionDialog(QtGui.QDialog):
         pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
         self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
-        if len(self.auction.imagepathes) > 5:
+        if len(self.auction.imagepaths) > 5:
             thumbnailWidth = thumbnailHeight = 60
         else:
             thumbnailWidth = thumbnailHeight = 75
 
         self.listWidget_thumbnail.clear()
-        for imagepath in self.auction.imagepathes:
+        for imagepath in self.auction.imagepaths:
             widgetiItem = ThumbnailWidgetItem(imagepath, thumbnailWidth, thumbnailHeight)
             self.listWidget_thumbnail.addItem(widgetiItem)
             self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
@@ -132,6 +132,6 @@ class ViewAuctionDialog(QtGui.QDialog):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    addItemWidget = ViewAuctionDialog(auction_id=3, DEBUGMODE=True)
+    addItemWidget = ViewAuctionDialog(auction_id=1, DEBUGMODE=True)
     addItemWidget.show()
     sys.exit(app.exec_())

@@ -67,17 +67,17 @@ class Auctions:
             expirytime = row[9]
             soldout = row[10]
 
-            params = urllib.parse.urlencode({'statement': "SELECT * from auction_images WHERE auction_images.id=%s" % (auction_id,)})
+            params = urllib.parse.urlencode({'statement': "SELECT * from auction_images WHERE auction_images.auctionid=%s" % (auction_id,)})
             conn.request("POST", "/query", params, headers)
             response = conn.getresponse()
             data = response.read()
-
             imageurls = pickle.loads(data)
             imagepaths = list()
+
             for imageurl in imageurls:
                 conn.request("GET", imageurl[1])
                 response = conn.getresponse()
-                temp = tempfile.TemporaryFile()
+                temp = tempfile.TemporaryFile(suffix=".jpg")
                 temp.write(response.read())
                 imagepaths.append(temp)
 

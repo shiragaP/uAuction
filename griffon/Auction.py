@@ -11,7 +11,7 @@ class Auction():
         self.bidprice = bidprice
         self.bidnumber = bidnumber
         self.description = description
-        self.thumbnailpath = imagepaths[0]
+        self.thumbnailpath = thumbnailpath
         self.expirytime = expirytime
         self.soldout = soldout
         self.imagepaths = imagepaths
