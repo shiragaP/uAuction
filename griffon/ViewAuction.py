@@ -73,10 +73,11 @@ class ViewAuctionDialog(QtGui.QDialog):
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
 
-        #TODO:make this work
-        self.label_image.setText("<img>http://www.jpl.nasa.gov/spaceimages/images/mediumsize/PIA17011_ip.jpg</img>")
-        # pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
-        # self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
+        self.auction.imagepaths[0].seek(0)
+        data = self.auction.imagepaths[0].read()
+        pixmap = QtGui.QPixmap()
+        pixmap.loadFromData(data)
+        self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
         if len(self.auction.imagepaths) > 5:
             thumbnailWidth = thumbnailHeight = 60
@@ -85,7 +86,7 @@ class ViewAuctionDialog(QtGui.QDialog):
 
         self.listWidget_thumbnail.clear()
         for imagepath in self.auction.imagepaths:
-            widgetiItem = ThumbnailWidgetItem(imagepath.name, thumbnailWidth, thumbnailHeight)
+            widgetiItem = ThumbnailWidgetItem(imagepath, thumbnailWidth, thumbnailHeight)
             self.listWidget_thumbnail.addItem(widgetiItem)
             self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
 

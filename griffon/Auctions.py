@@ -78,7 +78,7 @@ class Auctions:
         for imageurl in imageurls:
             conn.request("GET", imageurl[1])
             response = conn.getresponse()
-            temp = tempfile.TemporaryFile(suffix=".jpg")
+            temp = tempfile.TemporaryFile()
             temp.write(response.read())
             imagepaths.append(temp)
 

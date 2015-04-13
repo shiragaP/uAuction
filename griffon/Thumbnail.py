@@ -18,7 +18,9 @@ class ThumbnailWidgetItem(QtGui.QListWidgetItem):
         except:
             return -1  # TODO: add warning
 
-        self.thumbnailImage = QtGui.QImage(self.filepath)
+        self.thumbnailImage = QtGui.QImage()
+        self.filepath.seek(0)
+        self.thumbnailImage.loadFromData(self.filepath.read())
         self.thumbnailLabel = QtGui.QLabel("<Thumbnail>")
         self.thumbnailLabel.setStyleSheet("border: 1px solid grey")
         self.thumbnailLabel.setPixmap(QtGui.QPixmap(
