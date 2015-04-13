@@ -130,7 +130,7 @@ class AddAuctionDialog(QtGui.QDialog):
 
     # def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
     # expirytime, soldout):
-    #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
+    # conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
     #                             % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     #     cur = conn.cursor()
     #

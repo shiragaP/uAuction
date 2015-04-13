@@ -70,7 +70,7 @@ class LoginDialog(QtGui.QDialog):
                 self.user_id = row[0]
         # for row in rows:
         # print("Comparing username:", row[1], username, str(row[1]) == username)
-        #     print("Comparing password:", row[2], password, str(row[2]) == password)
+        # print("Comparing password:", row[2], password, str(row[2]) == password)
         #     if str(row[1]) == username and str(row[2]) == password:
         #         loginValid = True
         #         self.user_id = row[0]
