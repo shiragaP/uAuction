@@ -102,7 +102,7 @@ class AddAuctionDialog(QtGui.QDialog):
 
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
-        imagepaths = [self.listWidget_thumbnail.item(i).filepath for i in range(self.listWidget_thumbnail.count())]
+        imagepaths = [open(self.listWidget_thumbnail.item(i).filepath) for i in range(self.listWidget_thumbnail.count())]
 
         try:
             self.addAuction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,

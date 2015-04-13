@@ -35,41 +35,12 @@ class Auctions:
         data = response.read()
         auction_id = pickle.loads(data)[0][0]
 
-        for image in auction.imagepaths:
-            params = urllib.parse.urlencode({'statement':"""INSERT INTO auction_images (directory, auctionid)
-                VALUES (%s, %s);"""%(image, auction_id,)})
-            conn.request("POST", "/query", params, headers)
-            response = conn.getresponse()
-            print(response.status, response.reason)
+        params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": auction.imagepaths})
+        conn.request("POST", "/insert_auction_images", params, headers)
+        response = conn.getresponse()
+        print(response.status, response.reason)
 
         conn.close()
-        # conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-        #                         % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-        # cur = conn.cursor()
-        #
-        # statement = """INSERT INTO auctions (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
-        #                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-        #                 """
-        #
-        # if (self.DEBUGMODE):
-        #     print("Sql Statement")
-        #     print(statement)
-        #
-        # cur.execute(statement, (name,
-        #                         seller,
-        #                         buyoutavailable,
-        #                         buyoutprice,
-        #                         bidprice,
-        #                         bidnumber,
-        #                         description,
-        #                         thumbnail,
-        #                         expirytime,
-        #                         soldout,))
-        # conn.commit()
-        # cur.close()
-        # conn.close()
-        #
-        # self.addAuctionImages()
 
     def getAuction(auction_id):
 
