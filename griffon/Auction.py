@@ -1,9 +1,9 @@
 __author__ = 'Shiraga-P'
 
+
 class Auction():
     def __init__(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                   expirytime, soldout, imagepaths, auction_id = None):
-
+                 expirytime, soldout, imagepaths, auction_id=None):
         self.name = name
         self.seller_id = seller_id
         self.buyoutavailable = buyoutavailable
@@ -32,5 +32,6 @@ class Auction():
 
 if __name__ == '__main__':
     from griffon.Auctions import Auctions
+
     auction = Auctions.getAuction(1)
     auction.printInfo()

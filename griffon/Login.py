@@ -2,9 +2,11 @@ __author__ = 'Shiraga-P'
 
 import sys
 import pickle
+import http.client
+import urllib
+
 from PySide import QtGui
 from PySide import QtUiTools
-import http.client , urllib
 
 
 class LoginDialog(QtGui.QDialog):
@@ -46,7 +48,7 @@ class LoginDialog(QtGui.QDialog):
             print("\tPassword: " + password)
 
         conn = http.client.HTTPConnection("localhost", 8080)
-        params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.username='%s'"%(username,)})
+        params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.username='%s'" % (username,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         conn.request("POST", "/query", params, headers)
         response = conn.getresponse()
@@ -67,7 +69,7 @@ class LoginDialog(QtGui.QDialog):
                 loginValid = True
                 self.user_id = row[0]
         # for row in rows:
-        #     print("Comparing username:", row[1], username, str(row[1]) == username)
+        # print("Comparing username:", row[1], username, str(row[1]) == username)
         #     print("Comparing password:", row[2], password, str(row[2]) == password)
         #     if str(row[1]) == username and str(row[2]) == password:
         #         loginValid = True

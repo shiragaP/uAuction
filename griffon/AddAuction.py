@@ -3,13 +3,11 @@ __author__ = 'Shiraga-P'
 import sys
 from datetime import datetime, timedelta
 
-import psycopg2
 from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
 from griffon.Auctions import Auctions
 from griffon.Auction import Auction
-import DatabaseInfo
 from griffon.Thumbnail import ThumbnailWidgetItem
 
 
@@ -91,7 +89,7 @@ class AddAuctionDialog(QtGui.QDialog):
         seller_id = self.user_id
         bidprice = self.lineEdit_bidprice.text()
         bidnumber = 0
-        #TODO: categories
+        # TODO: categories
         categories = self.lineEdit_categories.text()
         description = self.textEdit_description.toHtml()
 
@@ -102,11 +100,13 @@ class AddAuctionDialog(QtGui.QDialog):
 
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
-        imagepaths = [open(self.listWidget_thumbnail.item(i).filepath) for i in range(self.listWidget_thumbnail.count())]
+        imagepaths = [open(self.listWidget_thumbnail.item(i).filepath) for i in
+                      range(self.listWidget_thumbnail.count())]
 
         try:
-            self.addAuction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                   expirytime, soldout, imagepaths)
+            self.addAuction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description,
+                            thumbnailpath,
+                            expirytime, soldout, imagepaths)
 
         except Exception as e:
             QtGui.QMessageBox.warning(self, "Warning", "Invalid input.")
@@ -117,8 +117,9 @@ class AddAuctionDialog(QtGui.QDialog):
     def addAuction(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                    expirytime, soldout, imagepaths):
 
-        Auctions.addAuction(Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                                    expirytime, soldout, imagepaths))
+        Auctions.addAuction(
+            Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
+                    expirytime, soldout, imagepaths))
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
@@ -128,7 +129,7 @@ class AddAuctionDialog(QtGui.QDialog):
         self.close()
 
     # def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
-    #                expirytime, soldout):
+    # expirytime, soldout):
     #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
     #                             % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
     #     cur = conn.cursor()

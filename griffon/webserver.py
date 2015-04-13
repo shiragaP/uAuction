@@ -12,10 +12,6 @@ import os  # os. path
 
 from griffon.postgreSQLmanager import DBmanager
 
-import psycopg2
-
-import DatabaseInfo
-
 
 CWD = os.path.abspath('.')
 ## print CWD
@@ -26,7 +22,6 @@ UPLOAD_PAGE = 'upload.html'  # must contain a valid link with address and port o
 
 
 class AuctionSite(BaseHTTPRequestHandler):
-
     def make_index(self, relpath):
         abspath = os.path.abspath(relpath)  # ; print abspath
         flist = os.listdir(abspath)  # ; print flist
@@ -202,7 +197,7 @@ class AuctionSite(BaseHTTPRequestHandler):
 
                 # elif self.path == '/auction':
                 # fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
-                #     auction_id = fs['auction_id'].value
+                # auction_id = fs['auction_id'].value
                 #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
                 #     cur = conn.cursor()
                 #     cur.execute("SELECT * from auctions WHERE auctions.id=%s", (auction_id,))
