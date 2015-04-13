@@ -20,42 +20,39 @@ CWD = os.path.abspath('.')
 
 # PORT = 8080
 UPLOAD_PAGE = 'upload.html'  # must contain a valid link with address and port of the servers
-
-
-def make_index(relpath):
-    abspath = os.path.abspath(relpath)  # ; print abspath
-    flist = os.listdir(abspath)  # ; print flist
-
-    rellist = []
-    for fname in flist:
-        relname = os.path.join(relpath, fname)
-        rellist.append(relname)
-
-    # print rellist
-    inslist = []
-    for r in rellist:
-        inslist.append('<a href="%s">%s</a><br>' % (r, r))
-
-    # print inslist
-
-    page_tpl = "<html><head></head><body>%s</body></html>"
-
-    ret = page_tpl % ( '\n'.join(inslist), )
-
-    return ret
-
-
 # -----------------------------------------------------------------------
 
 class AuctionSite(BaseHTTPRequestHandler):
     def __init__(self):
         self.DEBUGMODE = False
 
+    def make_index(self,relpath):
+        abspath = os.path.abspath(relpath)  # ; print abspath
+        flist = os.listdir(abspath)  # ; print flist
+
+        rellist = []
+        for fname in flist:
+            relname = os.path.join(relpath, fname)
+            rellist.append(relname)
+
+        # print rellist
+        inslist = []
+        for r in rellist:
+            inslist.append('<a href="%s">%s</a><br>' % (r, r))
+
+        # print inslist
+
+        page_tpl = "<html><head></head><body>%s</body></html>"
+
+        ret = page_tpl % ( '\n'.join(inslist), )
+
+        return ret
+
     def do_GET(self):
         try:
             print(self.path)
             if self.path == '/':
-                page = make_index('.')
+                page = self.make_index('.')
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
