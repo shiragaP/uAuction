@@ -46,7 +46,7 @@ class Auctions:
             print(e)
 
     def getAuction(auction_id):
-        try:
+        # try:
             # TODO: make connection not localhost
             conn = http.client.HTTPConnection("localhost", 8080)
             params = urllib.parse.urlencode({'statement': "SELECT * from auctions WHERE auctions.id=%s" % (auction_id,)})
@@ -85,8 +85,8 @@ class Auctions:
 
             return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                        expirytime, soldout, imagepaths)
-        except Exception as e:
-            print(e)
+        # except Exception as e:
+        #     print(e)
 
     def delete(self):
         pass

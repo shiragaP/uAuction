@@ -10,6 +10,8 @@ from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
 
+from griffon.postgreSQLmanager import DBmanager
+
 import psycopg2
 
 import DatabaseInfo
@@ -22,11 +24,10 @@ CWD = os.path.abspath('.')
 UPLOAD_PAGE = 'upload.html'  # must contain a valid link with address and port of the servers
 # -----------------------------------------------------------------------
 
-class AuctionSite(BaseHTTPRequestHandler):
-    def __init__(self):
-        self.DEBUGMODE = False
 
-    def make_index(self,relpath):
+class AuctionSite(BaseHTTPRequestHandler):
+
+    def make_index(self, relpath):
         abspath = os.path.abspath(relpath)  # ; print abspath
         flist = os.listdir(abspath)  # ; print flist
 
@@ -110,6 +111,7 @@ class AuctionSite(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
+        dbmanager = DBmanager()
         # global rootnode ## something remained in the orig. code     
         try:
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
@@ -162,16 +164,10 @@ class AuctionSite(BaseHTTPRequestHandler):
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
-                    conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (
-                    DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-                    cur = conn.cursor()
-                    cur.execute(statement)
+                    print(statement)
                     self.send_response(200)
                     self.end_headers()
-                    self.wfile.write(pickle.dumps(cur.fetchall()))
-                    conn.commit()
-                    cur.close()
-                    conn.close()
+                    self.wfile.write(pickle.dumps(dbmanager.query(statement)))
 
                 elif self.path == '/insert_auction_images':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -195,27 +191,14 @@ class AuctionSite(BaseHTTPRequestHandler):
                                 # self.copyfile(fs['upfile'].file, o)
                                 o.write(image.read())
 
-                        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-                        cur = conn.cursor()
-
                         statement = """INSERT INTO auction_images (directory, auctionid)
                                         VALUES (%s, %s);
                                         """
 
-                        if (self.DEBUGMODE):
-                            print("Sql Statement")
-                            print(statement)
-
-                        cur.execute(statement, (fullname, auction_id,))
+                        dbmanager.query(statement % (fullname, auction_id,))
 
                     self.send_response(200)
                     self.end_headers()
-                    self.wfile.write(pickle.dumps(cur.fetchall()))
-                    conn.commit()
-                    cur.close()
-                    conn.close()
-
 
                 # elif self.path == '/auction':
                 # fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})

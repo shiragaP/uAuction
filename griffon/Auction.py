@@ -1,11 +1,5 @@
 __author__ = 'Shiraga-P'
 
-import pickle
-import http.client
-import urllib.parse
-import tempfile
-
-
 class Auction():
     def __init__(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                    expirytime, soldout, imagepaths, auction_id = None):
@@ -38,5 +32,5 @@ class Auction():
 
 if __name__ == '__main__':
     from griffon.Auctions import Auctions
-    auction = Auctions.getAuction(2)
+    auction = Auctions.getAuction(1)
     auction.printInfo()
