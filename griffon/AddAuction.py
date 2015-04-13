@@ -7,6 +7,8 @@ import psycopg2
 from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
+from griffon.Auctions import Auctions
+from griffon.Auction import Auction
 import DatabaseInfo
 from griffon.Thumbnail import ThumbnailWidgetItem
 
@@ -86,58 +88,37 @@ class AddAuctionDialog(QtGui.QDialog):
             buyoutprice = self.lineEdit_buyoutprice.text()
         else:
             buyoutprice = 0
-        seller = self.user_id
+        seller_id = self.user_id
         bidprice = self.lineEdit_bidprice.text()
         bidnumber = 0
+        #TODO: categories
         categories = self.lineEdit_categories.text()
         description = self.textEdit_description.toHtml()
 
         if self.listWidget_thumbnail.count() == 0:
-            thumbnail = '..\\resources\\img\\noimage.png'
+            thumbnailpath = '..\\resources\\img\\noimage.png'
         else:
-            thumbnail = self.listWidget_thumbnail.item(0).filepath
+            thumbnailpath = self.listWidget_thumbnail.item(0).filepath
 
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=0))
         soldout = False
+        imagepaths = [self.listWidget_thumbnail.item(i).filepath for i in range(self.listWidget_thumbnail.count())]
 
         try:
-            self.addAuction(name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
-                            expirytime, soldout)
-        except:
+            self.addAuction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
+                   expirytime, soldout, imagepaths)
+
+        except Exception as e:
             QtGui.QMessageBox.warning(self, "Warning", "Invalid input.")
 
     def cancelActionListener(self):
         self.close()
 
-    def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
-                   expirytime, soldout):
-        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-        cur = conn.cursor()
+    def addAuction(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
+                   expirytime, soldout, imagepaths):
 
-        statement = """INSERT INTO auctions (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-                        """
-
-        if (self.DEBUGMODE):
-            print("Sql Statement")
-            print(statement)
-
-        cur.execute(statement, (name,
-                                seller,
-                                buyoutavailable,
-                                buyoutprice,
-                                bidprice,
-                                bidnumber,
-                                description,
-                                thumbnail,
-                                expirytime,
-                                soldout,))
-        conn.commit()
-        cur.close()
-        conn.close()
-
-        self.addAuctionImages()
+        Auctions.addAuction(Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
+                                    expirytime, soldout, imagepaths))
 
         QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
 
@@ -146,31 +127,68 @@ class AddAuctionDialog(QtGui.QDialog):
 
         self.close()
 
-    def addAuctionImages(self):
-        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-        cur = conn.cursor()
-
-        cur.execute("SELECT max(id) from auctions")
-        auction_id = cur.fetchall()[0][0]
-
-        for i in range(self.listWidget_thumbnail.count()):
-            item = self.listWidget_thumbnail.item(i)
-
-            statement = """INSERT INTO auction_images (directory, auctionid)
-                            VALUES (%s, %s);
-                            """
-
-            if (self.DEBUGMODE):
-                print("Sql Statement")
-                print(statement)
-
-            cur.execute(statement, (item.filepath,
-                                    auction_id,))
-
-        conn.commit()
-        cur.close()
-        conn.close()
+    # def addAuction(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
+    #                expirytime, soldout):
+    #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
+    #                             % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    #     cur = conn.cursor()
+    #
+    #     statement = """INSERT INTO auctions (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
+    #                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+    #                     """
+    #
+    #     if (self.DEBUGMODE):
+    #         print("Sql Statement")
+    #         print(statement)
+    #
+    #     cur.execute(statement, (name,
+    #                             seller,
+    #                             buyoutavailable,
+    #                             buyoutprice,
+    #                             bidprice,
+    #                             bidnumber,
+    #                             description,
+    #                             thumbnail,
+    #                             expirytime,
+    #                             soldout,))
+    #     conn.commit()
+    #     cur.close()
+    #     conn.close()
+    #
+    #     self.addAuctionImages()
+    #
+    #     QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
+    #
+    #     if self.parent:
+    #         self.parent.loadRecentItems()
+    #
+    #     self.close()
+    #
+    # def addAuctionImages(self):
+    #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
+    #                             % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+    #     cur = conn.cursor()
+    #
+    #     cur.execute("SELECT max(id) from auctions")
+    #     auction_id = cur.fetchall()[0][0]
+    #
+    #     for i in range(self.listWidget_thumbnail.count()):
+    #         item = self.listWidget_thumbnail.item(i)
+    #
+    #         statement = """INSERT INTO auction_images (directory, auctionid)
+    #                         VALUES (%s, %s);
+    #                         """
+    #
+    #         if (self.DEBUGMODE):
+    #             print("Sql Statement")
+    #             print(statement)
+    #
+    #         cur.execute(statement, (item.filepath,
+    #                                 auction_id,))
+    #
+    #     conn.commit()
+    #     cur.close()
+    #     conn.close()
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:

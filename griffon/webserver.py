@@ -113,8 +113,6 @@ class MyHandler(BaseHTTPRequestHandler):
         # global rootnode ## something remained in the orig. code     
         try:
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
-            print(ctype)
-            print(pdict)
             print(self.path)
             if ctype == 'multipart/form-data':
                 # original version :     
@@ -134,7 +132,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 # print 'have fs'
 
                 fs_up = fs['upfile']
-                print(fs_up)
+                # print(fs_up)
                 filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
                 fullname = os.path.join(CWD, filename)
 
