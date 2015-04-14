@@ -199,7 +199,7 @@ class AuctionSite(BaseHTTPRequestHandler):
                 # fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                 # auction_id = fs['auction_id'].value
                 # conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-                #     cur = conn.cursor()
+                # cur = conn.cursor()
                 #     cur.execute("SELECT * from auctions WHERE auctions.id=%s", (auction_id,))
                 #     self.send_response(200)
                 #     self.end_headers()
