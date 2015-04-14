@@ -6,7 +6,7 @@ from PySide import QtCore
 from PySide import QtGui
 from PySide import QtUiTools
 
-from griffon.Auction import Auction
+from griffon.Auctions import Auctions
 from griffon.ViewAuction import ViewAuctionDialog
 
 
@@ -18,7 +18,7 @@ class ThumbnailDetailWidget(QtGui.QWidget):
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
-        self.auction = Auction(self.auction_id)
+        self.auction = Auctions.getAuction(self.auction_id)
 
         loader = QtUiTools.QUiLoader(self)
         form = loader.load('ui\\thumbnaildetail.ui')
@@ -37,9 +37,9 @@ class ThumbnailDetailWidget(QtGui.QWidget):
         self.setFixedHeight(form.height() + 15)
         self.setWindowTitle('Thumbnail')
 
-        self.loadItem()
+        self.loadAuction()
 
-    def loadItem(self):
+    def loadAuction(self):
         self.label_name.setText(self.auction.name)
         self.label_buyoutprice.setText(str(self.auction.buyoutprice))
         self.label_bidprice.setText(str(self.auction.bidprice))

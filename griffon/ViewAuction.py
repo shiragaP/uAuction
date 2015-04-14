@@ -9,7 +9,7 @@ from PySide import QtUiTools
 
 from griffon.Auctions import Auctions
 from griffon.Thumbnail import ThumbnailWidgetItem
-from griffon.User import User
+from griffon.Users import Users
 
 
 class ViewAuctionDialog(QtGui.QDialog):
@@ -21,7 +21,7 @@ class ViewAuctionDialog(QtGui.QDialog):
         self.DEBUGMODE = DEBUGMODE
 
         self.auction = Auctions.getAuction(self.auction_id)
-        self.seller = User(self.auction.seller_id)
+        self.seller = Users.getUser(self.auction.seller_id)
 
         loader = QtUiTools.QUiLoader(self)
         form = loader.load('ui\\viewauction.ui')

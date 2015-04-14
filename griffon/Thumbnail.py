@@ -13,11 +13,6 @@ class ThumbnailWidgetItem(QtGui.QListWidgetItem):
         self.thumbnailHeight = thumbnailHeight
         super().__init__(parent)
 
-        try:
-            filepath = str(filepath)
-        except:
-            return -1  # TODO: add warning
-
         self.thumbnailImage = QtGui.QImage()
         self.filepath.seek(0)
         self.thumbnailImage.loadFromData(self.filepath.read())
