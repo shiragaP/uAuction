@@ -3,12 +3,10 @@ __author__ = 'Shiraga-P'
 import sys
 from datetime import datetime
 
-import psycopg2
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtUiTools
 
-import DatabaseInfo
 from griffon.Auctions import Auctions
 from griffon.Thumbnail import ThumbnailWidgetItem
 from griffon.User import User
@@ -96,15 +94,7 @@ class ViewAuctionDialog(QtGui.QDialog):
         self.loadAuction()
         newBidPrice = self.lineEdit_bidprice.text()
         if int(newBidPrice) > int(self.auction.bidprice):
-            conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                    (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-            cur = conn.cursor()
-
-            cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" % (newBidPrice, self.auction_id,))
-
-            conn.commit()
-            cur.close()
-            conn.close()
+            Auctions.updateBidPrice(self.auction_id, newBidPrice)
             self.loadAuction()
 
     def reloadTimeLeft(self):

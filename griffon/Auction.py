@@ -15,6 +15,7 @@ class Auction():
         self.expirytime = expirytime
         self.soldout = soldout
         self.imagepaths = imagepaths
+        self.auction_id = auction_id
 
     def printInfo(self):
         print("Name: " + str(self.name))
