@@ -13,7 +13,7 @@ class Item():
                                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
 
-        cur.execute("SELECT * from items WHERE items.id=%s", (self.item_id,))
+        cur.execute("SELECT * from auctions WHERE auctions.id=%s", (self.item_id,))
         row = cur.fetchall()[0]
         self.itemname = row[1]
         self.seller_id = row[2]
@@ -27,7 +27,7 @@ class Item():
         self.soldout = row[10]
         self.imagepathes = list()
 
-        cur.execute("SELECT * from item_images WHERE itemid=%s", (self.item_id,))
+        cur.execute("SELECT * from auction_images WHERE id=%s", (self.item_id,))
         rows = cur.fetchall()
         for row in rows:
             self.imagepathes += (row[1],)

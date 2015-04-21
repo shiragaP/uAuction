@@ -71,7 +71,8 @@ class MainWindow(QtGui.QMainWindow):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                                 (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
         cur = conn.cursor()
-        cur.execute("SELECT * from items WHERE expirytime>%s", (current_time,))
+        #cur.execute("SELECT * from auctions WHERE expirytime>%s", (current_time,))
+        cur.execute("SELECT * from auctions")
         rows = cur.fetchall()
         conn.commit()
         cur.close()

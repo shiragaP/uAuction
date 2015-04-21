@@ -3,52 +3,52 @@ __author__ = 'Shiraga-P'
 import sys
 from datetime import datetime, timedelta
 
-from PySide import QtGui, QtCore
-from PySide import QtUiTools
+from PyQt5 import QtWidgets, QtCore, QtWidgets
+from PyQt5 import uic
 
 from griffon.Auctions import Auctions
 from griffon.Auction import Auction
 from griffon.Thumbnail import ThumbnailWidgetItem
 
 
-class AddAuctionDialog(QtGui.QDialog):
+class AddAuctionDialog(QtWidgets.QDialog):
     def __init__(self, user_id=1, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.user_id = user_id
         self.parent = parent
         self.DEBUGMODE = DEBUGMODE
 
-        loader = QtUiTools.QUiLoader(self)
-        form = loader.load('ui\\addauction.ui')
+        #loader = uic.QUiLoader(self)
+        form = uic.loadUi('ui\\addauction.ui')
 
-        self.label_image = form.findChild(QtGui.QLabel, 'label_01_image')
-        self.listWidget_thumbnail = form.findChild(QtGui.QListWidget, 'listWidget_thumbnail')
-        self.listWidget_thumbnail.setFlow(QtGui.QListWidget.LeftToRight)
-        self.listWidget_thumbnail.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
+        self.label_image = form.findChild(QtWidgets.QLabel, 'label_01_image')
+        self.listWidget_thumbnail = form.findChild(QtWidgets.QListWidget, 'listWidget_thumbnail')
+        self.listWidget_thumbnail.setFlow(QtWidgets.QListWidget.LeftToRight)
+        self.listWidget_thumbnail.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.listWidget_thumbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
 
-        self.lineEdit_name = form.findChild(QtGui.QLineEdit, 'lineEdit_02_name')
-        self.lineEdit_buyoutprice = form.findChild(QtGui.QLineEdit, 'lineEdit_03_buyoutprice')
+        self.lineEdit_name = form.findChild(QtWidgets.QLineEdit, 'lineEdit_02_name')
+        self.lineEdit_buyoutprice = form.findChild(QtWidgets.QLineEdit, 'lineEdit_03_buyoutprice')
         self.lineEdit_buyoutprice.setReadOnly(True)
-        self.lineEdit_bidprice = form.findChild(QtGui.QLineEdit, 'lineEdit_04_bidprice')
-        self.lineEdit_categories = form.findChild(QtGui.QLineEdit, 'lineEdit_05_categories')
+        self.lineEdit_bidprice = form.findChild(QtWidgets.QLineEdit, 'lineEdit_04_bidprice')
+        self.lineEdit_categories = form.findChild(QtWidgets.QLineEdit, 'lineEdit_05_categories')
 
-        self.checkBox_buyoutavailable = form.findChild(QtGui.QCheckBox, 'checkBox_buyoutavailable')
+        self.checkBox_buyoutavailable = form.findChild(QtWidgets.QCheckBox, 'checkBox_buyoutavailable')
         self.checkBox_buyoutavailable.setChecked(False)
         self.checkBox_buyoutavailable.stateChanged.connect(self.checkBoxActionListener)
 
-        self.textEdit_description = form.findChild(QtGui.QTextEdit, 'textEdit_06_description')
+        self.textEdit_description = form.findChild(QtWidgets.QTextEdit, 'textEdit_06_description')
 
-        self.pushButton_addimage = form.findChild(QtGui.QPushButton, 'pushButton_01_addimage')
+        self.pushButton_addimage = form.findChild(QtWidgets.QPushButton, 'pushButton_01_addimage')
         self.pushButton_addimage.clicked.connect(self.addImageActionListener)
-        self.pushButton_deleteimage = form.findChild(QtGui.QPushButton, 'pushButton_02_deleteimage')
+        self.pushButton_deleteimage = form.findChild(QtWidgets.QPushButton, 'pushButton_02_deleteimage')
         self.pushButton_deleteimage.clicked.connect(self.deleteImageActionListener)
-        self.pushButton_sell = form.findChild(QtGui.QPushButton, 'pushButton_03_sell')
+        self.pushButton_sell = form.findChild(QtWidgets.QPushButton, 'pushButton_03_sell')
         self.pushButton_sell.clicked.connect(self.sellActionListener)
-        self.pushButton_cancel = form.findChild(QtGui.QPushButton, 'pushButton_04_cancel')
+        self.pushButton_cancel = form.findChild(QtWidgets.QPushButton, 'pushButton_04_cancel')
         self.pushButton_cancel.clicked.connect(self.cancelActionListener)
 
-        layout = QtGui.QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.addWidget(form)
 
         self.setLayout(layout)
@@ -65,7 +65,7 @@ class AddAuctionDialog(QtGui.QDialog):
             self.lineEdit_buyoutprice.setReadOnly(True)
 
     def addImageActionListener(self):
-        filepath = QtGui.QFileDialog.getOpenFileName(self)[0]
+        filepath = QtWidgets.QFileDialog.getOpenFileName(self)[0]
         if filepath != '':
             self.addImage(filepath)
 
@@ -109,7 +109,7 @@ class AddAuctionDialog(QtGui.QDialog):
                             expirytime, soldout, imagepaths)
 
         except Exception as e:
-            QtGui.QMessageBox.warning(self, "Warning", "Invalid input.")
+            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input.")
 
     def cancelActionListener(self):
         self.close()
@@ -121,7 +121,7 @@ class AddAuctionDialog(QtGui.QDialog):
             Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                     expirytime, soldout, imagepaths))
 
-        QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
+        QtWidgets.QMessageBox.information(self, "Notification", "Add item complete!")
 
         if self.parent:
             self.parent.loadRecentItems()
@@ -158,7 +158,7 @@ class AddAuctionDialog(QtGui.QDialog):
     #
     #     self.addAuctionImages()
     #
-    #     QtGui.QMessageBox.information(self, "Notification", "Add item complete!")
+    #     QtWidgets.QMessageBox.information(self, "Notification", "Add item complete!")
     #
     #     if self.parent:
     #         self.parent.loadRecentItems()
@@ -193,7 +193,7 @@ class AddAuctionDialog(QtGui.QDialog):
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            pixmap = QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage)
+            pixmap = QtWidgets.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage)
             self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
     def dragEnterEvent(self, event):
@@ -208,20 +208,20 @@ class AddAuctionDialog(QtGui.QDialog):
             if (fileInfo.isFile()):
                 # file
                 if fileInfo.suffix() in ["png", "jpg"]:
-                    QtGui.QMessageBox.information(self, self.tr("Dropped image file"), fileInfo.absoluteFilePath())
+                    QtWidgets.QMessageBox.information(self, self.tr("Dropped image file"), fileInfo.absoluteFilePath())
                     self.addImage(fileInfo.absoluteFilePath())
                 else:
-                    QtGui.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
+                    QtWidgets.QMessageBox.information(self, self.tr("Dropped file"), fileInfo.absoluteFilePath())
             elif (fileInfo.isDir()):
                 # directory
                 it = QtCore.QDirIterator(fileInfo.absoluteFilePath(), ("*.png", "*.jpg"), QtCore.QDir.Files,
                     QtCore.QDirIterator.Subdirectories)
                 while it.hasNext():
                     self.addImage(it.next())
-                QtGui.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
+                QtWidgets.QMessageBox.information(self, self.tr("Dropped directory"), fileInfo.absoluteFilePath())
             else:
                 # none
-                QtGui.QMessageBox.information(self, self.tr("Dropped, but unknown"),
+                QtWidgets.QMessageBox.information(self, self.tr("Dropped, but unknown"),
                                               self.tr("Unknown: %1").arg(fileInfo.absoluteFilePath()))
 
     def dropEvent(self, event):
@@ -231,7 +231,7 @@ class AddAuctionDialog(QtGui.QDialog):
 
 
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     addAuctionDialog = AddAuctionDialog(DEBUGMODE=True)
     addAuctionDialog.show()
     sys.exit(app.exec_())
