@@ -3,7 +3,7 @@ __author__ = 'Shiraga-P'
 import sys
 from datetime import datetime, timedelta
 
-from PyQt5 import QtWidgets, QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5 import uic
 
 from griffon.Auctions import Auctions
