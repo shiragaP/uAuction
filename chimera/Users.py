@@ -5,7 +5,7 @@ import http.client
 import urllib.parse
 
 from chimera.User import User
-from DatabaseInfo import server
+from DBInfo import server
 
 
 class Users:
@@ -48,7 +48,7 @@ class Users:
 
 
 if __name__ == '__main__':
-    user = Users.getUser(1)
+    user = Users().getUser(1)
     print("username", user.username)
     print("password", user.password)
     print("firstname", user.firstname)

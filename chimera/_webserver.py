@@ -10,7 +10,7 @@ from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
 
-from chimera._postgreSqlManager import DBmanager
+from chimera._postgreSqlManager import DBManager
 
 
 CWD = os.path.abspath('.')
@@ -106,7 +106,7 @@ class AuctionSite(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-        dbmanager = DBmanager()
+        dbmanager = DBManager()
         # global rootnode ## something remained in the orig. code     
         try:
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
