@@ -21,25 +21,32 @@ QWidget#Form
 }
 
 
-QWidget#label_00_title
-{
-	background-color: rgb(225, 225, 225);
-}
-
 QWidget
 {
-	padding: 2px;
+	background-color: rgb(239, 239, 239);
 }
+
 
 QPushButton 
 {
 	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-stop:0 rgba(225, 225, 225, 255), 
-stop:0.5 rgba(235, 235, 235, 255),
-stop:1 rgba(225, 225, 225, 255));
+stop:0 rgba(234, 234, 234, 255), 
+stop:0.5 rgba(249, 249, 249, 255),
+stop:1 rgba(234, 234, 234, 255));
 	border-style: outset;
     border-width: 2px;
     border-color: rgba(234, 234, 234, 255)
+ }
+
+QPushButton#pushButton_register
+ {
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(234, 234, 234, 255), 
+stop:0.5 rgba(249, 249, 249, 255),
+stop:1 rgba(234, 234, 234, 255));
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(128, 128, 128, 255)
  }
 
  QPushButton:pressed 
@@ -47,31 +54,36 @@ stop:1 rgba(225, 225, 225, 255));
 	background-color: rgb(221, 221, 221);
  }
 
- QPushButton:hover
-{
+ QPushButton:hover {
 	 background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-stop:0 rgba(215, 215, 215, 255), 
-stop:0.5 rgba(201, 201, 201, 255),
-stop:1 rgba(215, 215, 215, 255));
+stop:0 rgba(229, 229, 229, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(229, 229, 229, 221));
+    border-color: rgba(221, 128, 32, 255)
  }
 
 
-QLineEdit 
-{
+QLineEdit
+ {
 	background-color:  rgba(255, 255, 255, 255);
 	border-style: outset;
     border-width: 2px;
     border-color: rgba(234, 234, 234, 255)
  }
+
+QLabel
+{
+    padding: 2px;
+}
 </string>
   </property>
   <widget class="QLabel" name="label_01_username">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>43</y>
+     <y>40</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -91,9 +103,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>43</y>
+     <y>40</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -107,15 +119,17 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>405</y>
+     <y>400</y>
      <width>480</width>
-     <height>35</height>
+     <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Times New Roman</family>
-     <pointsize>12</pointsize>
+     <pointsize>14</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
@@ -128,13 +142,15 @@ QLineEdit
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>35</height>
+     <height>40</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Times New Roman</family>
      <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -148,9 +164,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>73</y>
+     <y>70</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -170,9 +186,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>163</y>
+     <y>160</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -192,9 +208,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>103</y>
+     <y>100</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -214,9 +230,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>253</y>
+     <y>250</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -236,9 +252,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>283</y>
+     <y>280</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -258,9 +274,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>223</y>
+     <y>220</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -280,9 +296,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>193</y>
+     <y>190</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -302,9 +318,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>343</y>
+     <y>340</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -324,9 +340,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>313</y>
+     <y>310</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -346,9 +362,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>313</y>
+     <y>310</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -368,9 +384,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>223</y>
+     <y>220</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -390,9 +406,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>193</y>
+     <y>190</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -412,9 +428,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>163</y>
+     <y>160</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -434,9 +450,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>283</y>
+     <y>280</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -456,9 +472,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>253</y>
+     <y>250</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -478,9 +494,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>103</y>
+     <y>100</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -500,9 +516,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>73</y>
+     <y>70</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -522,9 +538,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>343</y>
+     <y>340</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -544,9 +560,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>43</y>
+     <y>40</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -566,9 +582,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>73</y>
+     <y>70</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -582,9 +598,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>163</y>
+     <y>160</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -598,9 +614,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>103</y>
+     <y>100</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -614,9 +630,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>253</y>
+     <y>250</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -630,9 +646,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>223</y>
+     <y>220</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -646,9 +662,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>193</y>
+     <y>190</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -662,9 +678,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>283</y>
+     <y>280</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -678,9 +694,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>313</y>
+     <y>310</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -694,9 +710,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>343</y>
+     <y>340</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -710,9 +726,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>133</y>
+     <y>130</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -726,9 +742,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>133</y>
+     <y>130</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -748,9 +764,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>133</y>
+     <y>130</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -770,9 +786,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>373</y>
+     <y>370</y>
      <width>150</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -786,9 +802,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>373</y>
+     <y>370</y>
      <width>240</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -808,9 +824,9 @@ QLineEdit
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>373</y>
+     <y>370</y>
      <width>90</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">

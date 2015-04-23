@@ -2,12 +2,12 @@ __author__ = 'Shiraga-P'
 
 import psycopg2
 
-import DatabaseInfo
+import DBInfo
 
 
 def printUsers():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("SELECT * from users")
     rows = cur.fetchall()
@@ -21,7 +21,7 @@ def printUsers():
 
 def printAuctions():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("SELECT * from auctions")
     rows = cur.fetchall()
@@ -35,7 +35,7 @@ def printAuctions():
 
 def printItemsImage():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("SELECT * from item_images")
     rows = cur.fetchall()
@@ -49,10 +49,10 @@ def printItemsImage():
 
 def createDatabase():
     conn = psycopg2.connect("host='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.user, DBInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
-    cur.execute("CREATE DATABASE " + DatabaseInfo.dbname)
+    cur.execute("CREATE DATABASE " + DBInfo.dbname)
     conn.commit()
     cur.close()
     conn.close()
@@ -60,7 +60,7 @@ def createDatabase():
 
 def deleteUsersTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("DROP TABLE users CASCADE")
     conn.commit()
@@ -70,7 +70,7 @@ def deleteUsersTable():
 
 def createUsersTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
     statement = ""
@@ -98,7 +98,7 @@ def createUsersTable():
 
 def deleteItemsTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("DROP TABLE items CASCADE")
     conn.commit()
@@ -108,7 +108,7 @@ def deleteItemsTable():
 
 def createItemsTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
     statement = ""
@@ -135,7 +135,7 @@ def createItemsTable():
 
 def deleteItemImagesTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     cur = conn.cursor()
     cur.execute("DROP TABLE item_images CASCADE")
     conn.commit()
@@ -145,7 +145,7 @@ def deleteItemImagesTable():
 
 def createItemImagesTable():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
     statement = ""
@@ -198,7 +198,7 @@ def rebuildAll():
 
 def sqlExecute():
     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                            (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                            (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
     statement = input()

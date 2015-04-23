@@ -7,7 +7,7 @@ import psycopg2
 from PySide import QtGui, QtCore
 from PySide import QtUiTools
 
-import DatabaseInfo
+import DBInfo
 from unicorn.Thumbnail import ThumbnailWidgetItem
 
 
@@ -109,7 +109,7 @@ class AddItemDialog(QtGui.QDialog):
     def addItem(self, name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail,
                 expirytime, soldout):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                % (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
 
         statement = """INSERT INTO items (name, seller, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)
@@ -145,7 +145,7 @@ class AddItemDialog(QtGui.QDialog):
 
     def addItemImages(self):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                % (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
 
         cur.execute("SELECT max(id) from items")

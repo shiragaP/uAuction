@@ -6,7 +6,7 @@ import psycopg2
 from PySide import QtGui
 from PySide import QtUiTools
 
-import DatabaseInfo
+import DBInfo
 
 
 class LoginDialog(QtGui.QDialog):
@@ -48,7 +48,7 @@ class LoginDialog(QtGui.QDialog):
             print("\tPassword: " + password)
 
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
         cur.execute("SELECT * from users")
         rows = cur.fetchall()

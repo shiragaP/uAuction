@@ -8,7 +8,7 @@ from PySide import QtGui
 
 from unicorn.ThumbnailDetail import ThumbnailDetailWidget
 from unicorn.User import UserWidget
-import DatabaseInfo
+import DBInfo
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -69,7 +69,7 @@ class MainWindow(QtGui.QMainWindow):
     def loadRecentItems(self):
         current_time = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now())
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
         #cur.execute("SELECT * from auctions WHERE expirytime>%s", (current_time,))
         cur.execute("SELECT * from auctions")

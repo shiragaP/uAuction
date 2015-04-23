@@ -11,7 +11,7 @@ from PySide import QtUiTools
 from unicorn.Item import Item
 from unicorn.Thumbnail import ThumbnailWidgetItem
 from unicorn.User import User
-import DatabaseInfo
+import DBInfo
 
 
 class ViewItemDialog(QtGui.QDialog):
@@ -94,7 +94,7 @@ class ViewItemDialog(QtGui.QDialog):
         if int(newbid) > int(self.label_bidprice.text()):
             # self.label_bidprice.setText(newbid)
             conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                    (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                    (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
             cur = conn.cursor()
 
             cur.execute("UPDATE items SET bidprice=%s WHERE id=%s" % (newbid, self.item_id,))

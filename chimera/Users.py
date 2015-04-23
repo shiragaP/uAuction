@@ -5,13 +5,13 @@ import http.client
 import urllib.parse
 
 from chimera.User import User
-import DatabaseInfo
+import DBInfo
 
 
 class Users:
     def addUser(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                 phonenumber):
-        conn = http.client.HTTPConnection(DatabaseInfo.host, 8080)
+        conn = http.client.HTTPConnection(DBInfo.host, 8080)
         params = urllib.parse.urlencode({'statement': """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (
             username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
@@ -24,7 +24,7 @@ class Users:
         conn.close()
 
     def getUser(user_id):
-        conn = http.client.HTTPConnection(DatabaseInfo.host, 8080)
+        conn = http.client.HTTPConnection(DBInfo.host, 8080)
         params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.id=%s" % (user_id,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         conn.request("POST", "/query", params, headers)

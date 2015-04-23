@@ -2,13 +2,13 @@ __author__ = 'Waterstrider'
 
 import psycopg2
 
-import DatabaseInfo
+import DBInfo
 
 
 class DBmanager:
     def __init__(self):
         self.conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (
-            DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+            DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         self.cur = self.conn.cursor()
 
     def query(self, statement):

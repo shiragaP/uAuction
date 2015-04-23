@@ -7,7 +7,7 @@ from PySide import QtGui
 from PySide import QtUiTools
 from PySide import QtCore
 
-import DatabaseInfo
+import DBInfo
 
 
 class RegisterWidget(QtGui.QWidget):
@@ -109,7 +109,7 @@ class RegisterWidget(QtGui.QWidget):
     def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                  phonenumber):
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'"
-                                % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                % (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
 
         statement = ""

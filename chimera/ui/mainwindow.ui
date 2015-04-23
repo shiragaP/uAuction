@@ -43,10 +43,10 @@ stop:1 rgba(234, 234, 234, 255));
 
  QPushButton:hover {
 	 background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-stop:0 rgba(221, 221, 221, 255), 
-stop:0.5 rgba(215, 215, 215, 255),
-stop:1 rgba(221, 221, 221, 221));
-    border-color: rgba(201, 201, 201, 255)
+stop:0 rgba(229, 229, 229, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(229, 229, 229, 221));
+    border-color: rgba(221, 128, 32, 255)
  }
 
 
@@ -806,8 +806,6 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
-   <zorder>widget_title</zorder>
-   <zorder>widget_title</zorder>
   </widget>
   <widget class="QWidget" name="widget_unused_6" native="true">
    <property name="geometry">

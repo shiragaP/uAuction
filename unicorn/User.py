@@ -7,7 +7,7 @@ from PySide import QtGui
 from PySide import QtUiTools
 
 from unicorn.AddItem import AddItemDialog
-import DatabaseInfo
+import DBInfo
 
 
 class User():
@@ -15,7 +15,7 @@ class User():
         self.user_id = user_id
 
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
 
         cur.execute("SELECT * from users WHERE users.id=%s", (self.user_id,))

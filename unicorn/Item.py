@@ -2,7 +2,7 @@ __author__ = 'Shiraga-P'
 
 import psycopg2
 
-import DatabaseInfo
+import DBInfo
 
 
 class Item():
@@ -10,7 +10,7 @@ class Item():
         self.item_id = item_id
 
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
+                                (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
         cur = conn.cursor()
 
         cur.execute("SELECT * from auctions WHERE auctions.id=%s", (self.item_id,))
