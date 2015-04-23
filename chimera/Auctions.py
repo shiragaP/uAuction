@@ -6,12 +6,14 @@ import urllib.parse
 import tempfile
 
 from chimera.Auction import Auction
+from DatabaseInfo import server
 
 
 class Auctions:
-    def addAuction(auction):
-        # TODO: make connection not localhost
-        conn = http.client.HTTPConnection("localhost", 8080)
+    def __init__(self):
+        self.connection = http.client.HTTPConnection(server, 8080)
+
+    def addAuction(self, auction):
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
             (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (Auction.name,
@@ -25,31 +27,26 @@ class Auctions:
                                                             Auction.expirytime,
                                                             Auction.soldout,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         print(response.status, response.reason)
 
         params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions"})
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         data = response.read()
         auction_id = pickle.loads(data)[0][0]
 
         params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": auction.imagepaths})
-        conn.request("POST", "/insert_auction_images", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/insert_auction_images", params, headers)
+        response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        conn.close()
-
-    def getAuction(auction_id):
-        # try:
-        # TODO: make connection not localhost
-        conn = http.client.HTTPConnection("localhost", 8080)
+    def getAuction(self, auction_id):
         params = urllib.parse.urlencode({'statement': "SELECT * from auctions WHERE auctions.id=%s" % (auction_id,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         data = response.read()
 
         row = pickle.loads(data)[0]
@@ -66,34 +63,28 @@ class Auctions:
 
         params = urllib.parse.urlencode(
             {'statement': "SELECT * from auction_images WHERE auction_images.auctionid=%s" % (auction_id,)})
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         data = response.read()
         imageurls = pickle.loads(data)
         imagepaths = list()
 
         for imageurl in imageurls:
-            conn.request("GET", imageurl[1])
-            response = conn.getresponse()
+            self.connection.request("GET", imageurl[1])
+            response = self.connection.getresponse()
             temp = tempfile.TemporaryFile()
             temp.write(response.read())
             imagepaths.append(temp)
 
-        conn.close()
-
         return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                        expirytime, soldout, imagepaths, auction_id)
-        # except Exception as e:
-        # print(e)
 
-    def updateBidPrice(auction_id, newBidPrice):
-        # TODO: make connection not localhost
-        conn = http.client.HTTPConnection("localhost", 8080)
+    def updateBidPrice(self, auction_id, newBidPrice):
         params = urllib.parse.urlencode(
             {'statement': "UPDATE items SET bidprice=%s WHERE id=%s" % (newBidPrice, auction_id,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         print(response.status, response.reason)
 
     def delete(self):

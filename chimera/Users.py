@@ -5,30 +5,29 @@ import http.client
 import urllib.parse
 
 from chimera.User import User
-import DatabaseInfo
+from DatabaseInfo import server
 
 
 class Users:
-    def addUser(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+    def __init__(self):
+        self.connection = http.client.HTTPConnection(server, 8080)
+
+    def addUser(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                 phonenumber):
-        conn = http.client.HTTPConnection(DatabaseInfo.host, 8080)
         params = urllib.parse.urlencode({'statement': """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (
             username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
             phonenumber)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        conn.close()
-
-    def getUser(user_id):
-        conn = http.client.HTTPConnection(DatabaseInfo.host, 8080)
+    def getUser(self, user_id):
         params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.id=%s" % (user_id,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/query", params, headers)
-        response = conn.getresponse()
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
         data = response.read()
 
         row = pickle.loads(data)[0]
@@ -43,8 +42,6 @@ class Users:
         country = row[9]
         zipcode = row[10]
         phonenumber = row[11]
-
-        conn.close()
 
         return User(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                     phonenumber, user_id)
