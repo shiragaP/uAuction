@@ -32,9 +32,9 @@ class RegisterWidget(QtGui.QWidget):
         self.lineEdit_lastname = form.findChild(QtGui.QLineEdit, 'lineEdit_06_lastname')
         self.lineEdit_lastname.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_address1 = form.findChild(QtGui.QLineEdit, 'lineEdit_07_address1')
-        self.lineEdit_address1.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9]{0,28}"), self))
+        self.lineEdit_address1.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9_-+*/]{0,28}"), self))
         self.lineEdit_address2 = form.findChild(QtGui.QLineEdit, 'lineEdit_08_address2')
-        self.lineEdit_address2.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9]{0,28}"), self))
+        self.lineEdit_address2.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9_-+*/]{0,28}"), self))
         self.lineEdit_province = form.findChild(QtGui.QLineEdit, 'lineEdit_09_province')
         self.lineEdit_province.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
         self.lineEdit_country = form.findChild(QtGui.QLineEdit, 'lineEdit_10_country')
@@ -48,12 +48,13 @@ class RegisterWidget(QtGui.QWidget):
         self.pushButton_register.clicked.connect(self.registerActionListener)
 
         layout = QtGui.QGridLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(form)
 
         self.setLayout(layout)
 
-        self.setFixedWidth(form.width() + 15)
-        self.setFixedHeight(form.height() + 15)
+        self.setFixedWidth(form.width())
+        self.setFixedHeight(form.height())
         self.setWindowTitle('Register')
 
     def registerActionListener(self):

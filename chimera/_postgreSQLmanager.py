@@ -4,7 +4,12 @@ import DBInfo
 
 class DBManager:
     def __init__(self):
-        self.connectServer()
+        try:
+            self.connectDB()
+        except:
+            print("Cannot connect to database.")
+            print("Connect to server instead.")
+            self.connectServer()
 
     def connectServer(self):
         self.conn = psycopg2.connect(user=DBInfo.user, password=DBInfo.password, host=DBInfo.host)
@@ -25,8 +30,11 @@ class DBManager:
             pass
 
     def close(self):
-        self.cur.close()
-        self.conn.close()
+        try:
+            self.cur.close()
+            self.conn.close()
+        except:
+            pass
 
     def rebuildAll(self):
         prompt = input("Enter 'y' or 'Y' to continue rebuild all components ")
@@ -70,6 +78,9 @@ class DBManager:
                         );
                         """
         self.query(statement)
+        statement = """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
+                    VALUES ('admin', 'admin', 'admin@uAuction.com', 'Admin', 'Admin', 'None', null, 'Bangkok', 'Thailand', '10110', '0812345678')"""
+        self.query(statement)
 
     def createTableAuctions(self):
         self.dropTableAuctions()
@@ -103,7 +114,7 @@ class DBManager:
         self.dropTableCategoryTags()
         statement = """CREATE TABLE category_tags(
                         id serial PRIMARY KEY,
-                        bidprice INTEGER,
+                        category VARCHAR (127),
                         itemid serial
                         );
                         """
@@ -113,7 +124,7 @@ class DBManager:
         self.dropTableBidHistory()
         statement = """CREATE TABLE bid_history(
                         id serial PRIMARY KEY,
-                        category VARCHAR (127),
+                        bidprice INTEGER,
                         userid serial,
                         itemid serial
                         );
@@ -184,5 +195,4 @@ class DBManager:
 
 if __name__ == '__main__':
     manager = DBManager()
-    manager.connectDB()
-    manager.rebuildAll()
+    print(manager.query("SELECT * from users"))
