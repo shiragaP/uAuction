@@ -10,7 +10,7 @@ from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
 
-from chimera._postgreSQLmanager import DBManager
+from chimera._postgreSQLManager import DBManager
 
 
 CWD = os.path.abspath('.')
