@@ -13,17 +13,75 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+QWidget#Form
+{
+	background-color: rgb(249, 249, 249);
+}
+
+
+QWidget
+{
+	background-color: rgba(239, 239, 239, 0);
+	padding: 2px;
+}
+
+
+QPushButton 
+{
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(200, 200, 200, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(200, 200, 200, 255));
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(234, 234, 234, 255)
+ }
+
+QPushButton#pushButton_02_buyitnow
+{
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(234, 0, 0, 255), 
+stop:0.5 rgba(255, 39, 39, 255),
+stop:1 rgba(234, 0, 0, 255));
+	color: rgb(249, 249, 249);
+}
+
+ QPushButton:pressed {
+	background-color: rgb(221, 221, 221);
+ }
+
+ QPushButton:hover {
+	 background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(229, 229, 229, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(229, 229, 229, 221));
+    border-color: rgba(221, 128, 32, 255)
+ }
+
+
+QLineEdit
+{
+	background-color:  rgba(230, 230, 230, 255);
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(234, 234, 234, 255);
+ }
+</string>
+  </property>
   <widget class="QLabel" name="label_01_image">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>40</y>
-     <width>371</width>
-     <height>251</height>
+     <x>10</x>
+     <y>30</y>
+     <width>390</width>
+     <height>350</height>
     </rect>
    </property>
    <property name="font">
     <font>
+     <family>Times New Roman</family>
      <pointsize>28</pointsize>
     </font>
    </property>
@@ -37,43 +95,39 @@
   <widget class="QPushButton" name="pushButton_02_buyitnow">
    <property name="geometry">
     <rect>
-     <x>620</x>
+     <x>610</x>
      <y>350</y>
-     <width>71</width>
+     <width>81</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
     <string>Buy it now</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listWidget_thumbnail">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>300</y>
-     <width>391</width>
-     <height>81</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_01_bid">
    <property name="geometry">
     <rect>
-     <x>560</x>
+     <x>540</x>
      <y>350</y>
-     <width>51</width>
+     <width>61</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
@@ -83,15 +137,16 @@
   <widget class="QLabel" name="label_00_name">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>0</y>
-     <width>541</width>
-     <height>31</height>
+     <width>540</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>15</pointsize>
     </font>
    </property>
    <property name="text">
@@ -106,13 +161,14 @@
     <rect>
      <x>410</x>
      <y>40</y>
-     <width>111</width>
-     <height>21</height>
+     <width>140</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -127,13 +183,14 @@
     <rect>
      <x>410</x>
      <y>70</y>
-     <width>111</width>
-     <height>21</height>
+     <width>140</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -154,7 +211,8 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -173,15 +231,25 @@
      <height>191</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_bidprice">
    <property name="geometry">
     <rect>
      <x>420</x>
-     <y>360</y>
-     <width>131</width>
-     <height>21</height>
+     <y>350</y>
+     <width>111</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -190,55 +258,67 @@
   <widget class="QLabel" name="label_02_buyoutprice">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>550</x>
      <y>40</y>
-     <width>161</width>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
     <string>&lt;buyoutprice&gt;</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_03_bidprice">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>549</x>
      <y>70</y>
-     <width>161</width>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
     <string>&lt;bidprice&gt;</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_04_seller">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>550</x>
      <y>100</y>
-     <width>161</width>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
     <string>&lt;seller_username&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_04_seller_head">
@@ -246,13 +326,14 @@
     <rect>
      <x>410</x>
      <y>100</y>
-     <width>111</width>
-     <height>21</height>
+     <width>140</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -265,15 +346,16 @@
   <widget class="QLabel" name="label_00_timeleft">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>540</x>
      <y>0</y>
-     <width>141</width>
-     <height>31</height>
+     <width>160</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <family>Times New Roman</family>
+     <pointsize>15</pointsize>
     </font>
    </property>
    <property name="text">
@@ -286,7 +368,6 @@
  </widget>
  <tabstops>
   <tabstop>textEdit_05_description</tabstop>
-  <tabstop>listWidget_thumbnail</tabstop>
   <tabstop>pushButton_02_buyitnow</tabstop>
   <tabstop>pushButton_01_bid</tabstop>
  </tabstops>

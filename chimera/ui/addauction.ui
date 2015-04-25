@@ -13,6 +13,63 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+QWidget#Form
+{
+	background-color: rgb(249, 249, 249);
+}
+
+
+QWidget
+{
+	background-color: rgba(239, 239, 239, 0);
+	padding: 2px;
+}
+
+
+QPushButton 
+{
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(200, 200, 200, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(200, 200, 200, 255));
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(234, 234, 234, 255)
+ }
+
+QPushButton#pushButton_02_buyitnow
+{
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(234, 0, 0, 255), 
+stop:0.5 rgba(255, 39, 39, 255),
+stop:1 rgba(234, 0, 0, 255));
+	color: rgb(249, 249, 249);
+}
+
+ QPushButton:pressed {
+	background-color: rgb(221, 221, 221);
+ }
+
+ QPushButton:hover {
+	 background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+stop:0 rgba(229, 229, 229, 255), 
+stop:0.5 rgba(221, 221, 221, 255),
+stop:1 rgba(229, 229, 229, 221));
+    border-color: rgba(221, 128, 32, 255)
+ }
+
+
+QLineEdit
+{
+	background-color:  rgba(230, 230, 230, 255);
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(234, 234, 234, 255);
+ }
+</string>
+  </property>
   <widget class="QLabel" name="label_01_image">
    <property name="geometry">
     <rect>
@@ -127,7 +184,7 @@
      <x>410</x>
      <y>20</y>
      <width>91</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
@@ -136,7 +193,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Name:</string>
+    <string>Name</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -148,7 +205,7 @@
      <x>410</x>
      <y>50</y>
      <width>91</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
@@ -157,7 +214,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Buyout Price:</string>
+    <string>Buyout Price</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -169,7 +226,7 @@
      <x>410</x>
      <y>80</y>
      <width>91</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
@@ -178,7 +235,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Start Bid Price:</string>
+    <string>Start Bid Price</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -190,7 +247,7 @@
      <x>510</x>
      <y>20</y>
      <width>171</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -200,7 +257,7 @@
      <x>510</x>
      <y>50</y>
      <width>171</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -210,17 +267,17 @@
      <x>510</x>
      <y>80</y>
      <width>171</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
   <widget class="QCheckBox" name="checkBox_buyoutavailable">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>405</x>
      <y>50</y>
-     <width>21</width>
-     <height>21</height>
+     <width>25</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
@@ -264,7 +321,7 @@
      <x>410</x>
      <y>110</y>
      <width>91</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
@@ -285,7 +342,7 @@
      <x>510</x>
      <y>110</y>
      <width>171</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
