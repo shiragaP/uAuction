@@ -2,52 +2,52 @@ __author__ = 'Shiraga-P'
 
 import sys
 
-from PySide import QtGui
-from PySide import QtUiTools
-from PySide import QtCore
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+from PyQt5 import uic
 
-from griffon.Users import Users
+from chimera.Users import Users
 
 
-class RegisterWidget(QtGui.QWidget):
+class RegisterWidget(QtWidgets.QWidget):
     def __init__(self, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.DEBUGMODE = DEBUGMODE
 
-        loader = QtUiTools.QUiLoader(self)
-        form = loader.load('ui\\register.ui')
+        form = uic.loadUi('ui\\register.ui')
 
-        self.lineEdit_username = form.findChild(QtGui.QLineEdit, 'lineEdit_01_username')
+        self.lineEdit_username = form.findChild(QtWidgets.QLineEdit, 'lineEdit_01_username')
         self.lineEdit_username.setMaxLength(12)
-        self.lineEdit_password = form.findChild(QtGui.QLineEdit, 'lineEdit_02_password')
+        self.lineEdit_password = form.findChild(QtWidgets.QLineEdit, 'lineEdit_02_password')
         self.lineEdit_password.setMaxLength(12)
-        self.lineEdit_password.setEchoMode(QtGui.QLineEdit.Password)
-        self.lineEdit_repassword = form.findChild(QtGui.QLineEdit, 'lineEdit_03_repassword')
+        self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_repassword = form.findChild(QtWidgets.QLineEdit, 'lineEdit_03_repassword')
         self.lineEdit_repassword.setMaxLength(12)
-        self.lineEdit_repassword.setEchoMode(QtGui.QLineEdit.Password)
-        self.lineEdit_email = form.findChild(QtGui.QLineEdit, 'lineEdit_04_email')
+        self.lineEdit_repassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_email = form.findChild(QtWidgets.QLineEdit, 'lineEdit_04_email')
         self.lineEdit_email.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9@_-+*/]{0,28}"), self))
-        self.lineEdit_firstname = form.findChild(QtGui.QLineEdit, 'lineEdit_05_firstname')
+        self.lineEdit_firstname = form.findChild(QtWidgets.QLineEdit, 'lineEdit_05_firstname')
         self.lineEdit_firstname.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
-        self.lineEdit_lastname = form.findChild(QtGui.QLineEdit, 'lineEdit_06_lastname')
+        self.lineEdit_lastname = form.findChild(QtWidgets.QLineEdit, 'lineEdit_06_lastname')
         self.lineEdit_lastname.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
-        self.lineEdit_address1 = form.findChild(QtGui.QLineEdit, 'lineEdit_07_address1')
+        self.lineEdit_address1 = form.findChild(QtWidgets.QLineEdit, 'lineEdit_07_address1')
         self.lineEdit_address1.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9_-+*/]{0,28}"), self))
-        self.lineEdit_address2 = form.findChild(QtGui.QLineEdit, 'lineEdit_08_address2')
+        self.lineEdit_address2 = form.findChild(QtWidgets.QLineEdit, 'lineEdit_08_address2')
         self.lineEdit_address2.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z0-9_-+*/]{0,28}"), self))
-        self.lineEdit_province = form.findChild(QtGui.QLineEdit, 'lineEdit_09_province')
+        self.lineEdit_province = form.findChild(QtWidgets.QLineEdit, 'lineEdit_09_province')
         self.lineEdit_province.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
-        self.lineEdit_country = form.findChild(QtGui.QLineEdit, 'lineEdit_10_country')
+        self.lineEdit_country = form.findChild(QtWidgets.QLineEdit, 'lineEdit_10_country')
         self.lineEdit_country.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[A-Za-z]{0,28}"), self))
-        self.lineEdit_zipcode = form.findChild(QtGui.QLineEdit, 'lineEdit_11_zipcode')
+        self.lineEdit_zipcode = form.findChild(QtWidgets.QLineEdit, 'lineEdit_11_zipcode')
         self.lineEdit_zipcode.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[0-9]{0,28}"), self))
-        self.lineEdit_phonenumber = form.findChild(QtGui.QLineEdit, 'lineEdit_12_phonenumber')
+        self.lineEdit_phonenumber = form.findChild(QtWidgets.QLineEdit, 'lineEdit_12_phonenumber')
         self.lineEdit_phonenumber.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[0-9]{0,28}"), self))
 
-        self.pushButton_register = form.findChild(QtGui.QPushButton, 'pushButton_register')
+        self.pushButton_register = form.findChild(QtWidgets.QPushButton, 'pushButton_register')
         self.pushButton_register.clicked.connect(self.registerActionListener)
 
-        layout = QtGui.QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(form)
 
@@ -110,12 +110,12 @@ class RegisterWidget(QtGui.QWidget):
                  phonenumber):
         Users.addUser(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                       phonenumber)
-        QtGui.QMessageBox.information(self, "Notification", "Register complete!")
+        QtWidgets.QMessageBox.information(self, "Notification", "Register complete!")
         self.close()
 
 
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     registerWidget = RegisterWidget(DEBUGMODE=True)
     registerWidget.show()
     sys.exit(app.exec_())

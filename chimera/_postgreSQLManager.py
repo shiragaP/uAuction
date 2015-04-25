@@ -102,10 +102,10 @@ class DBManager:
 
     def createTableAuctionImages(self):
         self.dropTableAuctionImages()
-        statement = """CREATE TABLE auctions_images(
+        statement = """CREATE TABLE auction_images(
                         id serial PRIMARY KEY,
                         directory VARCHAR (127),
-                        itemid serial
+                        auctionid serial
                         );
                         """
         self.query(statement)
@@ -115,7 +115,7 @@ class DBManager:
         statement = """CREATE TABLE category_tags(
                         id serial PRIMARY KEY,
                         category VARCHAR (127),
-                        itemid serial
+                        auctionid serial
                         );
                         """
         self.query(statement)
@@ -126,7 +126,7 @@ class DBManager:
                         id serial PRIMARY KEY,
                         bidprice INTEGER,
                         userid serial,
-                        itemid serial
+                        auctionid serial
                         );
                         """
         self.query(statement)
@@ -195,4 +195,4 @@ class DBManager:
 
 if __name__ == '__main__':
     manager = DBManager()
-    print(manager.query("SELECT * from users"))
+    manager.rebuildAll()

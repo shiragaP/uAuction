@@ -3,7 +3,7 @@ __author__ = 'Shiraga-P'
 
 class Auction():
     def __init__(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                 expirytime, soldout, imagepaths=None, auction_id=None):
+                 expirytime, soldout, imagepaths=None, categories=None, auction_id=None):
         self.name = name
         self.seller_id = seller_id
         self.buyoutavailable = buyoutavailable
@@ -15,6 +15,7 @@ class Auction():
         self.expirytime = expirytime
         self.soldout = soldout
         self.imagepaths = imagepaths
+        self.categories = categories
         self.auction_id = auction_id
 
     def printInfo(self):

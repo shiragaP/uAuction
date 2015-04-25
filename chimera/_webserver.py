@@ -220,6 +220,23 @@ class AuctionSite(BaseHTTPRequestHandler):
                 #     cur.close()
                 #     conn.close()
 
+                elif self.path == '/insert_category_tags':
+                    fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
+                    auction_id = fs['auction_id'].value
+                    categories = fs['categories'].value
+
+                    for category in range(categories):
+                        print(category, category.name)
+
+                        statement = """INSERT INTO auction_images (category, auctionid)
+                                        VALUES (%s, %s);
+                                        """
+
+                        dbmanager.query(statement % (category, auction_id,))
+
+                    self.send_response(200)
+                    self.end_headers()
+
                 else:
                     raise Exception("Unexpected request path")
             else:

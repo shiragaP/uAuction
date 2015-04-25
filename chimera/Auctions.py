@@ -6,7 +6,7 @@ import urllib.parse
 import tempfile
 
 from chimera.Auction import Auction
-from DatabaseInfo import server
+from DBInfo import server
 
 
 class Auctions:
@@ -16,16 +16,16 @@ class Auctions:
     def addAuction(self, auction):
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (Auction.name,
-                                                            Auction.seller_id,
-                                                            Auction.buyoutavailable,
-                                                            Auction.buyoutprice,
-                                                            Auction.bidprice,
-                                                            Auction.bidnumber,
-                                                            Auction.description,
-                                                            Auction.thumbnailpath,
-                                                            Auction.expirytime,
-                                                            Auction.soldout,)})
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (auction.name,
+                                                            auction.seller_id,
+                                                            auction.buyoutavailable,
+                                                            auction.buyoutprice,
+                                                            auction.bidprice,
+                                                            auction.bidnumber,
+                                                            auction.description,
+                                                            auction.thumbnailpath,
+                                                            auction.expirytime,
+                                                            auction.soldout,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -39,6 +39,11 @@ class Auctions:
 
         params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": auction.imagepaths})
         self.connection.request("POST", "/insert_auction_images", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
+        params = urllib.parse.urlencode({'auction_id': auction_id, "categories": auction.categories})
+        self.connection.request("POST", "/insert_category_tags", params, headers)
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
