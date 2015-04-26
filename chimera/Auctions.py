@@ -16,7 +16,7 @@ class Auctions:
     def addAuction(self, auction):
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (auction.name,
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': (auction.name,
                                                             auction.seller_id,
                                                             auction.buyoutavailable,
                                                             auction.buyoutprice,
@@ -106,5 +106,5 @@ class Auctions:
 
 
 if __name__ == '__main__':
-    auction = Auctions.getAuction(1)
+    auction = Auctions().getAuction(1)
     print("name", auction.name)

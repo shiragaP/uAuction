@@ -159,10 +159,12 @@ class AuctionSite(BaseHTTPRequestHandler):
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
+                    arguments = fs['arguments'].value
                     print(statement)
+                    print(arguments)
                     self.send_response(200)
                     self.end_headers()
-                    self.wfile.write(pickle.dumps(dbmanager.query(statement)))
+                    self.wfile.write(pickle.dumps(dbmanager.query(statement, arguments)))
 
                 elif self.path == '/insert_auction_images':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -190,35 +192,10 @@ class AuctionSite(BaseHTTPRequestHandler):
                                         VALUES (%s, %s);
                                         """
 
-                        dbmanager.query(statement % (fullname, auction_id,))
+                        dbmanager.query(statement, (fullname, auction_id,))
 
                     self.send_response(200)
                     self.end_headers()
-
-                # elif self.path == '/auction':
-                # fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
-                # auction_id = fs['auction_id'].value
-                # conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-                # cur = conn.cursor()
-                # cur.execute("SELECT * from auctions WHERE auctions.id=%s", (auction_id,))
-                # self.send_response(200)
-                #     self.end_headers()
-                #     self.wfile.write(pickle.dumps(cur.fetchall()))
-                #     conn.commit()
-                #     cur.close()
-                #     conn.close()
-                # elif self.path == '/auction_images':
-                #     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
-                #     auction_id = fs['auction_id'].value
-                #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (DatabaseInfo.host, DatabaseInfo.dbname, DatabaseInfo.user, DatabaseInfo.password))
-                #     cur = conn.cursor()
-                #     cur.execute("SELECT * from auction_images WHERE auction_images.id=%s", (auction_id,))
-                #     self.send_response(200)
-                #     self.end_headers()
-                #     self.wfile.write(pickle.dumps(cur.fetchall()))
-                #     conn.commit()
-                #     cur.close()
-                #     conn.close()
 
                 elif self.path == '/insert_category_tags':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -232,7 +209,7 @@ class AuctionSite(BaseHTTPRequestHandler):
                                         VALUES (%s, %s);
                                         """
 
-                        dbmanager.query(statement % (category, auction_id,))
+                        dbmanager.query(statement, (category, auction_id,))
 
                     self.send_response(200)
                     self.end_headers()
