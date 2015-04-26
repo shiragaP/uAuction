@@ -4,6 +4,7 @@
 # Modified by nikomu @ code.google.com     
 
 import pickle
+import json
 import cgi
 import time
 from os import curdir, sep
@@ -161,8 +162,7 @@ class AuctionSite(BaseHTTPRequestHandler):
                     statement = fs['statement'].value
                     print(statement)
                     arguments = fs['arguments'].value
-                    print(arguments, "rgdhgf")
-                    import json
+                    print(arguments)
 
                     if arguments != "None":
                         arguments = json.loads(arguments)
@@ -177,8 +177,10 @@ class AuctionSite(BaseHTTPRequestHandler):
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     auction_id = fs['auction_id'].value
                     imagepaths = fs['imagepaths'].value
+                    imagepaths = json.loads(imagepaths)
+                    print(imagepaths)
 
-                    for image in range(imagepaths):
+                    for image in imagepaths:
                         filename = os.path.split(image.name)[1]  # strip the path, if it presents
                         fullname = os.path.join(CWD, filename)
 
@@ -208,11 +210,10 @@ class AuctionSite(BaseHTTPRequestHandler):
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     auction_id = fs['auction_id'].value
                     categories = fs['categories'].value
-
-                    for category in range(categories):
-                        print(category, category.name)
-
-                        statement = """INSERT INTO auction_images (category, auctionid)
+                    categories = json.loads(categories)
+                    print(categories)
+                    for category in categories:
+                        statement = """INSERT INTO category_tags (category, auctionid)
                                         VALUES (%s, %s);
                                         """
 

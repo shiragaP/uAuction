@@ -38,12 +38,12 @@ class Auctions:
         data = response.read()
         auction_id = pickle.loads(data)[0][0]
 
-        params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": auction.imagepaths})
+        params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": json.dumps(auction.imagepaths)})
         self.connection.request("POST", "/insert_auction_images", params, headers)
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        params = urllib.parse.urlencode({'auction_id': auction_id, "categories": auction.categories})
+        params = urllib.parse.urlencode({'auction_id': auction_id, "categories": json.dumps(auction.categories)})
         self.connection.request("POST", "/insert_category_tags", params, headers)
         response = self.connection.getresponse()
         print(response.status, response.reason)
