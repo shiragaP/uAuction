@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>380</height>
+    <width>880</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,8 +78,8 @@ QLineEdit
     <rect>
      <x>30</x>
      <y>20</y>
-     <width>381</width>
-     <height>211</height>
+     <width>440</width>
+     <height>280</height>
     </rect>
    </property>
    <property name="font">
@@ -97,10 +97,10 @@ QLineEdit
   <widget class="QPushButton" name="pushButton_01_addimage">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>330</y>
+     <x>370</x>
+     <y>400</y>
      <width>41</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -118,10 +118,10 @@ QLineEdit
   <widget class="QPushButton" name="pushButton_02_deleteimage">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>330</y>
+     <x>420</x>
+     <y>400</y>
      <width>41</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -138,10 +138,10 @@ QLineEdit
   <widget class="QPushButton" name="pushButton_03_sell">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>330</y>
-     <width>71</width>
-     <height>31</height>
+     <x>680</x>
+     <y>400</y>
+     <width>80</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="font">
@@ -156,9 +156,9 @@ QLineEdit
   <widget class="QListWidget" name="listWidget_thumbnail">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>240</y>
-     <width>391</width>
+     <x>30</x>
+     <y>310</y>
+     <width>441</width>
      <height>81</height>
     </rect>
    </property>
@@ -166,10 +166,10 @@ QLineEdit
   <widget class="QPushButton" name="pushButton_04_cancel">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>330</y>
-     <width>71</width>
-     <height>31</height>
+     <x>770</x>
+     <y>400</y>
+     <width>80</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="font">
@@ -184,7 +184,7 @@ QLineEdit
   <widget class="QLabel" name="label_02_name">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>500</x>
      <y>20</y>
      <width>91</width>
      <height>25</height>
@@ -205,7 +205,7 @@ QLineEdit
   <widget class="QLabel" name="label_03_buyoutprice">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>500</x>
      <y>50</y>
      <width>91</width>
      <height>25</height>
@@ -226,7 +226,7 @@ QLineEdit
   <widget class="QLabel" name="label_04_bidprice">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>500</x>
      <y>80</y>
      <width>91</width>
      <height>25</height>
@@ -247,9 +247,9 @@ QLineEdit
   <widget class="QLineEdit" name="lineEdit_02_name">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>600</x>
      <y>20</y>
-     <width>170</width>
+     <width>250</width>
      <height>25</height>
     </rect>
    </property>
@@ -257,9 +257,9 @@ QLineEdit
   <widget class="QLineEdit" name="lineEdit_03_buyoutprice">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>600</x>
      <y>50</y>
-     <width>170</width>
+     <width>250</width>
      <height>25</height>
     </rect>
    </property>
@@ -267,9 +267,9 @@ QLineEdit
   <widget class="QLineEdit" name="lineEdit_04_bidprice">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>600</x>
      <y>80</y>
-     <width>170</width>
+     <width>250</width>
      <height>25</height>
     </rect>
    </property>
@@ -277,7 +277,7 @@ QLineEdit
   <widget class="QCheckBox" name="checkBox_buyoutavailable">
    <property name="geometry">
     <rect>
-     <x>415</x>
+     <x>495</x>
      <y>50</y>
      <width>25</width>
      <height>25</height>
@@ -290,7 +290,7 @@ QLineEdit
   <widget class="QLabel" name="label_06_description">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>500</x>
      <y>140</y>
      <width>91</width>
      <height>21</height>
@@ -311,17 +311,17 @@ QLineEdit
   <widget class="QTextEdit" name="textEdit_06_description">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>510</x>
      <y>160</y>
-     <width>271</width>
-     <height>161</height>
+     <width>350</width>
+     <height>230</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label_05_categories">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>500</x>
      <y>110</y>
      <width>91</width>
      <height>25</height>
@@ -342,9 +342,9 @@ QLineEdit
   <widget class="QLineEdit" name="lineEdit_05_categories">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>600</x>
      <y>110</y>
-     <width>170</width>
+     <width>250</width>
      <height>25</height>
     </rect>
    </property>

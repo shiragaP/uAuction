@@ -74,7 +74,8 @@ class AddAuctionDialog(QtWidgets.QDialog):
             self.addImage(filepath)
 
     def addImage(self, filepath):
-        widgetiItem = ThumbnailWidgetItem(filepath, 60, 60)
+        size = self.listWidget_thumbnail.size().height() - 20
+        widgetiItem = ThumbnailWidgetItem(filepath, size, size)
         self.listWidget_thumbnail.addItem(widgetiItem)
         self.listWidget_thumbnail.setItemWidget(widgetiItem, widgetiItem.thumbnailWidget)
 
