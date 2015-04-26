@@ -159,11 +159,15 @@ class AuctionSite(BaseHTTPRequestHandler):
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
+                    print(statement)
                     arguments = fs['arguments'].value
+                    print(arguments, "rgdhgf")
                     import json
 
-                    arguments = json.loads(arguments)
-                    print(statement)
+                    if arguments != "None":
+                        arguments = json.loads(arguments)
+                    else:
+                        arguments = tuple()
                     print(len(arguments), arguments)
                     self.send_response(200)
                     self.end_headers()

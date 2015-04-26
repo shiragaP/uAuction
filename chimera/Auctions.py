@@ -32,7 +32,7 @@ class Auctions:
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions"})
+        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions", 'arguments': "None"})
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
         data = response.read()
