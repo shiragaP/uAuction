@@ -2,21 +2,21 @@ __author__ = 'Waterstrider'
 
 import sys
 
-from PySide import QtCore
-from PySide import QtGui
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
 
-class ThumbnailWidgetItem(QtGui.QListWidgetItem):
+class ThumbnailWidgetItem(QtWidgets.QListWidgetItem):
     def __init__(self, filepath, thumbnailWidth, thumbnailHeight, parent=None):
+        super().__init__(parent)
         self.filepath = filepath
         self.thumbnailWidth = thumbnailWidth
         self.thumbnailHeight = thumbnailHeight
-        super().__init__(parent)
 
-        self.thumbnailImage = QtGui.QImage()
-        self.filepath.seek(0)
-        self.thumbnailImage.loadFromData(self.filepath.read())
-        self.thumbnailLabel = QtGui.QLabel("<Thumbnail>")
+        self.thumbnailImage = QtGui.QImage(self.filepath)
+        #self.thumbnailImage.loadFromData(self.filepath)
+        self.thumbnailLabel = QtWidgets.QLabel("<Thumbnail>")
         self.thumbnailLabel.setStyleSheet("border: 1px solid grey")
         self.thumbnailLabel.setPixmap(QtGui.QPixmap(
             self.thumbnailImage.scaled(self.thumbnailWidth, self.thumbnailHeight, QtCore.Qt.KeepAspectRatio)))
@@ -24,8 +24,8 @@ class ThumbnailWidgetItem(QtGui.QListWidgetItem):
         self.thumbnailLabel.setMaximumSize(self.thumbnailWidth, self.thumbnailHeight)
         self.thumbnailLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        self.thumbnailWidget = QtGui.QWidget()
-        self.gridLayout = QtGui.QGridLayout(self.thumbnailWidget)
+        self.thumbnailWidget = QtWidgets.QWidget()
+        self.gridLayout = QtWidgets.QGridLayout(self.thumbnailWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.addWidget(self.thumbnailLabel, 0, 0, 1, 1)
         self.thumbnailWidget.setLayout(self.gridLayout)
@@ -34,8 +34,8 @@ class ThumbnailWidgetItem(QtGui.QListWidgetItem):
 
 
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    thumbnailWidgetItem = ThumbnailWidgetItem(QtCore.QFileInfo("E:\\Programming\\Pycharm Projects\\uAuction\\resources\\img\\logo.png").absoluteFilePath(),
-                                              60, 60)
+    app = QtWidgets.QApplication(sys.argv)
+    thumbnailWidgetItem = ThumbnailWidgetItem("C:\\Users\\Fujiwara\\Pictures\\Kantai Collection\\Hinagiku55.png",
+                                              600, 600)
     thumbnailWidgetItem.thumbnailWidget.show()
     sys.exit(app.exec_())

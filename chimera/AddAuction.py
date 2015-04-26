@@ -5,6 +5,7 @@ import re
 from datetime import datetime, timedelta
 
 from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5 import uic
 
@@ -25,6 +26,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
         self.label_image = form.findChild(QtWidgets.QLabel, 'label_01_image')
         self.listWidget_thumbnail = form.findChild(QtWidgets.QListWidget, 'listWidget_thumbnail')
         self.listWidget_thumbnail.setFlow(QtWidgets.QListWidget.LeftToRight)
+        self.listWidget_thumbnail.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.listWidget_thumbnail.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.listWidget_thumbnail.itemSelectionChanged.connect(self.itemSelectionChangedListener)
 
@@ -130,7 +132,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
 
     def itemSelectionChangedListener(self):
         if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            pixmap = QtWidgets.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage)
+            pixmap = QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage)
             self.label_image.setPixmap(pixmap.scaled(self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
     def dragEnterEvent(self, event):
