@@ -14,27 +14,25 @@ class Auctions:
         self.connection = http.client.HTTPConnection(server, 8080)
 
     def addAuction(self, auction):
-        arg = [auction.name,
-               auction.seller_id,
-               auction.buyoutavailable,
-               auction.buyoutprice,
-               auction.bidprice,
-               auction.bidnumber,
-               auction.description,
-               auction.thumbnailpath,
-               auction.expirytime,
-               auction.soldout, ]
-        arg = (str(i) for i in arg)
-        print(arg)
+        import json
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': tuple(arg)})
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps([auction.name,
+                                                                                   auction.seller_id,
+                                                                                   auction.buyoutavailable,
+                                                                                   auction.buyoutprice,
+                                                                                   auction.bidprice,
+                                                                                   auction.bidnumber,
+                                                                                   auction.description,
+                                                                                   auction.thumbnailpath,
+                                                                                   auction.expirytime,
+                                                                                   auction.soldout, ])})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions", 'arguments': tuple()})
+        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions"})
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
         data = response.read()

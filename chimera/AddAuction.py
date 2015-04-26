@@ -109,7 +109,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
                             thumbnailpath, expirytime, soldout, imagepaths, categories)
 
         except Exception as e:
-            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input." + e.__repr__())
+            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input."+ e.__repr__())
 
     def cancelActionListener(self):
         self.close()

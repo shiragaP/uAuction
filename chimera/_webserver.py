@@ -160,8 +160,11 @@ class AuctionSite(BaseHTTPRequestHandler):
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
                     arguments = fs['arguments'].value
+                    import json
+
+                    arguments = json.loads(arguments)
                     print(statement)
-                    print(arguments)
+                    print(len(arguments), arguments)
                     self.send_response(200)
                     self.end_headers()
                     self.wfile.write(pickle.dumps(dbmanager.query(statement, arguments)))
