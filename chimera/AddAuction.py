@@ -1,6 +1,7 @@
 __author__ = 'Shiraga-P'
 
-import sys, re
+import sys
+import re
 from datetime import datetime, timedelta
 
 from PyQt5 import QtCore
@@ -108,7 +109,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
                             thumbnailpath, expirytime, soldout, imagepaths, categories)
 
         except Exception as e:
-            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input.")
+            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input." + e.__repr__())
 
     def cancelActionListener(self):
         self.close()
