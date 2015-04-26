@@ -252,8 +252,8 @@ def main():
         import socket
 
         print(socket.gethostbyname(socket.gethostname()))
-        # server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), MyHandler)
-        server = HTTPServer(('localhost', 8080), AuctionSite)
+        server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
+        # server = HTTPServer(('localhost', 8080), AuctionSite)
         print('started httpserver...')
         server.serve_forever()
     except KeyboardInterrupt:
