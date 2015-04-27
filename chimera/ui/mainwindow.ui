@@ -15,17 +15,30 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-QWidget#Form
-{
-	background-color: rgb(213, 213, 213);
-}
-
 
 QWidget
 {
 	background-color: rgb(239, 239, 239);
 }
 
+QWidget#Form
+{
+	background-color: rgb(213, 213, 213);
+}
+
+QWidget#widget_qquickview
+{
+	background-color: rgba(0, 0, 0, 0);
+}
+
+QWidget
+#widget_unused_1, #widget_unused_2, #widget_unused_3,
+#widget_unused_4, #widget_unused_5, #widget_unused_6,
+#widget_unused_7, #widget_unused_8, #widget_unused_9,
+#widget_unused_10
+{
+	background-color: rgba(0, 0, 0, 0);
+}
 
 QPushButton {
 	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,
@@ -776,7 +789,7 @@ QLineEdit {
     <string>[4]</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_prev_6">
+  <widget class="QPushButton" name="pushButton_p5">
    <property name="geometry">
     <rect>
      <x>750</x>
@@ -797,7 +810,7 @@ QLineEdit {
     <string>[5]</string>
    </property>
   </widget>
-  <widget class="QWidget" name="widget_unused" native="true">
+  <widget class="QWidget" name="widget_unused_1" native="true">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -826,6 +839,7 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <zorder>widget_qquickview</zorder>
   </widget>
   <widget class="QWidget" name="widget_unused_7" native="true">
    <property name="geometry">
@@ -894,6 +908,16 @@ QLineEdit {
      <y>320</y>
      <width>160</width>
      <height>240</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_qquickview" native="true">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>50</y>
+     <width>920</width>
+     <height>520</height>
     </rect>
    </property>
   </widget>
