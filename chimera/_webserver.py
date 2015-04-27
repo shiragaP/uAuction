@@ -158,11 +158,11 @@ class AuctionSite(BaseHTTPRequestHandler):
 
             elif ctype == 'multipart/form-data':
                 if self.path.startswith("/insert_auction_images"):
-                    from urllib.parse import urlparse
+                    from urllib.parse import urlparse, parse_qs
 
                     print(urlparse(self.path))
-                    print(urlparse(self.path).query)
-                    auction_id = urlparse(self.path).query
+                    print(parse_qs(urlparse(self.path).query))
+                    auction_id = parse_qs(urlparse(self.path).query)["auction_id"]
                     # original version :
                     '''
                     query=cgi.parse_multipart(self.rfile, pdict)
@@ -173,16 +173,12 @@ class AuctionSite(BaseHTTPRequestHandler):
                     fs = cgi.FieldStorage(fp=self.rfile,
                                           headers=self.headers,
                                           environ={'REQUEST_METHOD': 'POST'}
-                                          # all the rest will come from the 'headers' object,
-                                          # but as the FieldStorage object was designed for CGI, absense of 'POST' value in environ
-                                          # will prevent the object from using the 'fp' argument !
                                           )
-                    # print 'have fs'
 
                     fs_up = fs['upfile']
-                    # print(fs_up)
                     filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
                     fullname = os.path.join(CWD, filename)
+                    print(filename)
 
                     # check for copies :
                     if os.path.exists(fullname):
