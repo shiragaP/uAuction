@@ -4,19 +4,42 @@ ListView {
     anchors.fill: parent
     id: list
     spacing: 10
-    model: 100
+    model: ListModel {
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
+
+    }
+    orientation: Qt.Horizontal
 
     delegate: Rectangle {
         id: itemDelegate
-        property int listY: y - list.contentY
-        property real angleZ: (90 * listY)  / list.height       // 0 - 90 degrees
-        transform: Rotation { origin.x: width / 2; origin.y: 30; axis { x: 1; y: 0; z: 0 } angle: angleZ}
-        //transform: Rotation { origin.x: 0; origin.y: 30; axis { x: 1; y: 1; z: 0 } angle: angleZ}     <--- I like this one more!
-        width: parent.width
-        height: 50
+        property int listX: x-list.contentX
+        property real angleZ: -35 + (90 * listX)  / list.width       // 0 - 90 degrees
+        transform: Rotation { origin.y: height / 2; origin.x: 200; axis { x: 0; y: 1; z: 0 } angle: angleZ}
+        //transform: Rotation { origin.x: 0; origin.y: 30; axis { x: 1; y: 1; z: 0 } angle: angleZ}
+        width: 300
+        height: parent.height
         border.color: "lightgray"
         color: "red"
-
+        Image {
+            id: imageItem
+            height: parent.height; width: parent.width
+            anchors.left: parent.left
+            fillMode: Image.PreserveAspectFit
+            smooth: true
+            // deligate can directly ues ListElement role name
+            source: imagePath
+        }
         Binding {
             target: itemDelegate
             property: "angleZ"
