@@ -3,7 +3,7 @@ import QtQuick 2.0
 ListView {
     anchors.fill: parent
     id: list
-    spacing: 10
+    spacing: 1
     model: ListModel {
         ListElement { imagePath: "noimage.png";}
         ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
@@ -25,8 +25,7 @@ ListView {
         id: itemDelegate
         property int listX: x-list.contentX
         property real angleZ: -35 + (90 * listX)  / list.width       // 0 - 90 degrees
-        transform: Rotation { origin.y: height / 2; origin.x: 200; axis { x: 0; y: 1; z: 0 } angle: angleZ}
-        //transform: Rotation { origin.x: 0; origin.y: 30; axis { x: 1; y: 1; z: 0 } angle: angleZ}
+        transform: Rotation { origin.y: height / 2; origin.x: 150; axis { x: 0; y: 1; z: 0 } angle: angleZ}
         width: 300
         height: parent.height
         border.color: "lightgray"
@@ -40,6 +39,7 @@ ListView {
             // deligate can directly ues ListElement role name
             source: imagePath
         }
+        /*
         Binding {
             target: itemDelegate
             property: "angleZ"
@@ -51,5 +51,6 @@ ListView {
             NumberAnimation {duration: 200; to: 0}
             enabled: !(list.flicking || list.dragging)
         }
+        */
     }
 }
