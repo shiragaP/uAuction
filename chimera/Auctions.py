@@ -4,6 +4,7 @@ import pickle
 import http.client
 import urllib.parse
 import tempfile
+import mimetypes
 
 from chimera.Auction import Auction
 from DBInfo import server
@@ -12,6 +13,50 @@ from DBInfo import server
 class Auctions:
     def __init__(self):
         self.connection = http.client.HTTPConnection(server, 8080)
+
+    def post_multipart(self, selector, fields, files):
+        """
+        Post fields and files to an http host as multipart/form-data.
+        fields is a sequence of (name, value) elements for regular form fields.
+        files is a sequence of (name, filename, value) elements for data to be uploaded as files
+        Return the server's response page.
+        """
+        content_type, body = self.encode_multipart_formdata(fields, files)
+        headers = {
+            'Content-Type': content_type
+        }
+        self.connection.request('POST', selector, body, headers)
+        res = self.connection.getresponse()
+        return res.read()
+
+    def encode_multipart_formdata(self, fields, files):
+        """
+        fields is a sequence of (name, value) elements for regular form fields.
+        files is a sequence of (name, filename, value) elements for data to be uploaded as files
+        Return (content_type, body) ready for httplib.HTTP instance
+        """
+        BOUNDARY = '----------ThIs_Is_tHe_bouNdaRY_$'
+        CRLF = '\r\n'
+        L = []
+        for (key, value) in fields:
+            L.append('--' + BOUNDARY)
+            L.append('Content-Disposition: form-data; name="%s"' % key)
+            L.append('')
+            L.append(value)
+        for (key, filename, value) in files:
+            L.append('--' + BOUNDARY)
+            L.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
+            L.append('Content-Type: %s' % self.get_content_type(filename))
+            L.append('')
+            L.append(value)
+        L.append('--' + BOUNDARY + '--')
+        L.append('')
+        body = CRLF.join(L)
+        content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
+        return content_type, body
+
+    def get_content_type(self, filename):
+        return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
 
     def addAuction(self, auction):
         import json
@@ -32,16 +77,16 @@ class Auctions:
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
-        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions", 'arguments': "None"})
+        params = urllib.parse.urlencode({'statement': "SELECT max(id) from auctions"})
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
         data = response.read()
         auction_id = pickle.loads(data)[0][0]
 
-        params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": json.dumps(auction.imagepaths)})
-        self.connection.request("POST", "/insert_auction_images", params, headers)
-        response = self.connection.getresponse()
-        print(response.status, response.reason)
+        # params = urllib.parse.urlencode({'auction_id': auction_id, "imagepaths": json.dumps(auction.imagepaths)})
+        # self.connection.request("POST", "/insert_auction_images", params, headers)
+        # response = self.connection.getresponse()
+        # print(response.status, response.reason)
 
         params = urllib.parse.urlencode({'auction_id': auction_id, "categories": json.dumps(auction.categories)})
         self.connection.request("POST", "/insert_category_tags", params, headers)

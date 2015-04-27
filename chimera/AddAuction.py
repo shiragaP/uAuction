@@ -108,27 +108,20 @@ class AddAuctionDialog(QtWidgets.QDialog):
                       range(self.listWidget_thumbnail.count())]
 
         try:
-            self.addAuction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description,
-                            thumbnailpath, expirytime, soldout, imagepaths, categories)
+            Auctions().addAuction(
+                Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
+                        expirytime, soldout, imagepaths, categories))
+            QtWidgets.QMessageBox.information(self, "Notification", "Add item complete!")
+
+            if self.parent:
+                self.parent.loadRecentItems()
+
+            self.close()
 
         except Exception as e:
             QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input."+ e.__repr__())
 
     def cancelActionListener(self):
-        self.close()
-
-    def addAuction(self, name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description,
-                   thumbnailpath, expirytime, soldout, imagepaths, categories):
-
-        Auctions().addAuction(
-            Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                    expirytime, soldout, imagepaths, categories))
-
-        QtWidgets.QMessageBox.information(self, "Notification", "Add item complete!")
-
-        if self.parent:
-            self.parent.loadRecentItems()
-
         self.close()
 
     def itemSelectionChangedListener(self):

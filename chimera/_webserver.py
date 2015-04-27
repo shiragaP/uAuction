@@ -112,8 +112,8 @@ class AuctionSite(BaseHTTPRequestHandler):
         try:
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
             print(self.path)
-            if ctype == 'multipart/form-data':
-                # original version :     
+            if ctype == 'application/octet-stream':
+                # original version :
                 '''
                 query=cgi.parse_multipart(self.rfile, pdict)
                 upfilecontent = query.get('upfile')
@@ -156,21 +156,118 @@ class AuctionSite(BaseHTTPRequestHandler):
                 self.wfile.write(('<BR><A HREF=%s>back</A>' % (UPLOAD_PAGE, )).encode('ascii'))
                 self.wfile.write("</BODY></HTML>".encode('ascii'))
 
+            elif ctype == 'multipart/form-data':
+                if self.path.startswith("/insert_auction_images"):
+                    from urllib.parse import urlparse
+
+                    print(urlparse(self.path))
+                    print(urlparse(self.path).query)
+                    auction_id = urlparse(self.path).query
+                    # original version :
+                    '''
+                    query=cgi.parse_multipart(self.rfile, pdict)
+                    upfilecontent = query.get('upfile')
+                    print "filecontent", upfilecontent[0]
+                    '''
+
+                    fs = cgi.FieldStorage(fp=self.rfile,
+                                          headers=self.headers,
+                                          environ={'REQUEST_METHOD': 'POST'}
+                                          # all the rest will come from the 'headers' object,
+                                          # but as the FieldStorage object was designed for CGI, absense of 'POST' value in environ
+                                          # will prevent the object from using the 'fp' argument !
+                                          )
+                    # print 'have fs'
+
+                    fs_up = fs['upfile']
+                    # print(fs_up)
+                    filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
+                    fullname = os.path.join(CWD, filename)
+
+                    # check for copies :
+                    if os.path.exists(fullname):
+                        fullname_test = fullname + '.copy'
+                        i = 0
+                        while os.path.exists(fullname_test):
+                            fullname_test = "%s.copy(%d)" % (fullname, i)
+                            i += 1
+                        fullname = fullname_test
+
+                    if not os.path.exists(fullname):
+                        with open(fullname, 'wb') as o:
+                            # self.copyfile(fs['upfile'].file, o)
+                            o.write(fs_up.file.read())
+
+                    statement = """INSERT INTO auction_images (directory, auctionid)
+                                        VALUES (%s, %s);
+                                        """
+
+                    dbmanager.query(statement, (fullname, auction_id,))
+
+                    self.send_response(200)
+                    self.end_headers()
+
+                else:
+                    # original version :
+                    '''
+                    query=cgi.parse_multipart(self.rfile, pdict)
+                    upfilecontent = query.get('upfile')
+                    print "filecontent", upfilecontent[0]
+                    '''
+
+                    fs = cgi.FieldStorage(fp=self.rfile,
+                                          headers=self.headers,
+                                          environ={'REQUEST_METHOD': 'POST'}
+                                          # all the rest will come from the 'headers' object,
+                                          # but as the FieldStorage object was designed for CGI, absense of 'POST' value in environ
+                                          # will prevent the object from using the 'fp' argument !
+                                          )
+                    # print 'have fs'
+
+                    fs_up = fs['upfile']
+                    # print(fs_up)
+                    filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
+                    fullname = os.path.join(CWD, filename)
+
+                    # check for copies :
+                    if os.path.exists(fullname):
+                        fullname_test = fullname + '.copy'
+                        i = 0
+                        while os.path.exists(fullname_test):
+                            fullname_test = "%s.copy(%d)" % (fullname, i)
+                            i += 1
+                        fullname = fullname_test
+
+                    if not os.path.exists(fullname):
+                        with open(fullname, 'wb') as o:
+                            # self.copyfile(fs['upfile'].file, o)
+                            o.write(fs_up.file.read())
+
+                    self.send_response(200)
+                    self.end_headers()
+
+                    self.wfile.write("<HTML><HEAD></HEAD><BODY>POST OK.<BR><BR>".encode('ascii'))
+                    self.wfile.write(("File uploaded under name: " + os.path.split(fullname)[1]).encode('ascii'))
+                    self.wfile.write(('<BR><A HREF=%s>back</A>' % (UPLOAD_PAGE, )).encode('ascii'))
+                    self.wfile.write("</BODY></HTML>".encode('ascii'))
+
             elif ctype == 'application/x-www-form-urlencoded':
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
                     print(statement)
-                    arguments = fs['arguments'].value
-                    print(arguments)
-
-                    if arguments != "None":
+                    try:
+                        arguments = fs['arguments'].value
+                        print(arguments)
                         arguments = json.loads(arguments)
-                    else:
+                    except KeyError as e:
+                        print("KeyError", e)
                         arguments = tuple()
+
                     print(len(arguments), arguments)
                     self.send_response(200)
                     self.end_headers()
+                    print(dbmanager.query(statement, arguments))
                     self.wfile.write(pickle.dumps(dbmanager.query(statement, arguments)))
 
                 elif self.path == '/insert_auction_images':
