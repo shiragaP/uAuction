@@ -3,7 +3,6 @@ __author__ = 'Waterstrider'
 import pickle
 import http.client
 import urllib.parse
-import tempfile
 import json
 
 from chimera.Auction import Auction
@@ -78,13 +77,15 @@ class Auctions:
         data = response.read()
         imageurls = pickle.loads(data)
         imagepaths = list()
-
         for imageurl in imageurls:
-            self.connection.request("GET", imageurl[1])
-            response = self.connection.getresponse()
-            temp = tempfile.TemporaryFile()
-            temp.write(response.read())
-            imagepaths.append(temp)
+            imagepaths.append(imageurl[1])
+
+        # for imageurl in imageurls:
+        # self.connection.request("GET", imageurl[1])
+        #     response = self.connection.getresponse()
+        #     temp = tempfile.TemporaryFile()
+        #     temp.write(response.read())
+        #     imagepaths.append(temp)
 
         return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                        expirytime, soldout, imagepaths, auction_id)
