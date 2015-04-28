@@ -76,16 +76,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
 
-        # pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
-        # print(self.auction.thumbnailpath)
-        # label_image = QtWidgets.QLabel()
-        # label_image.setPixmap(pixmap.scaled(self.widget_qquickview.size(), QtCore.Qt.KeepAspectRatio))
-        # layout = QtWidgets.QGridLayout()
-        # layout.setContentsMargins(0, 0, 0, 0)
-        # layout.addWidget(label_image)
-
-        # self.widget_qquickview.setLayout(layout)
-
         #TODO: load images
         for imagepath in self.auction.imagepaths:
             print(imagepath)
@@ -96,8 +86,10 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.loadAuction()
         newBidPrice = self.lineEdit_bidprice.text()
         if int(newBidPrice) > int(self.auction.bidprice):
-            Auctions.updateBidPrice(self.auction_id, newBidPrice)
-            self.loadAuction()
+            Auctions().updateBidPrice(self.auction_id, newBidPrice)
+        else:
+            QtWidgets.QMessageBox.warning(self, "Warning", "Invalid bid price.")
+        self.loadAuction()
 
     def reloadTimeLeft(self):
         time_left = self.auction.expirytime - datetime.now()

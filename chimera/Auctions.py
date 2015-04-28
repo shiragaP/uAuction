@@ -78,7 +78,6 @@ class Auctions:
         data = response.read()
         imageurls = pickle.loads(data)
         imagepaths = list()
-        print(imageurls)
 
         for imageurl in imageurls:
             self.connection.request("GET", imageurl[1])
@@ -92,7 +91,7 @@ class Auctions:
 
     def updateBidPrice(self, auction_id, newBidPrice):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE items SET bidprice=%s WHERE id=%s" % (newBidPrice, auction_id,)})
+            {'statement': "UPDATE auctions SET bidprice=%s WHERE id=%s" % (newBidPrice, auction_id,)})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()

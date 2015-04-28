@@ -13,6 +13,8 @@ from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
 from urllib.parse import urlparse, parse_qs
+from chimera.Users import Users
+from chimera.Auctions import Auctions
 
 from chimera._postgreSQLManager import DBManager
 
@@ -293,7 +295,19 @@ class AuctionSiteHelper():
             """
             arguments = (row[0], )
             self.manager.query(statement, arguments)
+            self.sendAuctionEndNotification(row[0])
         Timer(1, self.run).start()
+
+    def sendAuctionEndNotification(self, auction_id):
+        auction = Auctions().getAuction(auction_id)
+        seller = Users().getUser(auction.seller_id)
+        statement = """SELECT * FROM bid_history
+                                WHERE auctionid=%s
+        """
+        print(auction_id)
+        arguments = (auction_id, )
+        rows = self.manager.query(statement, arguments)
+        print("ROWS --------------", rows)
 
 def main():
     try:
