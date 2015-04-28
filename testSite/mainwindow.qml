@@ -5,7 +5,7 @@ ListView {
     id: list
     spacing: 1
     model: ListModel {
-        ListElement { imagePath: "noimage.png";}
+        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
         ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
         ListElement { imagePath: "noimage.png";}
         ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}

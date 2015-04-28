@@ -113,6 +113,39 @@ class AuctionSite(BaseHTTPRequestHandler):
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
             print(self.path)
             if ctype == 'application/octet-stream':
+
+                fs = cgi.FieldStorage(fp=self.rfile,
+                                      headers=self.headers,
+                                      environ={'REQUEST_METHOD': 'POST'}
+                                      )
+
+                fs_up = fs['upfile']
+                # print(fs_up)
+                filename = os.path.split(fs_up.filename)[1]
+                fullname = os.path.join(CWD, filename)
+
+                if os.path.exists(fullname):
+                    fullname_test = fullname + '.copy'
+                    i = 0
+                    while os.path.exists(fullname_test):
+                        fullname_test = "%s.copy(%d)" % (fullname, i)
+                        i += 1
+                    fullname = fullname_test
+
+                if not os.path.exists(fullname):
+                    with open(fullname, 'wb') as o:
+                        # self.copyfile(fs['upfile'].file, o)
+                        o.write(fs_up.file.read())
+
+                self.send_response(200)
+                self.end_headers()
+
+                self.wfile.write("<HTML><HEAD></HEAD><BODY>POST OK.<BR><BR>".encode('ascii'))
+                self.wfile.write(("File uploaded under name: " + os.path.split(fullname)[1]).encode('ascii'))
+                self.wfile.write(('<BR><A HREF=%s>back</A>' % (UPLOAD_PAGE, )).encode('ascii'))
+                self.wfile.write("</BODY></HTML>".encode('ascii'))
+
+            elif ctype == 'multipart/form-data':
                 # original version :
                 '''
                 query=cgi.parse_multipart(self.rfile, pdict)
@@ -156,97 +189,6 @@ class AuctionSite(BaseHTTPRequestHandler):
                 self.wfile.write(('<BR><A HREF=%s>back</A>' % (UPLOAD_PAGE, )).encode('ascii'))
                 self.wfile.write("</BODY></HTML>".encode('ascii'))
 
-            elif ctype == 'multipart/form-data':
-                if self.path.startswith("/insert_auction_images"):
-                    from urllib.parse import urlparse, parse_qs
-
-                    print(urlparse(self.path))
-                    print(parse_qs(urlparse(self.path).query))
-                    auction_id = parse_qs(urlparse(self.path).query)["auction_id"]
-                    # original version :
-                    '''
-                    query=cgi.parse_multipart(self.rfile, pdict)
-                    upfilecontent = query.get('upfile')
-                    print "filecontent", upfilecontent[0]
-                    '''
-
-                    fs = cgi.FieldStorage(fp=self.rfile,
-                                          headers=self.headers,
-                                          environ={'REQUEST_METHOD': 'POST'}
-                                          )
-
-                    fs_up = fs['upfile']
-                    filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
-                    fullname = os.path.join(CWD, filename)
-                    print(filename)
-
-                    # check for copies :
-                    if os.path.exists(fullname):
-                        fullname_test = fullname + '.copy'
-                        i = 0
-                        while os.path.exists(fullname_test):
-                            fullname_test = "%s.copy(%d)" % (fullname, i)
-                            i += 1
-                        fullname = fullname_test
-
-                    if not os.path.exists(fullname):
-                        with open(fullname, 'wb') as o:
-                            # self.copyfile(fs['upfile'].file, o)
-                            o.write(fs_up.file.read())
-
-                    statement = """INSERT INTO auction_images (directory, auctionid)
-                                        VALUES (%s, %s);
-                                        """
-
-                    dbmanager.query(statement, (fullname, auction_id,))
-
-                    self.send_response(200)
-                    self.end_headers()
-
-                else:
-                    # original version :
-                    '''
-                    query=cgi.parse_multipart(self.rfile, pdict)
-                    upfilecontent = query.get('upfile')
-                    print "filecontent", upfilecontent[0]
-                    '''
-
-                    fs = cgi.FieldStorage(fp=self.rfile,
-                                          headers=self.headers,
-                                          environ={'REQUEST_METHOD': 'POST'}
-                                          # all the rest will come from the 'headers' object,
-                                          # but as the FieldStorage object was designed for CGI, absense of 'POST' value in environ
-                                          # will prevent the object from using the 'fp' argument !
-                                          )
-                    # print 'have fs'
-
-                    fs_up = fs['upfile']
-                    # print(fs_up)
-                    filename = os.path.split(fs_up.filename)[1]  # strip the path, if it presents
-                    fullname = os.path.join(CWD, filename)
-
-                    # check for copies :
-                    if os.path.exists(fullname):
-                        fullname_test = fullname + '.copy'
-                        i = 0
-                        while os.path.exists(fullname_test):
-                            fullname_test = "%s.copy(%d)" % (fullname, i)
-                            i += 1
-                        fullname = fullname_test
-
-                    if not os.path.exists(fullname):
-                        with open(fullname, 'wb') as o:
-                            # self.copyfile(fs['upfile'].file, o)
-                            o.write(fs_up.file.read())
-
-                    self.send_response(200)
-                    self.end_headers()
-
-                    self.wfile.write("<HTML><HEAD></HEAD><BODY>POST OK.<BR><BR>".encode('ascii'))
-                    self.wfile.write(("File uploaded under name: " + os.path.split(fullname)[1]).encode('ascii'))
-                    self.wfile.write(('<BR><A HREF=%s>back</A>' % (UPLOAD_PAGE, )).encode('ascii'))
-                    self.wfile.write("</BODY></HTML>".encode('ascii'))
-
             elif ctype == 'application/x-www-form-urlencoded':
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -265,39 +207,6 @@ class AuctionSite(BaseHTTPRequestHandler):
                     self.end_headers()
                     print(dbmanager.query(statement, arguments))
                     self.wfile.write(pickle.dumps(dbmanager.query(statement, arguments)))
-
-                elif self.path == '/insert_auction_images':
-                    fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
-                    auction_id = fs['auction_id'].value
-                    imagepaths = fs['imagepaths'].value
-                    imagepaths = json.loads(imagepaths)
-                    print(imagepaths)
-
-                    for image in imagepaths:
-                        filename = os.path.split(image.name)[1]  # strip the path, if it presents
-                        fullname = os.path.join(CWD, filename)
-
-                        # check for copies :
-                        if os.path.exists(fullname):
-                            fullname_test = fullname + '.copy'
-                            i = 0
-                            while os.path.exists(fullname_test):
-                                fullname_test = "%s.copy(%d)" % (fullname, i)
-                                i += 1
-                            fullname = fullname_test
-                        if not os.path.exists(fullname):
-                            with open(fullname, 'wb') as o:
-                                # self.copyfile(fs['upfile'].file, o)
-                                o.write(image.read())
-
-                        statement = """INSERT INTO auction_images (directory, auctionid)
-                                        VALUES (%s, %s);
-                                        """
-
-                        dbmanager.query(statement, (fullname, auction_id,))
-
-                    self.send_response(200)
-                    self.end_headers()
 
                 elif self.path == '/insert_category_tags':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -320,6 +229,51 @@ class AuctionSite(BaseHTTPRequestHandler):
             else:
                 raise Exception("Unexpected POST request")
 
+        except Exception as e:
+            print("Exception: ", e)
+            self.send_error(404, 'POST to "%s" failed: %s' % (self.path, str(e)))
+
+    def do_PUT(self):
+        dbmanager = DBManager()
+        try:
+            print("----- SOMETHING WAS PUT!! ------")
+            print(self.headers)
+            length = int(self.headers['Content-Length'])
+            # content = self.rfile.read(length)
+            self.send_response(200)
+            print(self.path)
+
+            from urllib.parse import urlparse, parse_qs
+
+            print(urlparse(self.path))
+            print(parse_qs(urlparse(self.path).query))
+            auction_id = int(parse_qs(urlparse(self.path).query)["auction_id"][0])
+            print(auction_id)
+            fs_up = self.rfile
+            print(urlparse(self.path).path)
+            filename = os.path.split(urlparse(self.path).path)[1]  # strip the path, if it presents
+            fullname = os.path.join(CWD, filename)
+
+            if os.path.exists(fullname):
+                fullname_test = fullname + '.copy'
+                i = 0
+                while os.path.exists(fullname_test):
+                    fullname_test = "%s.copy(%d)" % (fullname, i)
+                    i += 1
+                fullname = fullname_test
+
+            if not os.path.exists(fullname):
+                with open(fullname, 'wb') as o:
+                    o.write(fs_up.read(length))
+
+            statement = """INSERT INTO auction_images (directory, auctionid)
+                                VALUES (%s, %s);
+                                """
+
+            dbmanager.query(statement, (fullname, auction_id,))
+
+            self.send_response(200)
+            self.end_headers()
         except Exception as e:
             print("Exception: ", e)
             self.send_error(404, 'POST to "%s" failed: %s' % (self.path, str(e)))
