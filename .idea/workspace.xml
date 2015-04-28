@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c1f5d0c-3d09-4f3b-8445-d429f3ccf46b" name="Default" comment="webserver">
-      <change type="MOVED" beforePath="C:\Users\Waterstrider\PycharmProjects\uAuction\chimera\mainwindow.qml" afterPath="$PROJECT_DIR$/chimera/Mainwindow.qml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DBInfo.py" afterPath="$PROJECT_DIR$/DBInfo.py" />
-    </list>
-    <list id="13847bdf-be1c-4147-b0d4-15ba7d73ee43" name="Failed commit: Default" comment="webserver">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chimera/MainwindowItemGroup.qml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chimera/viewAuctionImage.qml" />
-      <change type="DELETED" beforePath="C:\Users\Waterstrider\PycharmProjects\uAuction\testSite\Auction.qml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chimera/ViewAuction.py" afterPath="$PROJECT_DIR$/chimera/ViewAuction.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testSite/main.py" afterPath="$PROJECT_DIR$/testSite/main.py" />
-    </list>
+    <list default="true" id="8c1f5d0c-3d09-4f3b-8445-d429f3ccf46b" name="Default" comment="webserver" />
+    <list id="13847bdf-be1c-4147-b0d4-15ba7d73ee43" name="Failed commit: Default" comment="webserver" />
     <ignored path="uAuction.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
