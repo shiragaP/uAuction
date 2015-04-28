@@ -76,9 +76,8 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
 
-        self.view.setSource(QtCore.QUrl('mainwindow.qml'))
+        self.view.setSource(QtCore.QUrl('viewAuctionImage.qml'))
         rc = self.view.rootContext()
-        # listmodel = (self.auction.imagepaths)
         rc.setContextProperty('pythonListModel', self.auction.imagepaths)
         # class Link(QtCore.QObject):
         # def __init__(self):
