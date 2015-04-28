@@ -6,7 +6,9 @@
 import pickle
 import json
 import cgi
+from threading import Thread, Timer
 import time
+from datetime import datetime, timedelta
 from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
@@ -271,14 +273,36 @@ class AuctionSite(BaseHTTPRequestHandler):
             print("Exception: ", e)
             self.send_error(404, 'POST to "%s" failed: %s' % (self.path, str(e)))
 
+class AuctionSiteHelper():
+    def __init__(self):
+        super().__init__()
+        self.manager = DBManager()
+        Timer(1, self.run).start()
+
+    def run(self):
+        statement = """SELECT * FROM auctions
+                                WHERE expirytime=(SELECT min(expirytime) FROM auctions WHERE soldout='False' AND expirytime<%s)
+        """
+        arguments = (datetime.now(), )
+        rows = self.manager.query(statement, arguments)
+        for row in rows:
+            print(row)
+            statement = """UPDATE auctions
+                                SET soldout='True'
+                                WHERE id=%s;
+            """
+            arguments = (row[0], )
+            self.manager.query(statement, arguments)
+        Timer(1, self.run).start()
 
 def main():
     try:
         import socket
 
         print(socket.gethostbyname(socket.gethostname()))
-        server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
-        # server = HTTPServer(('localhost', 8080), AuctionSite)
+        #server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
+        server = HTTPServer(('localhost', 8080), AuctionSite)
+        helper = AuctionSiteHelper()
         print('started httpserver...')
         server.serve_forever()
     except KeyboardInterrupt:
