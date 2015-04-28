@@ -7,6 +7,7 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5 import uic
+from PyQt5 import QtQuick
 
 from chimera.Auctions import Auctions
 from chimera.Users import Users
@@ -42,6 +43,14 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
         self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
 
+        view = QtQuick.QQuickView()
+        view.setSource(QtCore.QUrl('mainwindow.qml'))
+        layout = QtWidgets.QGridLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        con = QtWidgets.QWidget.createWindowContainer(view, self)
+        layout.addWidget(con)
+        self.widget_qquickview.setLayout(layout)
+
         self.pushButton_bid.clicked.connect(self.bidActionListener)
 
         layout = QtWidgets.QGridLayout()
@@ -67,18 +76,15 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
 
-        #self.auction.imagepaths[0].seek(0)
-        #data = self.auction.imagepaths[0].read()
-        pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
-        print(self.auction.thumbnailpath)
-        #pixmap.loadFromData(data)
-        label_image = QtWidgets.QLabel()
-        label_image.setPixmap(pixmap.scaled(self.widget_qquickview.size(), QtCore.Qt.KeepAspectRatio))
-        layout = QtWidgets.QGridLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(label_image)
+        # pixmap = QtGui.QPixmap(self.auction.thumbnailpath)
+        # print(self.auction.thumbnailpath)
+        # label_image = QtWidgets.QLabel()
+        # label_image.setPixmap(pixmap.scaled(self.widget_qquickview.size(), QtCore.Qt.KeepAspectRatio))
+        # layout = QtWidgets.QGridLayout()
+        # layout.setContentsMargins(0, 0, 0, 0)
+        # layout.addWidget(label_image)
 
-        self.widget_qquickview.setLayout(layout)
+        # self.widget_qquickview.setLayout(layout)
 
         #TODO: load images
         for imagepath in self.auction.imagepaths:

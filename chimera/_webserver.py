@@ -10,6 +10,7 @@ import time
 from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
+from urllib.parse import urlparse, parse_qs
 
 from chimera._postgreSQLManager import DBManager
 
@@ -196,17 +197,15 @@ class AuctionSite(BaseHTTPRequestHandler):
                     print(statement)
                     try:
                         arguments = fs['arguments'].value
-                        print(arguments)
                         arguments = json.loads(arguments)
                     except KeyError as e:
                         print("KeyError", e)
                         arguments = tuple()
 
-                    print(len(arguments), arguments)
                     self.send_response(200)
                     self.end_headers()
-                    print(dbmanager.query(statement, arguments))
-                    self.wfile.write(pickle.dumps(dbmanager.query(statement, arguments)))
+                    fetch = dbmanager.query(statement, arguments)
+                    self.wfile.write(pickle.dumps(fetch))
 
                 elif self.path == '/insert_category_tags':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
@@ -241,16 +240,10 @@ class AuctionSite(BaseHTTPRequestHandler):
             length = int(self.headers['Content-Length'])
             # content = self.rfile.read(length)
             self.send_response(200)
-            print(self.path)
 
-            from urllib.parse import urlparse, parse_qs
 
-            print(urlparse(self.path))
-            print(parse_qs(urlparse(self.path).query))
             auction_id = int(parse_qs(urlparse(self.path).query)["auction_id"][0])
-            print(auction_id)
             fs_up = self.rfile
-            print(urlparse(self.path).path)
             filename = os.path.split(urlparse(self.path).path)[1]  # strip the path, if it presents
             fullname = os.path.join(CWD, filename)
 

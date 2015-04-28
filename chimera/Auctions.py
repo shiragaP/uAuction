@@ -4,6 +4,7 @@ import pickle
 import http.client
 import urllib.parse
 import tempfile
+import json
 
 from chimera.Auction import Auction
 from DBInfo import server
@@ -14,7 +15,7 @@ class Auctions:
         self.connection = http.client.HTTPConnection(server, 8080)
 
     def addAuction(self, auction):
-        import json
+        print("Sent...")
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
             (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps([auction.name,
@@ -50,7 +51,8 @@ class Auctions:
         print(response.status, response.reason)
 
     def getAuction(self, auction_id):
-        params = urllib.parse.urlencode({'statement': "SELECT * from auctions WHERE auctions.id=%s" % (auction_id,)})
+        params = urllib.parse.urlencode(
+            {'statement': "SELECT * from auctions WHERE auctions.id=%s", 'arguments': json.dumps((auction_id,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -69,12 +71,14 @@ class Auctions:
         soldout = row[10]
 
         params = urllib.parse.urlencode(
-            {'statement': "SELECT * from auction_images WHERE auction_images.auctionid=%s" % (auction_id,)})
+            {'statement': "SELECT * from auction_images WHERE auction_images.auctionid=%s",
+             'arguments': json.dumps((auction_id,))})
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
         data = response.read()
         imageurls = pickle.loads(data)
         imagepaths = list()
+        print(imageurls)
 
         for imageurl in imageurls:
             self.connection.request("GET", imageurl[1])

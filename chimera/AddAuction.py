@@ -116,7 +116,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
             if self.parent:
                 self.parent.loadRecentItems()
 
-            self.close()
+                # self.close()
 
         except Exception as e:
             QtWidgets.QMessageBox.warning(self, "Warning", "Invalid input."+ e.__repr__())
