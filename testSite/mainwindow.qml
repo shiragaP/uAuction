@@ -3,9 +3,9 @@ import QtQuick 2.0
 ListView {
     anchors.fill: parent
     id: list
-    spacing: 1
+    spacing: -15
     model: ListModel {
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
+        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/chimera/Image10_958642.jpg";}
         ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}
         ListElement { imagePath: "noimage.png";}
         ListElement { imagePath: "UP10631108H05_788C087B3445FED333D2_L.png"}

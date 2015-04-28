@@ -43,11 +43,11 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
         self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
 
-        view = QtQuick.QQuickView()
-        view.setSource(QtCore.QUrl('mainwindow.qml'))
+        self.view = QtQuick.QQuickView()
+
         layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        con = QtWidgets.QWidget.createWindowContainer(view, self)
+        con = QtWidgets.QWidget.createWindowContainer(self.view, self)
         layout.addWidget(con)
         self.widget_qquickview.setLayout(layout)
 
@@ -75,6 +75,20 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.label_buyoutprice.setText(str(self.auction.buyoutprice if self.auction.buyoutprice != 0 else '-'))
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
+
+        self.view.setSource(QtCore.QUrl('mainwindow.qml'))
+        rc = self.view.rootContext()
+        # listmodel = (self.auction.imagepaths)
+        rc.setContextProperty('pythonListModel', self.auction.imagepaths)
+        # class Link(QtCore.QObject):
+        # def __init__(self):
+        # super().__init__()
+        #     # @QtCore.pyqtSlot(int)
+        #     @QtCore.pyqtSlot('QString')
+        #     def debug(self, s):
+        #         print(s)
+        # link = Link()
+        # rc.setContextProperty('link',link)
 
         #TODO: load images
         for imagepath in self.auction.imagepaths:
@@ -115,7 +129,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
             self.label_image.setPixmap(
                 QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(
                     self.label_image.size(), QtCore.Qt.KeepAspectRatio))
-
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

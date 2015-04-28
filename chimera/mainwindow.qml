@@ -3,32 +3,29 @@ import QtQuick 2.0
 ListView {
     anchors.fill: parent
     id: list
-    spacing: 1
-    model: ListModel {
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/logo.png";}
-        ListElement { imagePath: "http://uAuction.mooo.com:8080/Users/Waterstrider/PycharmProjects/uAuction/resources/img/noimage.png";}
-    }
+    spacing: -15
+    model: pythonListModel
     orientation: Qt.Horizontal
-
-    delegate: Rectangle {
+    delegate:Rectangle {
         id: itemDelegate
         property int listX: x-list.contentX
-        property real angleZ: -35 + (90 * listX)  / list.width       // 0 - 90 degrees
+        property real angleZ:-15+ (90 * listX)  / list.width       // 0 - 90 degrees
         transform: Rotation { origin.y: height / 2; origin.x: 150; axis { x: 0; y: 1; z: 0 } angle: angleZ}
         width: 300
         height: parent.height
-        border.color: "lightgray"
-        color: "red"
+        //border.color: "lightgray"
+        //color: "#22000000"
+        gradient: Gradient {
+          GradientStop { position: 0.0
+          color: "#F0F0F0"
+          }
+          GradientStop { position: 0.5
+          color: "#000000"
+          }
+          GradientStop { position: 1.0
+          color: "#FFFFFF"
+          }
+        }
         Image {
             id: imageItem
             height: parent.height; width: parent.width
@@ -36,7 +33,10 @@ ListView {
             fillMode: Image.PreserveAspectFit
             smooth: true
             // deligate can directly ues ListElement role name
-            source: imagePath
+            source: modelData
+        }
+        function f(){
+            console.log("F...F")
         }
         /*
         Binding {

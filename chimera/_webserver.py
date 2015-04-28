@@ -6,16 +6,17 @@
 import pickle
 import json
 import cgi
-from threading import Thread, Timer
+from threading import Timer
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from os import curdir, sep
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os  # os. path
 from urllib.parse import urlparse, parse_qs
+
+import DBInfo
 from chimera.Users import Users
 from chimera.Auctions import Auctions
-
 from chimera._postgreSQLManager import DBManager
 
 
@@ -252,10 +253,11 @@ class AuctionSite(BaseHTTPRequestHandler):
             fullname = os.path.join(CWD, filename)
 
             if os.path.exists(fullname):
-                fullname_test = fullname + '.copy'
+                fullname, fileExtension = os.path.splitext(fullname)
+                fullname_test = fullname + '.copy' + fileExtension
                 i = 0
                 while os.path.exists(fullname_test):
-                    fullname_test = "%s.copy(%d)" % (fullname, i)
+                    fullname_test = "%s.copy(%d)%s" % (fullname, i, fileExtension)
                     i += 1
                 fullname = fullname_test
 
@@ -266,8 +268,9 @@ class AuctionSite(BaseHTTPRequestHandler):
             statement = """INSERT INTO auction_images (directory, auctionid)
                                 VALUES (%s, %s);
                                 """
-
-            dbmanager.query(statement, (fullname, auction_id,))
+            if fullname.startswith("C:\\"):
+                fullname = fullname[3:].replace("\\", '/')
+            dbmanager.query(statement, ("http://" + DBInfo.server + ":8080/" + fullname, auction_id,))
 
             self.send_response(200)
             self.end_headers()
@@ -277,7 +280,6 @@ class AuctionSite(BaseHTTPRequestHandler):
 
 class AuctionSiteHelper():
     def __init__(self):
-        super().__init__()
         self.manager = DBManager()
         Timer(1, self.run).start()
 
@@ -314,8 +316,8 @@ def main():
         import socket
 
         print(socket.gethostbyname(socket.gethostname()))
-        #server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
-        server = HTTPServer(('localhost', 8080), AuctionSite)
+        server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
+        # server = HTTPServer(('localhost', 8080), AuctionSite)
         helper = AuctionSiteHelper()
         print('started httpserver...')
         server.serve_forever()
