@@ -322,8 +322,12 @@ def main():
         import socket
 
         print(socket.gethostbyname(socket.gethostname()))
-        # server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
-        server = HTTPServer(('localhost', 8080), AuctionSite)
+        server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
+
+        import getpass
+        if getpass.getuser() == 'Fujiwara':
+            server = HTTPServer(('localhost', 8080), AuctionSite)
+
         AuctionSiteHelper().run()
         print('started httpserver...')
         server.serve_forever()

@@ -10,7 +10,7 @@ from PyQt5 import uic
 from chimera.Users import Users
 
 
-class RegisterWidget(QtWidgets.QWidget):
+class RegisterDialog(QtWidgets.QDialog):
     def __init__(self, parent=None, DEBUGMODE=False):
         super().__init__(parent)
         self.DEBUGMODE = DEBUGMODE
@@ -116,6 +116,6 @@ class RegisterWidget(QtWidgets.QWidget):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    registerWidget = RegisterWidget(DEBUGMODE=True)
-    registerWidget.show()
+    registerDialog = RegisterDialog(DEBUGMODE=True)
+    registerDialog.show()
     sys.exit(app.exec_())

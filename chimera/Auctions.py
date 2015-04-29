@@ -141,7 +141,30 @@ class Auctions:
     def update(self):
         pass
 
+    def getActiveAuctionIDs(self):
+        params = urllib.parse.urlencode(
+            {'statement': "SELECT id from auctions WHERE soldout=False ORDER BY id DESC"})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+
+        rows = pickle.loads(data)
+
+        return rows
+
+    def getPopularCategories(self):
+        params = urllib.parse.urlencode(
+            {'statement': "SELECT category from category_tags GROUP BY category ORDER BY COUNT(category) DESC LIMIT 10"})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+
+        rows = pickle.loads(data)
+
+        return rows
 
 if __name__ == '__main__':
-    auction = Auctions().getAuction(1)
-    print("name", auction.name)
+    auction = Auctions().getPopularCategories()
+    print(auction)

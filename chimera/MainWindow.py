@@ -9,6 +9,7 @@ from PyQt5 import uic
 
 from chimera.Auctions import Auctions
 from chimera.Users import Users
+from chimera.Register import RegisterDialog
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -34,16 +35,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pushButton_p5 = form.findChild(QtWidgets.QPushButton, 'pushButton_p5')
         self.pushButton_prev = form.findChild(QtWidgets.QPushButton, 'pushButton_prev')
 
-        self.label_cat_1 = form.findChild(QtWidgets.QLabel, 'label_cat_1')
-        self.label_cat_2 = form.findChild(QtWidgets.QLabel, 'label_cat_2')
-        self.label_cat_3 = form.findChild(QtWidgets.QLabel, 'label_cat_3')
-        self.label_cat_4 = form.findChild(QtWidgets.QLabel, 'label_cat_4')
-        self.label_cat_5 = form.findChild(QtWidgets.QLabel, 'label_cat_5')
-        self.label_cat_6 = form.findChild(QtWidgets.QLabel, 'label_cat_6')
-        self.label_cat_7 = form.findChild(QtWidgets.QLabel, 'label_cat_7')
-        self.label_cat_8 = form.findChild(QtWidgets.QLabel, 'label_cat_8')
-        self.label_cat_9 = form.findChild(QtWidgets.QLabel, 'label_cat_9')
-        self.label_cat_10 = form.findChild(QtWidgets.QLabel, 'label_cat_10')
+        self.label_cat = list()
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_1'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_2'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_3'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_4'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_5'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_6'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_7'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_8'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_9'))
+        self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_10'))
 
         self.widget_login = form.findChild(QtWidgets.QWidget, 'widget_login')
         self.lineEdit_user = form.findChild(QtWidgets.QLineEdit, 'lineEdit_user')
@@ -53,6 +55,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pushButton_login = form.findChild(QtWidgets.QPushButton, 'pushButton_login')
         self.pushButton_login.clicked.connect(self.loginClickedActionListener)
         self.pushButton_register = form.findChild(QtWidgets.QPushButton, 'pushButton_register')
+        self.pushButton_register.clicked.connect(self.registerClickedActionListener)
 
         self.widget_info = form.findChild(QtWidgets.QWidget, 'widget_info')
         self.label_name = form.findChild(QtWidgets.QLabel, 'label_name')
@@ -68,54 +71,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(form)
 
         self.setMinimumSize(form.size())
+        self.setMaximumSize(form.size())
         self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle("uAuction")
 
         self.currentPage = 1
+        self.auctionList = Auctions().getActiveAuctionIDs()
         self.showGuestWidgets()
-        self.loadRecentItems()
+        self.loadPopularCategories()
+        self.loadItemsFromRight()
 
-    def loadRecentItems(self):
-        current_time = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now())
-        conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
-                                (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
-        cur = conn.cursor()
-        #cur.execute("SELECT * from auctions WHERE expirytime>%s", (current_time,))
-        cur.execute("SELECT * from auctions")
-        rows = cur.fetchall()
-        conn.commit()
-        cur.close()
-        conn.close()
-
-        self.itemCount = min(len(rows), 20)
-
-        print(self.itemCount)
-        if self.itemCount == 0:
-            return
-
-        if self.itemCount <= int((self.width() - 190) / 196):
-            self.table_columnCount = self.itemCount
-            self.table_rowCount = 1
-        else:
-            self.table_columnCount = int((self.width() - 190) / 196)
-            self.table_rowCount = math.ceil(self.itemCount / self.table_columnCount)
-
-        self.table_widget.setRowCount(self.table_rowCount)
-        self.table_widget.setColumnCount(self.table_columnCount)
-        for i in range(self.itemCount):
-            self.table_widget.setCellWidget(int(i / self.table_columnCount), i % self.table_columnCount,
-                                            ThumbnailDetailWidget(self.user_id, rows[i][0], self, DEBUGMODE=True))
-
-        remainCellCount = (self.table_columnCount - self.itemCount % self.table_columnCount) % self.table_columnCount
-        for i in range(remainCellCount):
-            self.table_widget.setCellWidget(self.table_rowCount - 1, self.table_columnCount - i - 1, QtGui.QLabel())
-
-        self.table_widget.resizeColumnsToContents()
-        self.table_widget.resizeRowsToContents()
-
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-
+    def loadItemsFromRight(self):
         pass
 
     def loginClickedActionListener(self):
@@ -134,6 +100,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_user.setText(user.username)
         self.label_userid.setText("(" + ("%04d" % user.user_id) + ")")
         self.showUserWidgets()
+
+    def registerClickedActionListener(self):
+        registerWidget = RegisterDialog(DEBUGMODE=self.DEBUGMODE)
+        registerWidget.exec_()
 
     def logoutClickedActionListener(self):
         self.user_id = 0
@@ -164,6 +134,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pushButton_seebidhistory.show()
         self.pushButton_logout.show()
 
+    def loadPopularCategories(self):
+        categories = Auctions().getPopularCategories()
+        for i in range(len(categories)):
+            self.label_cat[i].setText(categories[i][0])
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
