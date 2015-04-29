@@ -92,19 +92,6 @@ QLineEdit {
     <string>Register</string>
    </property>
   </widget>
-  <widget class="QWidget" name="widget_title" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>180</width>
-     <height>45</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">image: url(:/img/resource/logo.png);</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_login">
    <property name="geometry">
     <rect>
@@ -839,7 +826,6 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
-   <zorder>widget_qquickview</zorder>
   </widget>
   <widget class="QWidget" name="widget_unused_7" native="true">
    <property name="geometry">
@@ -920,7 +906,56 @@ QLineEdit {
      <height>520</height>
     </rect>
    </property>
+   <zorder>label_name</zorder>
+   <zorder>widget_info</zorder>
   </widget>
+  <widget class="QLabel" name="label_logo">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>180</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>[LOGO]</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <zorder>pushButton_register</zorder>
+  <zorder>pushButton_login</zorder>
+  <zorder>widget_pop_cat</zorder>
+  <zorder>widget_login</zorder>
+  <zorder>lineEdit_search</zorder>
+  <zorder>pushButton_search</zorder>
+  <zorder>pushButton_logout</zorder>
+  <zorder>pushButton_seebidhistory</zorder>
+  <zorder>pushButton_sell</zorder>
+  <zorder>pushButton_seeprofile</zorder>
+  <zorder>widget_info</zorder>
+  <zorder>pushButton_prev</zorder>
+  <zorder>pushButton_next</zorder>
+  <zorder>pushButton_p1</zorder>
+  <zorder>pushButton_p2</zorder>
+  <zorder>pushButton_p3</zorder>
+  <zorder>pushButton_p4</zorder>
+  <zorder>pushButton_p5</zorder>
+  <zorder>widget_unused_1</zorder>
+  <zorder>widget_unused_6</zorder>
+  <zorder>widget_unused_2</zorder>
+  <zorder>widget_unused_7</zorder>
+  <zorder>widget_unused_9</zorder>
+  <zorder>widget_unused_8</zorder>
+  <zorder>widget_unused_3</zorder>
+  <zorder>widget_unused_4</zorder>
+  <zorder>widget_unused_5</zorder>
+  <zorder>widget_unused_10</zorder>
+  <zorder>widget_qquickview</zorder>
+  <zorder>label_userid</zorder>
+  <zorder>label_logo</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

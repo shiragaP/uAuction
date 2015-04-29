@@ -1,6 +1,7 @@
 __author__ = 'Waterstrider'
 
 import pickle
+import json
 import http.client
 import urllib.parse
 
@@ -24,7 +25,7 @@ class Users:
         print(response.status, response.reason)
 
     def getUser(self, user_id):
-        params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.id=%s" % (user_id,)})
+        params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.id=%s", 'arguments': json.dumps((user_id,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -45,6 +46,19 @@ class Users:
 
         return User(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                     phonenumber, user_id)
+
+    def validUser(self, username, password):
+        params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.username=%s", 'arguments': json.dumps((username, ))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+        rows = pickle.loads(data)
+        if len(rows) < 1:
+            return -1
+        elif password == rows[0][2]:
+            return rows[0][0]
+        return 0
 
 
 if __name__ == '__main__':

@@ -96,6 +96,9 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.textEdit_description.setText(self.auction.description)
 
     def bidActionListener(self):
+        if self.lineEdit_bidprice.text() == "":
+            QtWidgets.QMessageBox.warning(self, "Invalid Bid", "Please enter the bid price.")
+            return
         self.loadAuction()
         newBidPrice = self.lineEdit_bidprice.text()
         if int(newBidPrice) > int(self.auction.bidprice):
