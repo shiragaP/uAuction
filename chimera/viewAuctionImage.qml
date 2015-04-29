@@ -35,10 +35,7 @@ ListView {
             // deligate can directly ues ListElement role name
             source: modelData
         }
-        function f(){
-            console.log("F...F")
-        }
-        /*
+
         Binding {
             target: itemDelegate
             property: "angleZ"
@@ -50,6 +47,6 @@ ListView {
             NumberAnimation {duration: 200; to: 0}
             enabled: !(list.flicking || list.dragging)
         }
-        */
+
     }
 }
