@@ -131,6 +131,16 @@ class DBManager:
                         """
         self.query(statement)
 
+    def createTableBuyoutHistory(self):
+        self.dropTableBuyoutHistory()
+        statement = """CREATE TABLE buyout_history(
+                        id serial PRIMARY KEY,
+                        userid serial,
+                        auctionid serial
+                        );
+                        """
+        self.query(statement)
+
     def dropTableUsers(self):
         self.conn.set_isolation_level(0)
         self.query("DROP TABLE IF EXISTS " + "users")
@@ -150,6 +160,10 @@ class DBManager:
     def dropTableBidHistory(self):
         self.conn.set_isolation_level(0)
         self.query("DROP TABLE IF EXISTS " + "bid_history")
+
+    def dropTableBuyoutHistory(self):
+        self.conn.set_isolation_level(0)
+        self.query("DROP TABLE IF EXISTS " + "buyout_history")
 
 # def printUsers():
 #     conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
@@ -195,4 +209,4 @@ class DBManager:
 
 if __name__ == '__main__':
     manager = DBManager()
-    manager.rebuildAll()
+    manager.createTableBuyoutHistory()

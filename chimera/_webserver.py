@@ -53,6 +53,7 @@ class AuctionSite(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
+            self.path = self.path.replace('%20', ' ')
             print(self.path)
             if self.path == '/':
                 page = self.make_index('.')
@@ -199,7 +200,6 @@ class AuctionSite(BaseHTTPRequestHandler):
                 if self.path == '/query':
                     fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
                     statement = fs['statement'].value
-                    print(statement)
                     try:
                         arguments = fs['arguments'].value
                         arguments = json.loads(arguments)
@@ -217,7 +217,6 @@ class AuctionSite(BaseHTTPRequestHandler):
                     auction_id = fs['auction_id'].value
                     categories = fs['categories'].value
                     categories = json.loads(categories)
-                    print(categories)
                     for category in categories:
                         statement = """INSERT INTO category_tags (category, auctionid)
                                         VALUES (%s, %s);
@@ -227,6 +226,15 @@ class AuctionSite(BaseHTTPRequestHandler):
 
                     self.send_response(200)
                     self.end_headers()
+
+                elif self.path == '/send_auction_end_notification':
+                    fs = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
+                    auctionid = fs['auctionid'].value
+
+                    self.send_response(200)
+                    self.end_headers()
+
+                    Timer(1, lambda: AuctionSiteHelper().sendAuctionEndNotification(auctionid)).start()
 
                 else:
                     raise Exception("Unexpected request path")
@@ -268,7 +276,7 @@ class AuctionSite(BaseHTTPRequestHandler):
             statement = """INSERT INTO auction_images (directory, auctionid)
                                 VALUES (%s, %s);
                                 """
-            if fullname.startswith("C:\\"):
+            if fullname[1:].startswith(":\\"):
                 fullname = fullname[3:].replace("\\", '/')
             dbmanager.query(statement, ("http://" + DBInfo.server + ":8080/" + fullname, auction_id,))
 
@@ -281,7 +289,6 @@ class AuctionSite(BaseHTTPRequestHandler):
 class AuctionSiteHelper():
     def __init__(self):
         self.manager = DBManager()
-        Timer(1, self.run).start()
 
     def run(self):
         statement = """SELECT * FROM auctions
@@ -303,10 +310,9 @@ class AuctionSiteHelper():
     def sendAuctionEndNotification(self, auction_id):
         auction = Auctions().getAuction(auction_id)
         seller = Users().getUser(auction.seller_id)
-        statement = """SELECT * FROM bid_history
+        statement = """SELECT userid FROM bid_history
                                 WHERE auctionid=%s
         """
-        print(auction_id)
         arguments = (auction_id, )
         rows = self.manager.query(statement, arguments)
         print("ROWS --------------", rows)
@@ -318,7 +324,7 @@ def main():
         print(socket.gethostbyname(socket.gethostname()))
         # server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
         server = HTTPServer(('localhost', 8080), AuctionSite)
-        helper = AuctionSiteHelper()
+        AuctionSiteHelper().run()
         print('started httpserver...')
         server.serve_forever()
     except KeyboardInterrupt:

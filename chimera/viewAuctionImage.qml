@@ -17,10 +17,10 @@ ListView {
         //color: "#22000000"
         gradient: Gradient {
           GradientStop { position: 0.0
-          color: "#F0F0F0"
+          color: "#FFFFFF"
           }
           GradientStop { position: 0.5
-          color: "#000000"
+          color: "#101010"
           }
           GradientStop { position: 1.0
           color: "#FFFFFF"

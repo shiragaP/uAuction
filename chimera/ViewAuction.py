@@ -39,7 +39,9 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.lineEdit_bidprice.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[0-9]{0,28}"), self))
 
         self.pushButton_bid = form.findChild(QtWidgets.QPushButton, 'pushButton_01_bid')
+        self.pushButton_bid.clicked.connect(self.bidActionListener)
         self.pushButton_buyitnow = form.findChild(QtWidgets.QPushButton, 'pushButton_02_buyitnow')
+        self.pushButton_buyitnow.clicked.connect(self.buyoutActionListener)
 
         self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
 
@@ -50,8 +52,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         con = QtWidgets.QWidget.createWindowContainer(self.view, self)
         layout.addWidget(con)
         self.widget_qquickview.setLayout(layout)
-
-        self.pushButton_bid.clicked.connect(self.bidActionListener)
 
         layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
@@ -75,6 +75,18 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.label_buyoutprice.setText(str(self.auction.buyoutprice if self.auction.buyoutprice != 0 else '-'))
         self.label_bidprice.setText(str(self.auction.bidprice))
         self.label_seller.setText(self.seller.username)
+
+        if self.auction.buyoutavailable:
+            self.pushButton_buyitnow.setEnabled(True)
+        else:
+            self.pushButton_buyitnow.setEnabled(False)
+
+        if self.auction.soldout:
+            self.pushButton_buyitnow.setEnabled(False)
+            self.pushButton_bid.setEnabled(False)
+        else:
+            self.pushButton_buyitnow.setEnabled(True)
+            self.pushButton_bid.setEnabled(True)
 
         self.view.setSource(QtCore.QUrl('viewAuctionImage.qml'))
         rc = self.view.rootContext()
@@ -102,9 +114,20 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.loadAuction()
         newBidPrice = self.lineEdit_bidprice.text()
         if int(newBidPrice) > int(self.auction.bidprice):
-            Auctions().updateBidPrice(self.auction_id, newBidPrice)
+            Auctions().updateBidPrice(self.auction_id, self.user_id, newBidPrice)
         else:
             QtWidgets.QMessageBox.warning(self, "Warning", "Invalid bid price.")
+        self.loadAuction()
+
+    def buyoutActionListener(self):
+        quit_msg = "Are you sure you want to buy this item?"
+        reply = QtWidgets.QMessageBox.question(self, 'Message',
+                         quit_msg, QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+
+        if reply == QtWidgets.QMessageBox.Yes:
+            Auctions().updateBuyout(self.auction_id, self.user_id, True)
+        else:
+            pass
         self.loadAuction()
 
     def reloadTimeLeft(self):
@@ -126,14 +149,9 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
         self.label_timeleft.setText(time_left_str)
 
-    def itemSelectionChangedListener(self):
-        if len(self.listWidget_thumbnail.selectedItems()) > 0:
-            self.label_image.setPixmap(
-                QtGui.QPixmap(self.listWidget_thumbnail.selectedItems()[0].thumbnailImage).scaled(
-                    self.label_image.size(), QtCore.Qt.KeepAspectRatio))
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    viewItemWidget = ViewAuctionDialog(auction_id=1, DEBUGMODE=True)
+    viewItemWidget = ViewAuctionDialog(auction_id=6, DEBUGMODE=True)
     viewItemWidget.show()
     sys.exit(app.exec_())

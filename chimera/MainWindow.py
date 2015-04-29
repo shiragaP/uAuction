@@ -21,7 +21,6 @@ class MainWindow(QtWidgets.QMainWindow):
         form = uic.loadUi('ui\\mainwindow.ui')
 
         self.label_logo = form.findChild(QtWidgets.QWidget, 'label_logo')
-        pixmap = QtGui.QPixmap("..\\resources\\img\\logo.png")
         self.label_logo.setPixmap(QtGui.QPixmap("..\\resources\\img\\logo.png").scaled(self.label_logo.size(), QtCore.Qt.KeepAspectRatio))
 
         self.pushButton_search = form.findChild(QtWidgets.QPushButton, 'pushButton_search')
@@ -72,11 +71,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle("uAuction")
 
+        self.currentPage = 1
         self.showGuestWidgets()
         self.loadRecentItems()
 
     def loadRecentItems(self):
-        '''
         current_time = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now())
         conn = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" %
                                 (DBInfo.host, DBInfo.dbname, DBInfo.user, DBInfo.password))
@@ -112,8 +111,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.table_widget.setCellWidget(self.table_rowCount - 1, self.table_columnCount - i - 1, QtGui.QLabel())
 
         self.table_widget.resizeColumnsToContents()
-        self.table_widget.resizeRowsToContents()'''
-        pass
+        self.table_widget.resizeRowsToContents()
 
     def resizeEvent(self, event):
         super().resizeEvent(event)

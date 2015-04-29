@@ -90,11 +90,42 @@ class Auctions:
         return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
                        expirytime, soldout, imagepaths, auction_id)
 
-    def updateBidPrice(self, auction_id, newBidPrice):
+    def updateBidPrice(self, auction_id, userid, newBidPrice):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE auctions SET bidprice=%s WHERE id=%s" % (newBidPrice, auction_id,)})
+            {'statement': "UPDATE auctions SET bidprice=%s WHERE id=%s", "arguments": json.dumps((newBidPrice, auction_id,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
+        params = urllib.parse.urlencode(
+            {'statement': """INSERT INTO bid_history (bidprice, userid, auctionid)
+                                        VALUES (%s, %s, %s);""", "arguments": json.dumps((newBidPrice, userid, auction_id,))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
+    def updateBuyout(self, auction_id, userid, buyout):
+        params = urllib.parse.urlencode(
+            {'statement': "UPDATE auctions SET soldout=%s WHERE id=%s", "arguments": json.dumps((buyout, auction_id,))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
+        params = urllib.parse.urlencode(
+            {'statement': """INSERT INTO buyout_history (userid, auctionid)
+                                        VALUES (%s, %s);""", "arguments": json.dumps((userid, auction_id,))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
+        params = urllib.parse.urlencode(
+            {'auctionid': auction_id})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/send_auction_end_notification", params, headers)
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
