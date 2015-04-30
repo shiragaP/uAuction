@@ -82,10 +82,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>20</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -103,10 +103,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>20</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -122,18 +122,23 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
    <widget class="QLabel" name="label_pop_cat">
     <property name="geometry">
      <rect>
       <x>7</x>
       <y>7</y>
       <width>170</width>
-      <height>20</height>
+      <height>25</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>15</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -154,8 +159,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -175,8 +180,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -196,8 +201,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -217,8 +222,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -238,8 +243,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -259,8 +264,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -280,8 +285,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -301,8 +306,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -322,8 +327,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -343,8 +348,8 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>11</pointsize>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -363,6 +368,11 @@ QLineEdit {
      <height>145</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
    <widget class="QLineEdit" name="lineEdit_user">
     <property name="geometry">
      <rect>
@@ -374,6 +384,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
+      <family>Calibri</family>
       <pointsize>12</pointsize>
      </font>
     </property>
@@ -389,7 +400,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>15</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -410,6 +421,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
+      <family>Calibri</family>
       <pointsize>12</pointsize>
      </font>
     </property>
@@ -425,7 +437,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>15</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -447,6 +459,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
+     <family>Calibri</family>
      <pointsize>12</pointsize>
     </font>
    </property>
@@ -462,7 +475,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>12</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -483,10 +496,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>20</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -504,10 +517,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>16</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -525,10 +538,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>16</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -546,10 +559,10 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>16</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -565,6 +578,11 @@ QLineEdit {
      <height>105</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
    <widget class="QLabel" name="label_name">
     <property name="geometry">
      <rect>
@@ -576,7 +594,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>11</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -597,7 +615,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>11</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -618,7 +636,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>11</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -639,7 +657,7 @@ QLineEdit {
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
+      <family>Calibri</family>
       <pointsize>11</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -661,7 +679,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>16</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -682,7 +700,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -703,7 +721,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -724,7 +742,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -745,7 +763,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -766,7 +784,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -787,7 +805,7 @@ QLineEdit {
    </property>
    <property name="font">
     <font>
-     <family>Times New Roman</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -806,6 +824,11 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QWidget" name="widget_unused_6" native="true">
    <property name="geometry">
@@ -815,6 +838,11 @@ QLineEdit {
      <width>160</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QWidget" name="widget_unused_2" native="true">
@@ -826,6 +854,11 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QWidget" name="widget_unused_7" native="true">
    <property name="geometry">
@@ -835,6 +868,11 @@ QLineEdit {
      <width>160</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QWidget" name="widget_unused_9" native="true">
@@ -846,6 +884,11 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QWidget" name="widget_unused_8" native="true">
    <property name="geometry">
@@ -855,6 +898,11 @@ QLineEdit {
      <width>160</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QWidget" name="widget_unused_3" native="true">
@@ -866,6 +914,11 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QWidget" name="widget_unused_4" native="true">
    <property name="geometry">
@@ -875,6 +928,11 @@ QLineEdit {
      <width>160</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QWidget" name="widget_unused_5" native="true">
@@ -886,6 +944,11 @@ QLineEdit {
      <height>240</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QWidget" name="widget_unused_10" native="true">
    <property name="geometry">
@@ -895,6 +958,11 @@ QLineEdit {
      <width>160</width>
      <height>240</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QWidget" name="widget_qquickview" native="true">
@@ -906,6 +974,17 @@ QLineEdit {
      <height>520</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
+   <zorder>pushButton_seeprofile</zorder>
+   <zorder>pushButton_login</zorder>
+   <zorder>pushButton_logout</zorder>
+   <zorder>pushButton_seebidhistory</zorder>
+   <zorder>pushButton_sell</zorder>
+   <zorder>pushButton_register</zorder>
   </widget>
   <widget class="QLabel" name="label_logo">
    <property name="geometry">
@@ -915,6 +994,11 @@ QLineEdit {
      <width>180</width>
      <height>45</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
    <property name="text">
     <string>[LOGO]</string>

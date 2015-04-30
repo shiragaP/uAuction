@@ -135,6 +135,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    viewItemWidget = ViewAuctionDialog(auction_id=2, DEBUGMODE=True)
+    viewItemWidget = ViewAuctionDialog(auction_id=20, DEBUGMODE=True)
     viewItemWidget.show()
     sys.exit(app.exec_())
