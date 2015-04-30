@@ -93,6 +93,7 @@ QLineEdit
    </property>
    <property name="font">
     <font>
+     <family>Calibri</family>
      <pointsize>28</pointsize>
     </font>
    </property>
@@ -114,10 +115,10 @@ QLineEdit
    </property>
    <property name="font">
     <font>
-     <family>MS Shell Dlg 2</family>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -135,9 +136,10 @@ QLineEdit
    </property>
    <property name="font">
     <font>
+     <family>Calibri</family>
      <pointsize>14</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -155,7 +157,10 @@ QLineEdit
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -171,6 +176,11 @@ QLineEdit
      <height>81</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_04_cancel">
    <property name="geometry">
@@ -183,7 +193,10 @@ QLineEdit
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -193,15 +206,16 @@ QLineEdit
   <widget class="QLabel" name="label_02_name">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>495</x>
      <y>20</y>
-     <width>91</width>
+     <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -214,15 +228,16 @@ QLineEdit
   <widget class="QLabel" name="label_03_buyoutprice">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>495</x>
      <y>50</y>
-     <width>91</width>
+     <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -235,15 +250,16 @@ QLineEdit
   <widget class="QLabel" name="label_04_bidprice">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>495</x>
      <y>80</y>
-     <width>91</width>
+     <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -262,6 +278,11 @@ QLineEdit
      <height>25</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_03_buyoutprice">
    <property name="geometry">
@@ -271,6 +292,11 @@ QLineEdit
      <width>250</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_04_bidprice">
@@ -282,15 +308,25 @@ QLineEdit
      <height>25</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QCheckBox" name="checkBox_buyoutavailable">
    <property name="geometry">
     <rect>
-     <x>495</x>
+     <x>490</x>
      <y>50</y>
      <width>25</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
    <property name="text">
     <string/>
@@ -299,15 +335,16 @@ QLineEdit
   <widget class="QLabel" name="label_06_description">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>490</x>
      <y>140</y>
-     <width>91</width>
+     <width>100</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="text">
@@ -326,19 +363,25 @@ QLineEdit
      <height>230</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLabel" name="label_05_categories">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>495</x>
      <y>110</y>
-     <width>91</width>
+     <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <family>Calibri</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -356,6 +399,11 @@ QLineEdit
      <width>250</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+    </font>
    </property>
    <property name="text">
     <string/>
