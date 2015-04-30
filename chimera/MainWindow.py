@@ -118,7 +118,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.auctionList2 = AuctionListModel(auctions2)
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
         self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
-
+        for auction in auctions1:
+            self.auctionList1.insertRow(0,auction)
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
