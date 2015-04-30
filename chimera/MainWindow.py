@@ -70,6 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pushButton_sell.clicked.connect(self.sellClickedActionListener)
         self.pushButton_seeprofile = form.findChild(QtWidgets.QPushButton, 'pushButton_seeprofile')
         self.pushButton_seebidhistory = form.findChild(QtWidgets.QPushButton, 'pushButton_seebidhistory')
+        self.pushButton_seebidhistory.clicked.connect(self.seebidhistoryClickedActionListener)
         self.pushButton_logout = form.findChild(QtWidgets.QPushButton, 'pushButton_logout')
         self.pushButton_logout.clicked.connect(self.logoutClickedActionListener)
 
@@ -94,7 +95,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
-        print(keywords)
+        self.auctionList = Auctions().searchAuctionIDs(keywords)
+        self.currentPage = 1
+        self.loadItemsFromRight()
 
     def nextClickedActionListener(self):
         if self.currentPage < len(self.auctionList) / 10:
@@ -130,6 +133,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def sellClickedActionListener(self):
         addAuctionDialog = AddAuctionDialog(DEBUGMODE=self.DEBUGMODE)
         addAuctionDialog.exec_()
+
+    def seebidhistoryClickedActionListener(self):
+        self.auctionList = Auctions().getBidHistory(self.user_id)
+        self.currentPage = 1
+        self.loadItemsFromRight()
 
     def logoutClickedActionListener(self):
         self.user_id = 0

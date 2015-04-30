@@ -40,7 +40,7 @@ class Auctions:
         print(auction.imagepaths)
 
         for image in auction.imagepaths:
-            self.connection.request("PUT", image.name + "?auction_id=" + str(auction_id), image)
+            self.connection.request("PUT", image.name.replace(" ", "%20") + "?auction_id=" + str(auction_id), image)
             response = self.connection.getresponse()
             print(response.status, response.reason)
 
@@ -79,6 +79,7 @@ class Auctions:
         imagepaths = list()
         for imageurl in imageurls:
             imagepaths.append(imageurl[1])
+        print(imagepaths)
 
         # for imageurl in imageurls:
         # self.connection.request("GET", imageurl[1])
@@ -165,6 +166,46 @@ class Auctions:
 
         return rows
 
+    def searchAuctionIDs(self, keywords):
+        if len(keywords) < 1:
+            return list()
+        statement = """SELECT id FROM auctions
+                        WHERE id in(SELECT id FROM auctions
+                            WHERE LOWER(name) LIKE LOWER(%s)"""
+        arguments = ('%'+keywords[0]+'%',)
+        for i in range(1, len(keywords)):
+            statement += "OR LOWER(name) LIKE LOWER(%s)"
+            arguments += ('%'+keywords[i]+'%',)
+        statement += ")"
+
+        params = urllib.parse.urlencode(
+            {'statement': statement, 'arguments': json.dumps(arguments)})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+
+        rows = pickle.loads(data)
+
+        return rows
+
+    def getBidHistory(self, userid):
+        statement = """SELECT id FROM bid_history
+                        WHERE userid=%s"""
+        arguments = (userid,)
+
+        params = urllib.parse.urlencode(
+            {'statement': statement, 'arguments': json.dumps(arguments)})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+
+        rows = pickle.loads(data)
+
+        return rows
+
 if __name__ == '__main__':
-    auction = Auctions().getPopularCategories()
-    print(auction)
+    auctions = Auctions().getBidHistory(1)
+    for auction in auctions:
+        print(auction)

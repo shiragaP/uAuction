@@ -23,7 +23,6 @@ QWidget#Form
 
 QWidget
 {
-	background-color: rgba(239, 239, 239, 0);
 	padding: 2px;
 }
 

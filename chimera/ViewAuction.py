@@ -84,9 +84,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         if self.auction.soldout:
             self.pushButton_buyitnow.setEnabled(False)
             self.pushButton_bid.setEnabled(False)
-        else:
-            self.pushButton_buyitnow.setEnabled(True)
-            self.pushButton_bid.setEnabled(True)
 
         self.view.setSource(QtCore.QUrl('viewAuctionImage.qml'))
         rc = self.view.rootContext()
@@ -152,6 +149,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    viewItemWidget = ViewAuctionDialog(auction_id=6, DEBUGMODE=True)
+    viewItemWidget = ViewAuctionDialog(auction_id=20, DEBUGMODE=True)
     viewItemWidget.show()
     sys.exit(app.exec_())

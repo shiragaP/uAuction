@@ -253,12 +253,12 @@ class AuctionSite(BaseHTTPRequestHandler):
             length = int(self.headers['Content-Length'])
             # content = self.rfile.read(length)
             self.send_response(200)
-
+            self.path = self.path.replace('%20', ' ')
 
             auction_id = int(parse_qs(urlparse(self.path).query)["auction_id"][0])
             fs_up = self.rfile
             filename = os.path.split(urlparse(self.path).path)[1]  # strip the path, if it presents
-            fullname = os.path.join(CWD, filename)
+            fullname = os.path.join(CWD+'\\img', filename)
 
             if os.path.exists(fullname):
                 fullname, fileExtension = os.path.splitext(fullname)
@@ -284,7 +284,7 @@ class AuctionSite(BaseHTTPRequestHandler):
             self.end_headers()
         except Exception as e:
             print("Exception: ", e)
-            self.send_error(404, 'POST to "%s" failed: %s' % (self.path, str(e)))
+            self.send_error(404, 'PUT to "%s" failed: %s' % (self.path, str(e)))
 
 class AuctionSiteHelper():
     def __init__(self):
