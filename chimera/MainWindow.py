@@ -1,16 +1,18 @@
 import sys, re
-from datetime import datetime
 
-import psycopg2
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5 import uic
+from PyQt5 import QtQuick
 
 from chimera.AddAuction import AddAuctionDialog
+from chimera.ViewAuction import ViewAuctionDialog
 from chimera.Auctions import Auctions
 from chimera.Users import Users
 from chimera.Register import RegisterDialog
+from chimera.auctionListModel import AuctionListModel
+from chimera.auctionWrapper import AuctionWrapper
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -53,7 +55,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.widget_login = form.findChild(QtWidgets.QWidget, 'widget_login')
         self.lineEdit_user = form.findChild(QtWidgets.QLineEdit, 'lineEdit_user')
+        self.lineEdit_user.returnPressed.connect(self.loginClickedActionListener)
         self.lineEdit_pass = form.findChild(QtWidgets.QLineEdit, 'lineEdit_pass')
+        self.lineEdit_pass.returnPressed.connect(self.loginClickedActionListener)
         self.lineEdit_pass.setEchoMode(QtWidgets.QLineEdit.Password)
 
         self.pushButton_login = form.findChild(QtWidgets.QPushButton, 'pushButton_login')
@@ -74,6 +78,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pushButton_logout = form.findChild(QtWidgets.QPushButton, 'pushButton_logout')
         self.pushButton_logout.clicked.connect(self.logoutClickedActionListener)
 
+        self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
+        self.view = QtQuick.QQuickView()
+        self.view.setSource(QtCore.QUrl('mainwindow.qml'))
+        self.rootContext = self.view.rootContext()
+        self.rootContext.setContextProperty('controller', self)
+        layout = QtWidgets.QGridLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        con = QtWidgets.QWidget.createWindowContainer(self.view, self)
+        layout.addWidget(con)
+        self.widget_qquickview.setLayout(layout)
+
         self.setCentralWidget(form)
 
         self.setMinimumSize(form.size())
@@ -81,23 +96,37 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle("uAuction")
 
-        self.currentPage = 1
-        self.auctionList = Auctions().getActiveAuctionIDs()
+        self.loadRecentAuction()
         self.showGuestWidgets()
         self.loadPopularCategories()
+
+    def loadRecentAuction(self):
+        self.currentPage = 1
+        self.auctionList = Auctions().getActiveAuctionIDs()
         self.loadItemsFromRight()
 
     def loadItemsFromRight(self):
-        print("To do: load auctions")
         auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
+        auctionList = Auctions()
+        self.currentAuctionWrappers = list()
         for auctionid in auctionIDsToLoad:
-            print(auctionid[0])
+            self.currentAuctionWrappers.append(AuctionWrapper(auctionList.getAuction(auctionid[0]), self.user_id))
+
+        auctions1 = self.currentAuctionWrappers[:5]
+        auctions2 = self.currentAuctionWrappers[5:]
+        self.auctionList1 = AuctionListModel(auctions1)
+        self.auctionList2 = AuctionListModel(auctions2)
+        self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
+        self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
-        self.auctionList = Auctions().searchAuctionIDs(keywords)
-        self.currentPage = 1
-        self.loadItemsFromRight()
+        if len(keywords) < 1:
+            self.loadRecentAuction()
+        else:
+            self.auctionList = Auctions().searchAuctionIDs(keywords)
+            self.currentPage = 1
+            self.loadItemsFromRight()
 
     def nextClickedActionListener(self):
         if self.currentPage < len(self.auctionList) / 10:
@@ -126,6 +155,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_userid.setText("(" + ("%04d" % user.user_id) + ")")
         self.showUserWidgets()
 
+        for wrapper in self.currentAuctionWrappers:
+            wrapper.buyer = self.user_id
+
     def registerClickedActionListener(self):
         registerDialog = RegisterDialog(DEBUGMODE=self.DEBUGMODE)
         registerDialog.exec_()
@@ -142,6 +174,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def logoutClickedActionListener(self):
         self.user_id = 0
         self.showGuestWidgets()
+
+        for wrapper in self.currentAuctionWrappers:
+            wrapper.buyer = self.user_id
 
     def showGuestWidgets(self):
         self.lineEdit_user.setText('')
@@ -172,6 +207,14 @@ class MainWindow(QtWidgets.QMainWindow):
         categories = Auctions().getPopularCategories()
         for i in range(len(categories)):
             self.label_cat[i].setText(categories[i][0])
+
+    @QtCore.pyqtSlot(QtCore.QObject)
+    def auctionSelected(self, wrapper):
+        if wrapper.buyer == 0:
+            QtWidgets.QMessageBox.warning(self, "Authentication Failed", "Please login to view auction details", )
+        else:
+            viewAuctionDialog = ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE)
+            viewAuctionDialog.exec_()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

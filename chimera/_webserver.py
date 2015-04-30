@@ -54,7 +54,6 @@ class AuctionSite(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             self.path = self.path.replace('%20', ' ')
-            print(self.path)
             if self.path == '/':
                 page = self.make_index('.')
                 self.send_response(200)
@@ -118,7 +117,6 @@ class AuctionSite(BaseHTTPRequestHandler):
         # global rootnode ## something remained in the orig. code     
         try:
             ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
-            print(self.path)
             if ctype == 'application/octet-stream':
 
                 fs = cgi.FieldStorage(fp=self.rfile,
@@ -248,8 +246,6 @@ class AuctionSite(BaseHTTPRequestHandler):
     def do_PUT(self):
         dbmanager = DBManager()
         try:
-            print("----- SOMETHING WAS PUT!! ------")
-            print(self.headers)
             length = int(self.headers['Content-Length'])
             # content = self.rfile.read(length)
             self.send_response(200)
@@ -258,7 +254,7 @@ class AuctionSite(BaseHTTPRequestHandler):
             auction_id = int(parse_qs(urlparse(self.path).query)["auction_id"][0])
             fs_up = self.rfile
             filename = os.path.split(urlparse(self.path).path)[1]  # strip the path, if it presents
-            fullname = os.path.join(CWD+'\\img', filename)
+            fullname = os.path.join(CWD+'\\images', filename)
 
             if os.path.exists(fullname):
                 fullname, fileExtension = os.path.splitext(fullname)

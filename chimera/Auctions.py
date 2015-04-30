@@ -1,5 +1,7 @@
+
 __author__ = 'Waterstrider'
 
+import os
 import pickle
 import http.client
 import urllib.parse
@@ -8,6 +10,7 @@ import json
 from chimera.Auction import Auction
 from DBInfo import server
 
+CWD = os.path.abspath('.')
 
 class Auctions:
     def __init__(self):
@@ -49,6 +52,8 @@ class Auctions:
         response = self.connection.getresponse()
         print(response.status, response.reason)
 
+        self.updateAuctionThumbnailPath(auction_id)
+
     def getAuction(self, auction_id):
         params = urllib.parse.urlencode(
             {'statement': "SELECT * from auctions WHERE auctions.id=%s", 'arguments': json.dumps((auction_id,))})
@@ -79,17 +84,30 @@ class Auctions:
         imagepaths = list()
         for imageurl in imageurls:
             imagepaths.append(imageurl[1])
-        print(imagepaths)
-
-        # for imageurl in imageurls:
-        # self.connection.request("GET", imageurl[1])
-        #     response = self.connection.getresponse()
-        #     temp = tempfile.TemporaryFile()
-        #     temp.write(response.read())
-        #     imagepaths.append(temp)
 
         return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                       expirytime, soldout, imagepaths, auction_id)
+                       expirytime, soldout, imagepaths,auction_id=auction_id)
+
+    def updateAuctionThumbnailPath(self, auctionid):
+        params = urllib.parse.urlencode(
+            {'statement': "SELECT directory from auction_images WHERE auctionid=%s ORDER BY id ASC", 'arguments': json.dumps((auctionid,))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        data = response.read()
+
+        rows = pickle.loads(data)
+
+        if len(rows) > 0:
+            path = rows[0][0]
+        else:
+            path = "http://" + server + ":8080/" + CWD[3:].replace("\\", '/') + "/images/noimage.png"
+        params = urllib.parse.urlencode(
+            {'statement': "UPDATE auctions SET thumbnail=%s WHERE id=%s", "arguments": json.dumps((path, auctionid,))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
 
     def updateBidPrice(self, auction_id, userid, newBidPrice):
         params = urllib.parse.urlencode(
@@ -190,7 +208,7 @@ class Auctions:
         return rows
 
     def getBidHistory(self, userid):
-        statement = """SELECT id FROM bid_history
+        statement = """SELECT DISTINCT auctionid FROM bid_history
                         WHERE userid=%s"""
         arguments = (userid,)
 
@@ -206,6 +224,4 @@ class Auctions:
         return rows
 
 if __name__ == '__main__':
-    auctions = Auctions().getBidHistory(1)
-    for auction in auctions:
-        print(auction)
+    auctions = Auctions().updateAuctionThumbnailPath(8)

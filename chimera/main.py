@@ -4,19 +4,21 @@ import sys
 from PyQt5 import QtCore
 from PyQt5 import QtQuick
 from PyQt5 import QtWidgets
-
+from chimera.auctionListModel import AuctionListModel
+from chimera.auctionWrapper import AuctionWrapper
+from chimera.Auction import Auction
 
 class ThingWrapper(QtCore.QObject):
     def __init__(self, thing):
         QtCore.QObject.__init__(self)
         self._thing = thing
 
-    def _name(self):
+    def name(self):
         return str(self._thing)
 
     changed = QtCore.pyqtSignal()
 
-    name = QtCore.pyqtProperty(str, 'name', notify=changed)
+    name = QtCore.pyqtProperty(str, name, notify=changed)
 
 
 class ThingListModel(QtCore.QAbstractListModel):
@@ -25,7 +27,9 @@ class ThingListModel(QtCore.QAbstractListModel):
     def __init__(self, things):
         QtCore.QAbstractListModel.__init__(self)
         self._things = things
-        self.setRoleNames(dict(enumerate(ThingListModel.COLUMNS)))
+
+    def roleNames(self):
+        return dict(enumerate(ThingListModel.COLUMNS))
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._things)
@@ -40,7 +44,7 @@ class Controller(QtCore.QObject):
     @QtCore.pyqtSlot(QtCore.QObject)
     def thingSelected(self, wrapper):
         print('User clicked on:', wrapper._thing.name)
-        if wrapper.thing.number > 10:
+        if wrapper._thing.number > 10:
             print('The number is greater than ten!')
 
 
@@ -49,15 +53,14 @@ class Person(object):
         self.name = name
         self.number = number
 
-    def __str__(self):
-        return 'Person "%s" (d)'(self.name, self.number)
+    def __repr__(self):
+        return 'Person "%s" (%d)'%(self.name, self.number)
 
 
 class Link(QtCore.QObject):
     def __init__(self):
         super().__init__()
 
-    # @QtCore.pyqtSlot(int)
     @QtCore.pyqtSlot('QString')
     def debug(self, s):
         print(s)
@@ -68,24 +71,38 @@ if __name__ == '__main__':
     myApp = QtWidgets.QApplication(sys.argv)
     # Create a label and set its properties
     view = QtQuick.QQuickView()
-    view.setSource(QtCore.QUrl('Mainwindow.qml'))
+    view.setSource(QtCore.QUrl('mainwindow.qml'))
     rc = view.rootContext()
     people = [
-        Person('Locke', 4),
-        Person('Reyes', 8),
-        Person('Ford', 15),
-        Person('Jarrah', 16),
-        Person('Shephard', 23),
-        Person('Kwon', 42),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+        Auction('Locke', 4, 4, 4, 4, 4, 4, 'C:/Users/Waterstrider/PycharmProjects/uAuction/resources\img/noimage.png',4, 4),
+
+        # Person('Locke', 4),
+        # Person('Reyes', 8),
+        # Person('Ford', 15),
+        # Person('Jarrah', 16),
+        # Person('Shephard', 23),
+        # Person('Kwon', 42),
     ]
-    things = [ThingWrapper(thing) for thing in people]
-    link = Link()
-    controller = Controller()
-    thingList = ThingListModel(things)
+    auctions = [AuctionWrapper(auction) for auction in people]
+    auctions1 = auctions[:5]
+    auctions2 = auctions[5:]
+    # link = Link()
+    controller = AuctionController()
+    thingList1 = AuctionListModel(auctions1)
+    thingList2 = AuctionListModel(auctions2)
 
     rc.setContextProperty('controller', controller)
-    rc.setContextProperty('pythonListModel', thingList)
-    rc.setContextProperty('link', link)
+    rc.setContextProperty('pythonListModel1', thingList1)
+    rc.setContextProperty('pythonListModel2', thingList2)
+    # rc.setContextProperty('link', link)
     # Show the Label
     view.show()
 

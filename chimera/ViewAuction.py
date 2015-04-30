@@ -46,7 +46,8 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
 
         self.view = QtQuick.QQuickView()
-
+        self.view.setSource(QtCore.QUrl('viewAuctionImage.qml'))
+        self.rootContext = self.view.rootContext()
         layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         con = QtWidgets.QWidget.createWindowContainer(self.view, self)
@@ -85,22 +86,7 @@ class ViewAuctionDialog(QtWidgets.QDialog):
             self.pushButton_buyitnow.setEnabled(False)
             self.pushButton_bid.setEnabled(False)
 
-        self.view.setSource(QtCore.QUrl('viewAuctionImage.qml'))
-        rc = self.view.rootContext()
-        rc.setContextProperty('pythonListModel', self.auction.imagepaths)
-        # class Link(QtCore.QObject):
-        # def __init__(self):
-        # super().__init__()
-        #     # @QtCore.pyqtSlot(int)
-        #     @QtCore.pyqtSlot('QString')
-        #     def debug(self, s):
-        #         print(s)
-        # link = Link()
-        # rc.setContextProperty('link',link)
-
-        #TODO: load images
-        for imagepath in self.auction.imagepaths:
-            print(imagepath)
+        self.rootContext.setContextProperty('pythonListModel', self.auction.imagepaths)
 
         self.textEdit_description.setText(self.auction.description)
 
@@ -149,6 +135,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    viewItemWidget = ViewAuctionDialog(auction_id=20, DEBUGMODE=True)
+    viewItemWidget = ViewAuctionDialog(auction_id=2, DEBUGMODE=True)
     viewItemWidget.show()
     sys.exit(app.exec_())
