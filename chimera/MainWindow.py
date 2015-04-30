@@ -119,6 +119,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
         self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
 
+
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
         if len(keywords) < 1:
