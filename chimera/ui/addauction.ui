@@ -17,13 +17,22 @@
    <string notr="true">
 QWidget#Form
 {
-	background-color: rgb(249, 249, 249);
+	background-color: rgb(213, 213, 213);
 }
-
 
 QWidget
 {
 	background-color: rgba(239, 239, 239, 0);
+}
+
+QListWidget#listWidget_thumbnail
+{
+	background-color: rgba(239, 239, 239, 255);
+}
+
+QTextEdit#textEdit_06_description
+{
+	background-color: rgba(239, 239, 239, 255);
 }
 
 QLabel

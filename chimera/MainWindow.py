@@ -1,4 +1,4 @@
-import sys
+import sys, re
 from datetime import datetime
 
 import psycopg2
@@ -7,6 +7,7 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5 import uic
 
+from chimera.AddAuction import AddAuctionDialog
 from chimera.Auctions import Auctions
 from chimera.Users import Users
 from chimera.Register import RegisterDialog
@@ -24,16 +25,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_logo = form.findChild(QtWidgets.QWidget, 'label_logo')
         self.label_logo.setPixmap(QtGui.QPixmap("..\\resources\\img\\logo.png").scaled(self.label_logo.size(), QtCore.Qt.KeepAspectRatio))
 
-        self.pushButton_search = form.findChild(QtWidgets.QPushButton, 'pushButton_search')
         self.lineEdit_search = form.findChild(QtWidgets.QLineEdit, 'lineEdit_search')
+        self.pushButton_search = form.findChild(QtWidgets.QPushButton, 'pushButton_search')
+        self.pushButton_search.clicked.connect(self.searchClickedActionListener)
 
         self.pushButton_next = form.findChild(QtWidgets.QPushButton, 'pushButton_next')
+        self.pushButton_next.clicked.connect(self.nextClickedActionListener)
         self.pushButton_p1 = form.findChild(QtWidgets.QPushButton, 'pushButton_p1')
         self.pushButton_p2 = form.findChild(QtWidgets.QPushButton, 'pushButton_p2')
         self.pushButton_p3 = form.findChild(QtWidgets.QPushButton, 'pushButton_p3')
         self.pushButton_p4 = form.findChild(QtWidgets.QPushButton, 'pushButton_p4')
         self.pushButton_p5 = form.findChild(QtWidgets.QPushButton, 'pushButton_p5')
         self.pushButton_prev = form.findChild(QtWidgets.QPushButton, 'pushButton_prev')
+        self.pushButton_prev.clicked.connect(self.prevClickedActionListener)
 
         self.label_cat = list()
         self.label_cat.append(form.findChild(QtWidgets.QLabel, 'label_cat_1'))
@@ -63,6 +67,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_userid = form.findChild(QtWidgets.QLabel, 'label_userid')
 
         self.pushButton_sell = form.findChild(QtWidgets.QPushButton, 'pushButton_sell')
+        self.pushButton_sell.clicked.connect(self.sellClickedActionListener)
         self.pushButton_seeprofile = form.findChild(QtWidgets.QPushButton, 'pushButton_seeprofile')
         self.pushButton_seebidhistory = form.findChild(QtWidgets.QPushButton, 'pushButton_seebidhistory')
         self.pushButton_logout = form.findChild(QtWidgets.QPushButton, 'pushButton_logout')
@@ -82,7 +87,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadItemsFromRight()
 
     def loadItemsFromRight(self):
-        pass
+        print("To do: load auctions")
+        auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
+        for auctionid in auctionIDsToLoad:
+            print(auctionid[0])
+
+    def searchClickedActionListener(self):
+        keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
+        print(keywords)
+
+    def nextClickedActionListener(self):
+        if self.currentPage < len(self.auctionList) / 10:
+            self.currentPage += 1
+        self.loadItemsFromRight()
+
+    def prevClickedActionListener(self):
+        if self.currentPage > 1:
+            self.currentPage -= 1
+        self.loadItemsFromRight()
 
     def loginClickedActionListener(self):
         if self.lineEdit_user.text() == "" or self.lineEdit_pass.text() =="":
@@ -102,8 +124,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showUserWidgets()
 
     def registerClickedActionListener(self):
-        registerWidget = RegisterDialog(DEBUGMODE=self.DEBUGMODE)
-        registerWidget.exec_()
+        registerDialog = RegisterDialog(DEBUGMODE=self.DEBUGMODE)
+        registerDialog.exec_()
+
+    def sellClickedActionListener(self):
+        addAuctionDialog = AddAuctionDialog(DEBUGMODE=self.DEBUGMODE)
+        addAuctionDialog.exec_()
 
     def logoutClickedActionListener(self):
         self.user_id = 0
