@@ -16,9 +16,9 @@ class Users:
     def addUser(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                 phonenumber):
         params = urllib.parse.urlencode({'statement': """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps((
             username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
-            phonenumber)})
+            phonenumber))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -47,6 +47,20 @@ class Users:
         return User(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                     phonenumber, user_id)
 
+    def updateUser(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+                phonenumber):
+        statement = """UPDATE users
+                        SET password=%s, email=%s, firstname=%s, lastname=%s, address1=%s, address2=%s, province=%s, country=%s, zipcode=%s, phonenumber=%s
+                        WHERE username=%s;
+        """
+        params = urllib.parse.urlencode({'statement': statement, 'arguments': json.dumps((
+            password, email, firstname, lastname, address1, address2, province, country, zipcode,
+            phonenumber, username))})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.connection.request("POST", "/query", params, headers)
+        response = self.connection.getresponse()
+        print(response.status, response.reason)
+
     def validUser(self, username, password):
         params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.username=%s", 'arguments': json.dumps((username, ))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
@@ -59,6 +73,8 @@ class Users:
         elif password == rows[0][2]:
             return rows[0][0]
         return 0
+
+
 
 
 if __name__ == '__main__':

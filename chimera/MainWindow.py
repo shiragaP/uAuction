@@ -13,6 +13,7 @@ from chimera.Users import Users
 from chimera.Register import RegisterDialog
 from chimera.auctionListModel import AuctionListModel
 from chimera.auctionWrapper import AuctionWrapper
+from chimera.QObjectListModel import QObjectListModel
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -80,7 +81,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.widget_qquickview = form.findChild(QtWidgets.QWidget, 'widget_qquickview')
         self.view = QtQuick.QQuickView()
-        self.view.setSource(QtCore.QUrl('mainwindow.qml'))
+        self.view.setSource(QtCore.QUrl('ui/mainwindow.qml'))
         self.rootContext = self.view.rootContext()
         self.rootContext.setContextProperty('controller', self)
         layout = QtWidgets.QGridLayout()
@@ -114,12 +115,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         auctions1 = self.currentAuctionWrappers[:5]
         auctions2 = self.currentAuctionWrappers[5:]
-        self.auctionList1 = AuctionListModel(auctions1)
-        self.auctionList2 = AuctionListModel(auctions2)
+        self.auctionList1 = QObjectListModel()
+        for auction in auctions1:
+            self.auctionList1.append(auction)
+        self.auctionList2 = QObjectListModel()
+        for auction in auctions2:
+            self.auctionList2.append(auction)
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
         self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
-        for auction in auctions1:
-            self.auctionList1.insertRow(0,auction)
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
