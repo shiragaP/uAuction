@@ -136,8 +136,9 @@ Rectangle {
             }
         }
         add: Transition {
-            NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
-            NumberAnimation { property: "scale"; easing.type: Easing.OutBounce; from: 0; to: 1.0; duration: 750 }
+            //NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
+            //NumberAnimation { property: "scale"; easing.type: Easing.OutBounce; from: 0; to: 1.0; duration: 750 }
+            NumberAnimation { properties: "x"; duration: 600; easing.type: Easing.OutBack }
         }
 
         addDisplaced: Transition {
