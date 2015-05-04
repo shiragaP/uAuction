@@ -9,7 +9,7 @@ ListView {
     delegate:Rectangle {
         id: itemDelegate
         property int listX: x-list.contentX
-        property real angleZ:-15+ (90 * listX)  / list.width       // 0 - 90 degrees
+        property real angleZ:+15- (90 * listX)  / list.width       // 0 - 90 degrees
         transform: Rotation { origin.y: height / 2; origin.x: 150; axis { x: 0; y: 1; z: 0 } angle: angleZ}
         width: 320
         height: parent.height
