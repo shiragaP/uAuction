@@ -324,7 +324,7 @@ def main():
         if getpass.getuser() == 'Fujiwara':
             server = HTTPServer(('localhost', 8080), AuctionSite)
 
-        AuctionSiteHelper().run()
+        Timer(1, AuctionSiteHelper().run).start()
         print('started httpserver...')
         server.serve_forever()
     except KeyboardInterrupt:
