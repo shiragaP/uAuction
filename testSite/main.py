@@ -12,7 +12,7 @@ if __name__ == '__main__':
     myApp = QApplication(sys.argv)
     # Create a label and set its properties
     appLabel = QQuickView()
-    appLabel.setSource(QUrl('viewAuctionImage.qml'))
+    appLabel.setSource(QUrl('Home.qml'))
 
     # Show the Label
     appLabel.show()

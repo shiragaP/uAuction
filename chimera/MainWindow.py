@@ -115,10 +115,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         auctions1 = self.currentAuctionWrappers[:5]
         auctions2 = self.currentAuctionWrappers[5:]
-        self.auctionList1 = QObjectListModel()
+        self.auctionList1 = QObjectListModel(self)
         for auction in auctions1:
             self.auctionList1.append(auction)
-        self.auctionList2 = QObjectListModel()
+        self.auctionList2 = QObjectListModel(self)
         for auction in auctions2:
             self.auctionList2.append(auction)
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)

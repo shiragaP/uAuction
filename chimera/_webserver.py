@@ -315,14 +315,11 @@ class AuctionSiteHelper():
 
 def main():
     try:
-        import socket
+        server = HTTPServer(('', 8080), AuctionSite)
 
-        print(socket.gethostbyname(socket.gethostname()))
-        server = HTTPServer((socket.gethostbyname(socket.gethostname()), 8080), AuctionSite)
-
-        import getpass
-        if getpass.getuser() == 'Fujiwara':
-            server = HTTPServer(('localhost', 8080), AuctionSite)
+        # import getpass
+        # if getpass.getuser() == 'Fujiwara':
+        #     server = HTTPServer(('localhost', 8080), AuctionSite)
 
         AuctionSiteHelper().run()
         print('started httpserver...')
