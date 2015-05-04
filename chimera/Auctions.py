@@ -162,7 +162,7 @@ class Auctions:
 
     def getActiveAuctionIDs(self):
         params = urllib.parse.urlencode(
-            {'statement': "SELECT id from auctions WHERE soldout=False ORDER BY id DESC"})
+            {'statement': "SELECT id from auctions WHERE 1=1 OR soldout=False ORDER BY id DESC"})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
