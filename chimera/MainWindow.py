@@ -6,8 +6,6 @@ from PyQt5 import QtGui
 from PyQt5 import uic
 from PyQt5 import QtQuick
 
-from threading import Timer
-
 from chimera.AddAuction import AddAuctionDialog
 from chimera.ViewAuction import ViewAuctionDialog
 from chimera.Auctions import Auctions
@@ -15,7 +13,6 @@ from chimera.Users import Users
 from chimera.Register import RegisterDialog
 from chimera.auctionListModel import AuctionListModel
 from chimera.auctionWrapper import AuctionWrapper
-
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, user_id=0, parent=None, DEBUGMODE=False):

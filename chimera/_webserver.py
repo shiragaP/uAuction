@@ -316,7 +316,16 @@ class AuctionSiteHelper():
         userEmails = list()
         for user in users:
             userEmails.append(user.email)
-        sendEmail(userEmails)
+        soldoutPrice = auction.bidprice
+        if auction.buyer != 0:
+            soldoutPrice = auction.buyoutprice
+        text = \
+"""Auction ID: %s
+
+Sold out at %s Baht
+""" % (auction.auction_id, soldoutPrice)
+        if len(userEmails) > 0:
+            sendEmail(userEmails, "Auction End Notification", text)
 
 def main():
     try:

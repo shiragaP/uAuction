@@ -19,7 +19,7 @@ class Auctions:
     def addAuction(self, auction):
         print("Sent...")
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
-            buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout)VALUES
+            buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout, buyer)VALUES
             (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps([auction.name,
                                                                                    auction.seller_id,
                                                                                    auction.buyoutavailable,
@@ -29,7 +29,8 @@ class Auctions:
                                                                                    auction.description,
                                                                                    auction.thumbnailpath,
                                                                                    auction.expirytime,
-                                                                                   auction.soldout, ])})
+                                                                                   auction.soldout,
+                                                                                   auction.buyer, ])})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -73,6 +74,7 @@ class Auctions:
         thumbnailpath = row[8]
         expirytime = row[9]
         soldout = row[10]
+        buyer = row[11]
 
         params = urllib.parse.urlencode(
             {'statement': "SELECT * from auction_images WHERE auction_images.auctionid=%s",
@@ -86,7 +88,7 @@ class Auctions:
             imagepaths.append(imageurl[1])
 
         return Auction(name, seller_id, buyoutavailable, buyoutprice, bidprice, bidnumber, description, thumbnailpath,
-                       expirytime, soldout, imagepaths,auction_id=auction_id)
+                       expirytime, soldout, imagepaths, buyer=buyer, auction_id=auction_id)
 
     def updateAuctionThumbnailPath(self, auctionid):
         params = urllib.parse.urlencode(
@@ -127,7 +129,7 @@ class Auctions:
 
     def updateBuyout(self, auction_id, userid, buyout):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE auctions SET soldout=%s WHERE id=%s", "arguments": json.dumps((buyout, auction_id,))})
+            {'statement': "UPDATE auctions SET soldout=%s AND buyer=%s WHERE id=%s", "arguments": json.dumps((buyout, userid, auction_id,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()

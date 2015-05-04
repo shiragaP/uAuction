@@ -95,7 +95,8 @@ class DBManager:
                         description VARCHAR (8191),
                         thumbnail VARCHAR (127),
                         expirytime TIMESTAMP,
-                        soldout BOOLEAN
+                        soldout BOOLEAN,
+                        buyer serial
                         );
                         """
         self.query(statement)
