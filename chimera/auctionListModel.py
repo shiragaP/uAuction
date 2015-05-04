@@ -30,4 +30,4 @@ class AuctionListModel(QtCore.QObject):
         return self._auctions
 
     modelChanged = QtCore.pyqtSignal()
-    auctionss = QtCore.pyqtProperty(QtCore.QObject, getAuctions, notify=modelChanged)
+    auctions = QtCore.pyqtProperty(QtCore.QObject, getAuctions, notify=modelChanged)

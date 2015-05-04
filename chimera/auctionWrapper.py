@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 class AuctionWrapper(QtCore.QObject):
     def __init__(self, auction, buyer):
         QtCore.QObject.__init__(self)
-        self._auction = auction
+        self.auction = auction
         self._buyer = buyer
 
     def getauction_id(self):
