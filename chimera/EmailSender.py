@@ -22,4 +22,4 @@ Subject: %s
 
 
 if __name__ == '__main__':
-    sendEmail(("upzaacub@gmail.com",), "Test Sending mail", "This is test's main :) 55 . . \n \n Test New Line \t\t TAB\tTab")
+    sendEmail(("upzaacub@gmail.com", ), "Test Sending mail", "This is test's main :) 55 . . \n \n Test New Line \t\t TAB\tTab")
