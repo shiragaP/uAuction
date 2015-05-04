@@ -210,7 +210,7 @@ Rectangle {
                 MouseArea {
                     id: itemDelegateArea
                     anchors.fill: itemDelegate
-                    onClicked: { linksys.print(model.object.name); wrapper.add() }
+                    onClicked: {  wrapper.add() }
                 }
             }
         }

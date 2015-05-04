@@ -11,7 +11,7 @@ Rectangle {
         height:260
         spacing: 20
 
-        model: pythonListModel1
+        model: pythonListModel1.auctions
         orientation: Qt.Horizontal
 
         delegate: Rectangle {

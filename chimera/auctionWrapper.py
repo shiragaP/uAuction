@@ -5,25 +5,25 @@ from PyQt5 import QtCore
 class AuctionWrapper(QtCore.QObject):
     def __init__(self, auction, buyer):
         QtCore.QObject.__init__(self)
-        self.auction = auction
-        self.buyer = buyer
+        self._auction = auction
+        self._buyer = buyer
 
-    def auction_id(self):
+    def getauction_id(self):
         return str(self.auction.auction_id)
 
-    def name(self):
+    def getname(self):
         return str(self.auction.name)
 
-    def buyoutprice(self):
+    def getbuyoutprice(self):
         return str(self.auction.buyoutprice)
 
-    def bidprice(self):
+    def getbidprice(self):
         return str(self.auction.bidprice)
 
-    def thumbnailpath(self):
+    def getthumbnailpath(self):
         return str(self.auction.thumbnailpath)
 
-    def buyer(self):
+    def getbuyer(self):
         return str(self.auction.buyer)
 
     namechanged = QtCore.pyqtSignal()
@@ -31,8 +31,8 @@ class AuctionWrapper(QtCore.QObject):
     bidpricechanged = QtCore.pyqtSignal()
     thumbnailpathchanged = QtCore.pyqtSignal()
 
-    name = QtCore.pyqtProperty(str, name, notify=namechanged)
-    buyoutprice = QtCore.pyqtProperty(str, buyoutprice, notify=buyoutpricechanged)
-    bidprice = QtCore.pyqtProperty(str, bidprice, notify=bidpricechanged)
-    thumbnailpath = QtCore.pyqtProperty(str, thumbnailpath, notify=thumbnailpathchanged)
+    name = QtCore.pyqtProperty(str, getname, notify=namechanged)
+    buyoutprice = QtCore.pyqtProperty(str, getbuyoutprice, notify=buyoutpricechanged)
+    bidprice = QtCore.pyqtProperty(str, getbidprice, notify=bidpricechanged)
+    thumbnailpath = QtCore.pyqtProperty(str, getthumbnailpath, notify=thumbnailpathchanged)
 

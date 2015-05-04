@@ -26,8 +26,8 @@ class AuctionListModel(QtCore.QObject):
         self._auctions = QObjectListModel(self)
         self._auctions.setObjectList(dataList)
 
-    def getRestaurants(self):
-        return self._restaurants
+    def getAuctions(self):
+        return self._auctions
 
     modelChanged = QtCore.pyqtSignal()
-    restaurants = QtCore.pyqtProperty(QtCore.QObject, getRestaurants, notify=modelChanged)
+    auctionss = QtCore.pyqtProperty(QtCore.QObject, getAuctions, notify=modelChanged)
