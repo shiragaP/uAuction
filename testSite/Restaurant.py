@@ -1,7 +1,7 @@
 __author__ = 'Chatchaya'
 
 from PyQt5.QtCore import *
-from QObjectListModel import *
+from testSite.QObjectListModel import *
 
 class Restaurant(QObject):
     def __init__(self, parent, name, desc, path):

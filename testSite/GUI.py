@@ -1,6 +1,5 @@
 import sys
-from Linksys import *
-from Restaurant import *
+from testSite.Restaurant import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtQuick import *
@@ -16,9 +15,7 @@ class MainWindow(QQuickView):
                 Restaurant(self, "Yoshi", "", "images/17.jpg")]
 
         self.wrapper = MainWrapper(self, data)
-        self.linksys = Linksys()
         self.context = self.rootContext()
-        self.context.setContextProperty("linksys", self.linksys)
         self.context.setContextProperty("wrapper", self.wrapper)
 
         self.setTitle("Main Window")

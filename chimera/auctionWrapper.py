@@ -26,10 +26,13 @@ class AuctionWrapper(QtCore.QObject):
     def buyer(self):
         return str(self.auction.buyer)
 
-    changed = QtCore.pyqtSignal()
+    namechanged = QtCore.pyqtSignal()
+    buyoutpricechanged = QtCore.pyqtSignal()
+    bidpricechanged = QtCore.pyqtSignal()
+    thumbnailpathchanged = QtCore.pyqtSignal()
 
-    name = QtCore.pyqtProperty(str, name, notify=changed)
-    buyoutprice = QtCore.pyqtProperty(str, buyoutprice, notify=changed)
-    bidprice = QtCore.pyqtProperty(str, bidprice, notify=changed)
-    thumbnailpath = QtCore.pyqtProperty(str, thumbnailpath, notify=changed)
+    name = QtCore.pyqtProperty(str, name, notify=namechanged)
+    buyoutprice = QtCore.pyqtProperty(str, buyoutprice, notify=buyoutpricechanged)
+    bidprice = QtCore.pyqtProperty(str, bidprice, notify=bidpricechanged)
+    thumbnailpath = QtCore.pyqtProperty(str, thumbnailpath, notify=thumbnailpathchanged)
 

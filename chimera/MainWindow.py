@@ -13,7 +13,6 @@ from chimera.Users import Users
 from chimera.Register import RegisterDialog
 from chimera.auctionListModel import AuctionListModel
 from chimera.auctionWrapper import AuctionWrapper
-from chimera.QObjectListModel import QObjectListModel
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -115,12 +114,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         auctions1 = self.currentAuctionWrappers[:5]
         auctions2 = self.currentAuctionWrappers[5:]
-        self.auctionList1 = QObjectListModel(self)
+        self.auctionList1 = AuctionListModel(self)
         for auction in auctions1:
-            self.auctionList1.append(auction)
-        self.auctionList2 = QObjectListModel(self)
+            self.auctionList1._auctions.append(auction)
+        self.auctionList2 = AuctionListModel(self)
         for auction in auctions2:
-            self.auctionList2.append(auction)
+            self.auctionList2._auctions.append(auction)
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
         self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
 

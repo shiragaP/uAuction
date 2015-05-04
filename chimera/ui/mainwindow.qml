@@ -35,7 +35,7 @@ Rectangle {
                     height: 160
                     fillMode: Image.PreserveAspectFit
                     smooth: true
-                    source: model.auction.thumbnailpath
+                    source: model.object.thumbnailpath
                 }
             }
             Rectangle {
@@ -51,7 +51,7 @@ Rectangle {
                     y: 0
                     width: 152
                     height: 20
-                    text: qsTr(model.auction.name)
+                    text: qsTr(model.object.name)
                     verticalAlignment :Text.AlignVCenter
                     font.pixelSize: 14
                     color:"lightgray"
@@ -68,7 +68,7 @@ Rectangle {
                 width: 80
                 height: 20
                 horizontalAlignment :Text.AlignHCenter
-                text: qsTr(model.auction.buyoutprice)
+                text: qsTr(model.object.buyoutprice)
                 font.pixelSize: 14
                 font.family: "Calibri"
             }
@@ -105,7 +105,7 @@ Rectangle {
                 width: 80
                 height: 20
                 horizontalAlignment :Text.AlignHCenter
-                text: qsTr(model.auction.bidprice)
+                text: qsTr(model.object.bidprice)
                 font.pixelSize: 14
                 font.family: "Calibri"
             }
@@ -132,7 +132,7 @@ Rectangle {
             }
             MouseArea {
                         anchors.fill: parent
-                        onClicked: { controller.auctionSelected(model.auction) }
+                        onClicked: { controller.auctionSelected(model.object) }
             }
         }
         add: Transition {
