@@ -6,6 +6,8 @@ from PyQt5 import QtGui
 from PyQt5 import uic
 from PyQt5 import QtQuick
 
+from threading import Timer
+
 from chimera.AddAuction import AddAuctionDialog
 from chimera.ViewAuction import ViewAuctionDialog
 from chimera.Auctions import Auctions
@@ -96,6 +98,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle("uAuction")
 
+        self.auctionList1 = AuctionListModel(self)
+        self.auctionList2 = AuctionListModel(self)
+        self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
+        self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
+        self.currentPage = 1
+
         self.loadRecentAuction()
         self.showGuestWidgets()
         self.loadPopularCategories()
@@ -106,22 +114,37 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadItemsFromRight()
 
     def loadItemsFromRight(self):
+        print(self.auctionList)
+
         auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
         auctionList = Auctions()
         self.currentAuctionWrappers = list()
         for auctionid in auctionIDsToLoad:
             self.currentAuctionWrappers.append(AuctionWrapper(auctionList.getAuction(auctionid[0]), self.user_id))
-
         auctions1 = self.currentAuctionWrappers[:5]
         auctions2 = self.currentAuctionWrappers[5:]
-        self.auctionList1 = AuctionListModel(self)
+        self.auctionList1.clearAuctions()
+        self.auctionList2.clearAuctions()
         for auction in auctions1:
             self.auctionList1._auctions.append(auction)
-        self.auctionList2 = AuctionListModel(self)
         for auction in auctions2:
             self.auctionList2._auctions.append(auction)
-        self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
-        self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
+
+    def loadItemsFromRightThread(self):
+        auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
+        auctionList = Auctions()
+        self.currentAuctionWrappers = list()
+        for auctionid in auctionIDsToLoad:
+            self.currentAuctionWrappers.append(AuctionWrapper(auctionList.getAuction(auctionid[0]), self.user_id))
+        auctions1 = self.currentAuctionWrappers[:5]
+        auctions2 = self.currentAuctionWrappers[5:]
+        self.auctionList1.clearAuctions()
+        self.auctionList2.clearAuctions()
+        for auction in auctions1:
+            self.auctionList1._auctions.append(auction)
+        for auction in auctions2:
+            self.auctionList2._auctions.append(auction)
+        print(self.auctionList1.getAuctions())
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))

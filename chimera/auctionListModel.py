@@ -29,5 +29,8 @@ class AuctionListModel(QtCore.QObject):
     def getAuctions(self):
         return self._auctions
 
+    def clearAuctions(self):
+        self._auctions.clear()
+
     modelChanged = QtCore.pyqtSignal()
     auctions = QtCore.pyqtProperty(QtCore.QObject, getAuctions, notify=modelChanged)

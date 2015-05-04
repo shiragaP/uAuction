@@ -15,6 +15,7 @@ import os  # os. path
 from urllib.parse import urlparse, parse_qs
 
 import DBInfo
+from chimera.EmailSender import sendEmail
 from chimera.Users import Users
 from chimera.Auctions import Auctions
 from chimera._postgreSQLManager import DBManager
@@ -306,22 +307,26 @@ class AuctionSiteHelper():
     def sendAuctionEndNotification(self, auction_id):
         auction = Auctions().getAuction(auction_id)
         seller = Users().getUser(auction.seller_id)
-        statement = """SELECT userid FROM bid_history
+        statement = """SELECT DISTINCT userid FROM bid_history
                                 WHERE auctionid=%s
         """
         arguments = (auction_id, )
         rows = self.manager.query(statement, arguments)
-        print("ROWS --------------", rows)
+        users = Users().getUsers(rows)
+        userEmails = list()
+        for user in users:
+            userEmails.append(user.email)
+        sendEmail(userEmails)
 
 def main():
     try:
         server = HTTPServer(('', 8080), AuctionSite)
 
-        # import getpass
-        # if getpass.getuser() == 'Fujiwara':
-        #     server = HTTPServer(('localhost', 8080), AuctionSite)
+        import getpass
+        if getpass.getuser() == 'Fujiwara':
+            server = HTTPServer(('localhost', 8080), AuctionSite)
 
-        Timer(1, AuctionSiteHelper().run).start()
+        Timer(0, AuctionSiteHelper().run).start()
         print('started httpserver...')
         server.serve_forever()
     except KeyboardInterrupt:

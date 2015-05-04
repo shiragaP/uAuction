@@ -47,6 +47,35 @@ class Users:
         return User(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                     phonenumber, user_id)
 
+    def getUsers(self, user_id_list):
+        user_list = list()
+
+        for i in user_id_list:
+            params = urllib.parse.urlencode({'statement': "SELECT * from users WHERE users.id=%s", 'arguments': json.dumps((i[0],))})
+            headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+            self.connection.request("POST", "/query", params, headers)
+            response = self.connection.getresponse()
+            data = response.read()
+
+            row = pickle.loads(data)[0]
+            username = row[1]
+            password = row[2]
+            email = row[3]
+            firstname = row[4]
+            lastname = row[5]
+            address1 = row[6]
+            address2 = row[7]
+            province = row[8]
+            country = row[9]
+            zipcode = row[10]
+            phonenumber = row[11]
+
+            user = User(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+                    phonenumber, i[0])
+            user_list.append(user)
+
+        return user_list
+
     def updateUser(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                 phonenumber):
         statement = """UPDATE users
@@ -73,6 +102,8 @@ class Users:
         elif password == rows[0][2]:
             return rows[0][0]
         return 0
+
+
 
 
 
