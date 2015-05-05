@@ -233,7 +233,7 @@ class AuctionSite(BaseHTTPRequestHandler):
                     self.send_response(200)
                     self.end_headers()
 
-                    Timer(1, lambda: AuctionSiteHelper().sendAuctionEndNotification(auctionid)).start()
+                    Timer(0.1, lambda: AuctionSiteHelper().sendAuctionEndNotification(auctionid)).start()
 
                 else:
                     raise Exception("Unexpected request path")
@@ -302,7 +302,7 @@ class AuctionSiteHelper():
             arguments = (row[0], )
             self.manager.query(statement, arguments)
             self.sendAuctionEndNotification(row[0])
-        Timer(1, self.run).start()
+        Timer(0.1, self.run).start()
 
     def sendAuctionEndNotification(self, auction_id):
         auction = Auctions().getAuction(auction_id)

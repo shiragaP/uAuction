@@ -241,7 +241,10 @@ class MainWindow(QtWidgets.QMainWindow):
             viewAuctionDialog.exec_()
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow(DEBUGMODE=True)
-    window.show()
-    app.exec_()
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        window = MainWindow(DEBUGMODE=True)
+        window.show()
+        app.exec_()
+    except ConnectionRefusedError:
+        QtWidgets.QMessageBox.warning(None, "Error Occur", "Cannot start program because server is down.")
