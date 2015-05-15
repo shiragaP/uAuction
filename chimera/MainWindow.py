@@ -107,7 +107,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadPopularCategories()
 
     def loadRecentAuction(self):
-        print("LL")
         self.currentPage = 1
         self.auctionList = Auctions().getActiveAuctionIDs()
         self.loadItemsFromRight()
