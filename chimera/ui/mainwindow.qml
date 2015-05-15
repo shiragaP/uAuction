@@ -269,7 +269,7 @@ Rectangle {
                 width: 70
                 height: 23
                 Text {
-                    id: text2
+                    id: text4
                     x: 0
                     y: 0
                     width: 70
