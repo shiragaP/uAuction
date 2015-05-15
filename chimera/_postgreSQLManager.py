@@ -210,4 +210,4 @@ class DBManager:
 
 if __name__ == '__main__':
     manager = DBManager()
-    manager.createTableBuyoutHistory()
+    manager.rebuildAll()
