@@ -3,7 +3,7 @@ dbname = 'sep_project'
 user = 'postgres'
 password = 'admin'
 
-server = 'uAuction.mooo.com'
+server = 'uauction.mooo.com'
 
 import getpass
 if getpass.getuser() == 'Fujiwara':

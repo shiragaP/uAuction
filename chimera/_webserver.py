@@ -20,11 +20,7 @@ from chimera.Users import Users
 from chimera.Auctions import Auctions
 from chimera._postgreSQLManager import DBManager
 
-
 CWD = os.path.abspath('.')
-## print CWD
-
-# PORT = 8080
 UPLOAD_PAGE = 'upload.html'  # must contain a valid link with address and port of the servers
 # -----------------------------------------------------------------------
 
@@ -251,7 +247,6 @@ class AuctionSite(BaseHTTPRequestHandler):
             # content = self.rfile.read(length)
             self.send_response(200)
             self.path = self.path.replace('%20', ' ')
-
             auction_id = int(parse_qs(urlparse(self.path).query)["auction_id"][0])
             fs_up = self.rfile
             filename = os.path.split(urlparse(self.path).path)[1]  # strip the path, if it presents
