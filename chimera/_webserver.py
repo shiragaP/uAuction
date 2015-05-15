@@ -289,7 +289,7 @@ class AuctionSiteHelper():
 
     def run(self):
         statement = """SELECT * FROM auctions
-                                WHERE expirytime=(SELECT min(expirytime) FROM auctions WHERE soldout='False' AND expirytime<%s)
+                                WHERE expirytime=(SELECT min(expirytime) FROM auctions WHERE soldout=0 AND expirytime<%s)
         """
         arguments = (datetime.now(), )
         rows = self.manager.query(statement, arguments)
