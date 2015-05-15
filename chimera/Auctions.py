@@ -20,7 +20,7 @@ class Auctions:
         print("Sent...")
         params = urllib.parse.urlencode({'statement': """INSERT INTO auctions (name, seller, buyoutavailable,
             buyoutprice, bidprice, bidnumber, description, thumbnail, expirytime, soldout, buyer)VALUES
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps([auction.name,
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 'arguments': json.dumps([auction.name,
                                                                                    auction.seller_id,
                                                                                    auction.buyoutavailable,
                                                                                    auction.buyoutprice,

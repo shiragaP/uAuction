@@ -324,7 +324,7 @@ Sold out at %s Baht
 
 def main():
     try:
-        server = HTTPServer(('uauction.mooo.com', 8080), AuctionSite)
+        # server = HTTPServer(('uauction.mooo.com', 8080), AuctionSite)
 
         import getpass
         if getpass.getuser() == 'Fujiwara':

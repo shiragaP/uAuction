@@ -93,7 +93,7 @@ class DBManager:
                         bidprice INTEGER,
                         bidnumber INTEGER,
                         description VARCHAR (8191),
-                        thumbnail VARCHAR (127),
+                        thumbnail VARCHAR (1023),
                         expirytime TIMESTAMP,
                         soldout INTEGER,
                         buyer serial
@@ -105,7 +105,7 @@ class DBManager:
         self.dropTableAuctionImages()
         statement = """CREATE TABLE auction_images(
                         id serial PRIMARY KEY,
-                        directory VARCHAR (127),
+                        directory VARCHAR (1023),
                         auctionid serial
                         );
                         """
