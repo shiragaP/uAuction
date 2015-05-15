@@ -105,6 +105,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadRecentAuction()
         self.showGuestWidgets()
         self.loadPopularCategories()
+        self.loadRecentAuction()
 
     def loadRecentAuction(self):
         self.currentPage = 1
