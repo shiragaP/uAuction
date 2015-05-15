@@ -217,11 +217,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot(QtCore.QObject)
     def auctionSelected(self, wrapper):
-        print(wrapper.getbuyer())
         if wrapper.getbuyer() == '0':
             QtWidgets.QMessageBox.warning(self, "Authentication Failed", "Please login to view auction details", )
         else:
-            viewAuctionDialog = ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE)
+            ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE).show()
 
 if __name__ == '__main__':
     try:
