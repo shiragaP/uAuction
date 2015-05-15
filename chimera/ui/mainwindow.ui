@@ -673,7 +673,7 @@ QLineEdit {
     <rect>
      <x>440</x>
      <y>590</y>
-     <width>231</width>
+     <width>230</width>
      <height>25</height>
     </rect>
    </property>
@@ -692,9 +692,9 @@ QLineEdit {
   <widget class="QPushButton" name="pushButton_next">
    <property name="geometry">
     <rect>
-     <x>669</x>
+     <x>670</x>
      <y>590</y>
-     <width>231</width>
+     <width>230</width>
      <height>25</height>
     </rect>
    </property>
