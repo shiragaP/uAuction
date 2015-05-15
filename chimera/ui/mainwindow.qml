@@ -142,7 +142,7 @@ Rectangle {
         }
 
         addDisplaced: Transition {
-            NumberAnimation { properties: "y"; duration: 600; easing.type: Easing.InBack }
+            NumberAnimation { properties: "x"; duration: 600; easing.type: Easing.InBack }
         }
 
         remove: Transition {
@@ -156,14 +156,14 @@ Rectangle {
     }
 
     ListView {
-        id: pythonBottomList
+        id: pythonBottomList2
         x:20
         y:270
         width:920
         height:260
         spacing: 20
 
-        model: pythonListModel2
+        model: pythonListModel2.auctions
         orientation: Qt.Horizontal
 
         delegate: Rectangle {
@@ -187,7 +187,7 @@ Rectangle {
                     height: 160
                     fillMode: Image.PreserveAspectFit
                     smooth: true
-                    source: model.auction.thumbnailpath
+                    source: model.object.thumbnailpath
                 }
             }
             Rectangle {
@@ -203,7 +203,7 @@ Rectangle {
                     y: 0
                     width: 152
                     height: 20
-                    text: qsTr(model.auction.name)
+                    text: qsTr(model.object.name)
                     verticalAlignment :Text.AlignVCenter
                     font.pixelSize: 14
                     color:"lightgray"
@@ -220,7 +220,7 @@ Rectangle {
                 width: 80
                 height: 20
                 horizontalAlignment :Text.AlignHCenter
-                text: qsTr(model.auction.buyoutprice)
+                text: qsTr(model.object.buyoutprice)
                 font.pixelSize: 14
                 font.family: "Calibri"
             }
@@ -233,7 +233,7 @@ Rectangle {
                 height: 23
                 color:"#EA0000"
                 Text {
-                    id: text8
+                    id: text3
                     x: 0
                     y: 0
                     width: 70
@@ -257,7 +257,7 @@ Rectangle {
                 width: 80
                 height: 20
                 horizontalAlignment :Text.AlignHCenter
-                text: qsTr(model.auction.bidprice)
+                text: qsTr(model.object.bidprice)
                 font.pixelSize: 14
                 font.family: "Calibri"
             }
@@ -269,7 +269,7 @@ Rectangle {
                 width: 70
                 height: 23
                 Text {
-                    id: text9
+                    id: text2
                     x: 0
                     y: 0
                     width: 70
@@ -284,16 +284,17 @@ Rectangle {
             }
             MouseArea {
                         anchors.fill: parent
-                        onClicked: { controller.auctionSelected(model.auction) }
+                        onClicked: { controller.auctionSelected(model.object) }
             }
         }
         add: Transition {
-            NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
-            NumberAnimation { property: "scale"; easing.type: Easing.OutBounce; from: 0; to: 1.0; duration: 750 }
+            //NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
+            //NumberAnimation { property: "scale"; easing.type: Easing.OutBounce; from: 0; to: 1.0; duration: 750 }
+            NumberAnimation { properties: "x"; duration: 600; easing.type: Easing.OutBack }
         }
 
         addDisplaced: Transition {
-            NumberAnimation { properties: "y"; duration: 600; easing.type: Easing.InBack }
+            NumberAnimation { properties: "x"; duration: 600; easing.type: Easing.InBack }
         }
 
         remove: Transition {

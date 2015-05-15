@@ -61,7 +61,8 @@ class RegisterDialog(QtWidgets.QDialog):
         invalidFlags = list()
 
         username = self.lineEdit_username.text()
-        if 4 > len(username):
+
+        if 4 > len(username) or Users().validUser(username, "") != -1:
             invalidFlags.append('Username')
 
         password = self.lineEdit_password.text()
@@ -112,10 +113,11 @@ class RegisterDialog(QtWidgets.QDialog):
 
     def register(self, username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                  phonenumber):
-        if Users().validUser(username, password) != -1:
+        users = Users()
+        if users.validUser(username, password) != -1:
             QtWidgets.QMessageBox.warning(self, "Cannot register", "Username already exists.")
         else:
-            Users().addUser(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
+            users.addUser(username, password, email, firstname, lastname, address1, address2, province, country, zipcode,
                           phonenumber)
             QtWidgets.QMessageBox.information(self, "Notification", "Register complete!")
             self.close()
