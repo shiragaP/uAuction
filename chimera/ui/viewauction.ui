@@ -211,6 +211,7 @@ QLineEdit
    <property name="font">
     <font>
      <family>Calibri</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
   </widget>

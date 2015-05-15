@@ -24,7 +24,10 @@ class AuctionWrapper(QtCore.QObject):
         return str(self.auction.thumbnailpath)
 
     def getbuyer(self):
-        return str(self.auction.buyer)
+        return str(self._buyer)
+
+    def setbuyer(self, buyerid):
+        self._buyer = str(buyerid)
 
     namechanged = QtCore.pyqtSignal()
     buyoutpricechanged = QtCore.pyqtSignal()

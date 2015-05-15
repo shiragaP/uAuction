@@ -174,13 +174,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.showGuestWidgets()
 
     def login(self, user):
+        self.user_id = user.user_id
         self.label_name.setText(user.firstname)
         self.label_user.setText(user.username)
         self.label_userid.setText("(" + ("%04d" % user.user_id) + ")")
         self.showUserWidgets()
 
         for wrapper in self.currentAuctionWrappers:
-            wrapper.buyer = self.user_id
+            wrapper.setbuyer(self.user_id)
 
     def registerClickedActionListener(self):
         registerDialog = RegisterDialog(DEBUGMODE=self.DEBUGMODE)
@@ -200,7 +201,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showGuestWidgets()
 
         for wrapper in self.currentAuctionWrappers:
-            wrapper.buyer = self.user_id
+            wrapper.setbuyer(self.user_id)
 
     def showGuestWidgets(self):
         self.lineEdit_user.setText('')
@@ -234,11 +235,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot(QtCore.QObject)
     def auctionSelected(self, wrapper):
-        if wrapper.getbuyer == 0:
+        print(wrapper.getbuyer())
+        if wrapper.getbuyer() == '0':
             QtWidgets.QMessageBox.warning(self, "Authentication Failed", "Please login to view auction details", )
         else:
             viewAuctionDialog = ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE)
-            viewAuctionDialog.exec_()
+            viewAuctionDialog.show()
 
 if __name__ == '__main__':
     try:
