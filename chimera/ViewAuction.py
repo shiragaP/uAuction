@@ -66,6 +66,7 @@ class ViewAuctionDialog(QtWidgets.QDialog):
         self.setWindowTitle('View Auction')
 
         self.loadAuction()
+        self.show()
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.reloadTimeLeft)

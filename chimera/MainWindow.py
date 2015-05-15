@@ -222,7 +222,6 @@ class MainWindow(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, "Authentication Failed", "Please login to view auction details", )
         else:
             viewAuctionDialog = ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE)
-            viewAuctionDialog.show()
 
 if __name__ == '__main__':
     try:
