@@ -296,7 +296,7 @@ class AuctionSiteHelper():
         for row in rows:
             print(row)
             statement = """UPDATE auctions
-                                SET soldout='True'
+                                SET soldout=2
                                 WHERE id=%s;
             """
             arguments = (row[0], )
