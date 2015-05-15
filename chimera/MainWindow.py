@@ -101,6 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.rootContext.setContextProperty('pythonListModel1', self.auctionList1)
         self.rootContext.setContextProperty('pythonListModel2', self.auctionList2)
         self.currentPage = 1
+        self.auctionDialog = list()
 
         self.loadRecentAuction()
         self.showGuestWidgets()
@@ -221,7 +222,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if wrapper.getbuyer() == '0':
             QtWidgets.QMessageBox.warning(self, "Authentication Failed", "Please login to view auction details", )
         else:
-            ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE).show()
+            viewAuctionDialog = ViewAuctionDialog(user_id=self.user_id, auction_id=wrapper.auction.auction_id, DEBUGMODE=self.DEBUGMODE)
+            viewAuctionDialog.show()
+            self.auctionDialog.append(viewAuctionDialog)
 
 if __name__ == '__main__':
     try:
