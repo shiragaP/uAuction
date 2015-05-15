@@ -95,7 +95,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
         seller_id = self.user_id
         bidprice = self.lineEdit_bidprice.text()
         bidnumber = 0
-        categories = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_categories.text())))
+        categories = list(filter(''.__ne__, re.split(" |,|#|\n", self.lineEdit_categories.text())))
         description = self.textEdit_description.toHtml()
 
         if self.listWidget_thumbnail.count() == 0:

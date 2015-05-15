@@ -107,13 +107,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadPopularCategories()
 
     def loadRecentAuction(self):
+        print("LL")
         self.currentPage = 1
         self.auctionList = Auctions().getActiveAuctionIDs()
         self.loadItemsFromRight()
 
     def loadItemsFromRight(self):
         print(self.auctionList)
-
         auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
         auctionList = Auctions()
         self.currentAuctionWrappers = list()
@@ -127,22 +127,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.auctionList1._auctions.append(auction)
         for auction in auctions2:
             self.auctionList2._auctions.append(auction)
-
-    def loadItemsFromRightThread(self):
-        auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
-        auctionList = Auctions()
-        self.currentAuctionWrappers = list()
-        for auctionid in auctionIDsToLoad:
-            self.currentAuctionWrappers.append(AuctionWrapper(auctionList.getAuction(auctionid[0]), self.user_id))
-        auctions1 = self.currentAuctionWrappers[:5]
-        auctions2 = self.currentAuctionWrappers[5:]
-        self.auctionList1.clearAuctions()
-        self.auctionList2.clearAuctions()
-        for auction in auctions1:
-            self.auctionList1._auctions.append(auction)
-        for auction in auctions2:
-            self.auctionList2._auctions.append(auction)
-        print(self.auctionList1.getAuctions())
 
     def searchClickedActionListener(self):
         keywords = list(filter(''.__ne__, re.split(" |,|#", self.lineEdit_search.text())))
@@ -150,7 +134,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.loadRecentAuction()
         else:
             self.auctionList = Auctions().searchAuctionIDs(keywords)
-            self.currentPage = 1
             self.loadItemsFromRight()
 
     def nextClickedActionListener(self):

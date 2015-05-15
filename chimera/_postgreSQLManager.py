@@ -86,7 +86,7 @@ class DBManager:
         self.dropTableAuctions()
         statement = """CREATE TABLE auctions(
                         id serial PRIMARY KEY,
-                        name VARCHAR (63),
+                        name VARCHAR (1023),
                         seller serial,
                         buyoutavailable BOOLEAN,
                         buyoutprice INTEGER,
@@ -211,3 +211,4 @@ class DBManager:
 if __name__ == '__main__':
     manager = DBManager()
     manager.rebuildAll()
+

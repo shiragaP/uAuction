@@ -225,5 +225,42 @@ class Auctions:
 
         return rows
 
+def testData():
+    from datetime import datetime, timedelta
+    import glob
+    import re
+
+    rootpath = '..\\uAuction Test Data'
+    auctionTestDataPaths = glob.glob(rootpath + "\\*.txt")
+    auctions = Auctions()
+
+    for auctionPath in auctionTestDataPaths:
+        file = open(auctionPath, encoding='utf8')
+        name = file.readline().replace("\n", "")
+        buyoutprice = eval(file.readline())
+        buyoutavailable = True if buyoutprice > 0 else False
+        bidprice = eval(file.readline())
+        categories = list(filter(''.__ne__, re.split(" |,|#|\n", file.readline())))
+        description = ""
+        imagepaths = list()
+
+        rest = file.readlines()
+        while len(rest) > 0 and rest[0][:3] == "[I]":
+            imagepaths.append(rest[0][3:].replace("\n", ""))
+            rest.remove(rest[0])
+        while len(rest) > 0:
+            description += rest[0]
+            rest.remove(rest[0])
+
+        thumbnailpath = imagepaths[0] if len(imagepaths) > 0 else "..\\resources\\img\\noimage.png"
+        expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=3))
+        soldout = 0
+        imagepaths = [open(rootpath + "\\" + imagepaths[i], 'rb') for i in
+                      range(len(imagepaths))]
+
+        Auctions().addAuction(
+            Auction(name, 1, buyoutavailable, buyoutprice, bidprice, 0, description, thumbnailpath,
+                    expirytime, soldout, imagepaths, categories))
+
 if __name__ == '__main__':
-    auctions = Auctions().updateAuctionThumbnailPath(8)
+    testData()
