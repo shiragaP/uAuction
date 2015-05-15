@@ -112,7 +112,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadItemsFromRight()
 
     def loadItemsFromRight(self):
-        print(self.auctionList)
         auctionIDsToLoad = self.auctionList[(self.currentPage-1)*10: (self.currentPage-1)*10+10]
         auctionList = Auctions()
         self.currentAuctionWrappers = list()
