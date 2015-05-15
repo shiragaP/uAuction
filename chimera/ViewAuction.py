@@ -26,9 +26,6 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
         form = uic.loadUi('ui\\viewauction.ui')
 
-        self.label_logo = form.findChild(QtWidgets.QWidget, 'label_logo')
-        self.label_logo.setPixmap(QtGui.QPixmap("..\\resources\\img\\logo.png").scaled(self.label_logo.size(), QtCore.Qt.KeepAspectRatio))
-
         self.label_name = form.findChild(QtWidgets.QLabel, 'label_00_name')
         self.label_timeleft = form.findChild(QtWidgets.QLabel, 'label_00_timeleft')
         self.label_buyoutprice = form.findChild(QtWidgets.QLabel, 'label_02_buyoutprice')
@@ -65,6 +62,7 @@ class ViewAuctionDialog(QtWidgets.QDialog):
 
         self.setFixedWidth(form.width())
         self.setFixedHeight(form.height())
+        self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle('View Auction')
 
         self.loadAuction()

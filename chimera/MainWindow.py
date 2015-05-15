@@ -27,6 +27,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_logo.setPixmap(QtGui.QPixmap("..\\resources\\img\\logo.png").scaled(self.label_logo.size(), QtCore.Qt.KeepAspectRatio))
 
         self.lineEdit_search = form.findChild(QtWidgets.QLineEdit, 'lineEdit_search')
+        self.lineEdit_search.returnPressed.connect(self.searchClickedActionListener)
         self.pushButton_search = form.findChild(QtWidgets.QPushButton, 'pushButton_search')
         self.pushButton_search.clicked.connect(self.searchClickedActionListener)
 

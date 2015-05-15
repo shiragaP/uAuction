@@ -23,9 +23,6 @@ class AddAuctionDialog(QtWidgets.QDialog):
 
         form = uic.loadUi('ui\\addauction.ui')
 
-        self.label_logo = form.findChild(QtWidgets.QWidget, 'label_logo')
-        self.label_logo.setPixmap(QtGui.QPixmap("..\\resources\\img\\logo.png").scaled(self.label_logo.size(), QtCore.Qt.KeepAspectRatio))
-
         self.label_image = form.findChild(QtWidgets.QLabel, 'label_01_image')
         self.listWidget_thumbnail = form.findChild(QtWidgets.QListWidget, 'listWidget_thumbnail')
         self.listWidget_thumbnail.setFlow(QtWidgets.QListWidget.LeftToRight)
@@ -62,6 +59,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
 
         self.setFixedWidth(form.width())
         self.setFixedHeight(form.height())
+        self.setWindowIcon(QtGui.QIcon('..\\resources\\img\\icon.png'))
         self.setWindowTitle('Add Auction')
         self.setAcceptDrops(True)
 
