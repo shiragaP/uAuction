@@ -113,7 +113,7 @@ class Auctions:
 
     def updateBidPrice(self, auction_id, userid, newBidPrice):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE auctions SET bidprice=%s WHERE id=%s", "arguments": json.dumps((newBidPrice, auction_id,))})
+            {'statement': "UPDATE auctions SET bidprice=%s AND buyout=%s WHERE id=%s", "arguments": json.dumps((newBidPrice, auction_id, 2,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()

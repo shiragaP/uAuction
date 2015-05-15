@@ -108,7 +108,7 @@ class ViewAuctionDialog(QtWidgets.QDialog):
                          quit_msg, QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
 
         if reply == QtWidgets.QMessageBox.Yes:
-            Auctions().updateBuyout(self.auction_id, self.user_id, True)
+            Auctions().updateBuyout(self.auction_id, self.user_id, 1)
         else:
             pass
         self.loadAuction()

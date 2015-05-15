@@ -103,7 +103,7 @@ class AddAuctionDialog(QtWidgets.QDialog):
             thumbnailpath = self.listWidget_thumbnail.item(0).filepath
 
         expirytime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.now() + timedelta(days=3))
-        soldout = False
+        soldout = 0
         imagepaths = [open(self.listWidget_thumbnail.item(i).filepath, 'rb') for i in
                       range(self.listWidget_thumbnail.count())]
 
