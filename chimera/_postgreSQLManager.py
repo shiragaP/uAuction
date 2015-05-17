@@ -79,7 +79,7 @@ class DBManager:
                         """
         self.query(statement)
         statement = """INSERT INTO users (username, password, email, firstname, lastname, address1, address2, province, country, zipcode, phonenumber)
-                    VALUES ('admin', 'admin', 'admin@uAuction.com', 'Admin', 'Admin', 'None', null, 'Bangkok', 'Thailand', '10110', '0812345678')"""
+                    VALUES ('admin', 'admin', 'uAucionProject@gmail.com', 'Admin', 'Admin', 'None', null, 'Bangkok', 'Thailand', '10110', '0812345678')"""
         self.query(statement)
 
     def createTableAuctions(self):

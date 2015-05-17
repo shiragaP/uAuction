@@ -302,25 +302,60 @@ class AuctionSiteHelper():
     def sendAuctionEndNotification(self, auction_id):
         auction = Auctions().getAuction(auction_id)
         seller = Users().getUser(auction.seller_id)
-        statement = """SELECT DISTINCT userid FROM bid_history
-                                WHERE auctionid=%s
-        """
-        arguments = (auction_id, )
-        rows = self.manager.query(statement, arguments)
-        users = Users().getUsers(rows)
-        userEmails = list()
-        for user in users:
-            userEmails.append(user.email)
-        soldoutPrice = auction.bidprice
         if auction.buyer != 0:
-            soldoutPrice = auction.buyoutprice
-        text = \
+            buyer = Users().getUser(auction.buyer)
+            if auction.soldout == 2 and auction.bidnumber > 0:
+                statement = """SELECT DISTINCT userid FROM bid_history
+                                        WHERE auctionid=%s
+                """
+                arguments = (auction_id, )
+                rows = self.manager.query(statement, arguments)
+                users = Users().getUsers(rows)
+                userEmails = list()
+                for user in users:
+                    userEmails.append(user.email)
+                soldoutPrice = auction.bidprice
+                if auction.buyer != 0:
+                    soldoutPrice = auction.buyoutprice
+                text = \
 """Auction ID: %s
 
 Sold out at %s Baht
 """ % (auction.auction_id, soldoutPrice)
-        if len(userEmails) > 0:
-            sendEmail(userEmails, "Auction End Notification", text)
+                if len(userEmails) > 0:
+                    sendEmail(userEmails, "Auction End Notification", text)
+                self.sendNotificationSellerBuyer(seller, buyer, auction, soldoutPrice)
+        else:
+            text = \
+"""Auction ID: %s
+
+Auction does not sold out.
+""" % (auction.auction_id,)
+        sendEmail([seller.email,], "Auction Completed", text)
+
+    def sendNotificationSellerBuyer(self, seller, buyer, auction, price):
+        text = \
+"""Auction ID: %s
+
+Sold out at %s Baht
+Seller Information:
+%s %s
+%s
+%s
+%s
+%s
+%s
+Buyer Information:
+%s %s
+%s
+%s
+%s
+%s
+%s
+""" % (auction.auction_id, price, seller.firstname, seller.lastname, seller.address1, seller.address2, seller.zipcode,
+       seller.email, seller.phonenumber, buyer.firstname, buyer.lastname, buyer.address1, buyer.address2, buyer.zipcode,
+       buyer.email, buyer.phonenumber)
+        sendEmail([seller.email, buyer.email], "Auction Completed", text)
 
 def main():
     try:
