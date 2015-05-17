@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.0
 Rectangle {
     id: button0
     width:920
@@ -156,7 +157,7 @@ Rectangle {
     }
 
     ListView {
-        id: pythonBottomList2
+        id: pythonBottomList
         x:20
         y:270
         width:920

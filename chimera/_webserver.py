@@ -359,11 +359,12 @@ Buyer Information:
 
 def main():
     try:
-        # server = HTTPServer(('uauction.mooo.com', 8080), AuctionSite)
 
         import getpass
         if getpass.getuser() == 'Fujiwara':
             server = HTTPServer(('localhost', 8080), AuctionSite)
+        else:
+            server = HTTPServer(('uauction.mooo.com', 8080), AuctionSite)
 
         Timer(0, AuctionSiteHelper().run).start()
         print('started httpserver...')
