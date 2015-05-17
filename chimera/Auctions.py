@@ -113,7 +113,7 @@ class Auctions:
 
     def updateBidPrice(self, auction_id, userid, newBidPrice, bidNumber):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE auctions SET bidprice=%s AND bidnumber=%s WHERE id=%s", "arguments": json.dumps((newBidPrice, bidNumber, auction_id))})
+            {'statement': "UPDATE auctions SET bidprice=%s , bidnumber=%s WHERE id=%s", "arguments": json.dumps((newBidPrice, bidNumber, auction_id))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()
@@ -129,7 +129,7 @@ class Auctions:
 
     def updateBuyout(self, auction_id, userid, buyout):
         params = urllib.parse.urlencode(
-            {'statement': "UPDATE auctions SET soldout=%s AND buyer=%s WHERE id=%s", "arguments": json.dumps((buyout, userid, auction_id,))})
+            {'statement': "UPDATE auctions SET soldout=%s , buyer=%s WHERE id=%s", "arguments": json.dumps((buyout, userid, auction_id,))})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         self.connection.request("POST", "/query", params, headers)
         response = self.connection.getresponse()

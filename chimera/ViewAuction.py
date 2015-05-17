@@ -96,8 +96,8 @@ class ViewAuctionDialog(QtWidgets.QDialog):
             QtWidgets.QMessageBox.warning(self, "Invalid Bid", "Please enter the bid price.")
             return
         self.loadAuction()
-        newBidPrice = self.lineEdit_bidprice.text()
-        if int(newBidPrice) > int(self.auction.bidprice):
+        newBidPrice = float(self.lineEdit_bidprice.text())
+        if newBidPrice > self.auction.bidprice:
             Auctions().updateBidPrice(self.auction_id, self.user_id, newBidPrice, self.auction.bidnumber+1)
         else:
             QtWidgets.QMessageBox.warning(self, "Warning", "Invalid bid price.")
