@@ -49,11 +49,11 @@ Rectangle {
                 Text {
                     id: name
                     x: 4
-                    y: 0
+                    y: 2
                     width: 152
                     height: 20
                     text: qsTr(model.object.name)
-                    verticalAlignment :Text.AlignVCenter
+                    verticalAlignment :Text.AlignTop
                     font.pixelSize: 14
                     color:"lightgray"
                     font.family: "Calibri"
@@ -201,11 +201,11 @@ Rectangle {
                 Text {
                     id: name2
                     x: 4
-                    y: 0
+                    y: 2
                     width: 152
                     height: 20
                     text: qsTr(model.object.name)
-                    verticalAlignment :Text.AlignVCenter
+                    verticalAlignment :Text.AlignTop
                     font.pixelSize: 14
                     color:"lightgray"
                     font.family: "Calibri"

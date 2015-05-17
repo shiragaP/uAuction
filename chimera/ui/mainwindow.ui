@@ -548,7 +548,7 @@ QLineEdit {
     <string>Sell</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_seeprofile">
+  <widget class="QPushButton" name="pushButton_editprofile">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -566,7 +566,7 @@ QLineEdit {
     </font>
    </property>
    <property name="text">
-    <string>See Profile</string>
+    <string>Edit Profile</string>
    </property>
   </widget>
   <widget class="QWidget" name="widget_info" native="true">

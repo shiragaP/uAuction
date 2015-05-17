@@ -7,6 +7,7 @@ from PyQt5 import uic
 from PyQt5 import QtQuick
 
 from chimera.AddAuction import AddAuctionDialog
+from chimera.EditProfile import EditProfileDialog
 from chimera.ViewAuction import ViewAuctionDialog
 from chimera.Auctions import Auctions
 from chimera.Users import Users
@@ -72,7 +73,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.pushButton_sell = form.findChild(QtWidgets.QPushButton, 'pushButton_sell')
         self.pushButton_sell.clicked.connect(self.sellClickedActionListener)
-        self.pushButton_seeprofile = form.findChild(QtWidgets.QPushButton, 'pushButton_seeprofile')
+        self.pushButton_editprofile = form.findChild(QtWidgets.QPushButton, 'pushButton_editprofile')
+        self.pushButton_editprofile.clicked.connect(self.editProfileClickedActionListener)
         self.pushButton_seebidhistory = form.findChild(QtWidgets.QPushButton, 'pushButton_seebidhistory')
         self.pushButton_seebidhistory.clicked.connect(self.seebidhistoryClickedActionListener)
         self.pushButton_logout = form.findChild(QtWidgets.QPushButton, 'pushButton_logout')
@@ -175,6 +177,10 @@ class MainWindow(QtWidgets.QMainWindow):
         addAuctionDialog = AddAuctionDialog(DEBUGMODE=self.DEBUGMODE)
         addAuctionDialog.exec_()
 
+    def editProfileClickedActionListener(self):
+        editProfileDialog = EditProfileDialog(DEBUGMODE=self.DEBUGMODE)
+        editProfileDialog.exec_()
+
     def seebidhistoryClickedActionListener(self):
         self.auctionList = Auctions().getBidHistory(self.user_id)
         self.currentPage = 1
@@ -193,7 +199,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.widget_info.hide()
         self.pushButton_sell.hide()
-        self.pushButton_seeprofile.hide()
+        self.pushButton_editprofile.hide()
         self.pushButton_seebidhistory.hide()
         self.pushButton_logout.hide()
 
@@ -208,7 +214,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.widget_info.show()
         self.pushButton_sell.show()
-        self.pushButton_seeprofile.show()
+        self.pushButton_editprofile.show()
         self.pushButton_seebidhistory.show()
         self.pushButton_logout.show()
 

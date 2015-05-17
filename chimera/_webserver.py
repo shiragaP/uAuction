@@ -289,7 +289,6 @@ class AuctionSiteHelper():
         arguments = (datetime.now(), )
         rows = self.manager.query(statement, arguments)
         for row in rows:
-            print(row)
             statement = """UPDATE auctions
                                 SET soldout=2
                                 WHERE id=%s;
@@ -304,40 +303,40 @@ class AuctionSiteHelper():
         seller = Users().getUser(auction.seller_id)
         if auction.buyer != 0:
             buyer = Users().getUser(auction.buyer)
-            if auction.soldout == 2 and auction.bidnumber > 0:
-                statement = """SELECT DISTINCT userid FROM bid_history
-                                        WHERE auctionid=%s
-                """
-                arguments = (auction_id, )
-                rows = self.manager.query(statement, arguments)
-                users = Users().getUsers(rows)
-                userEmails = list()
-                for user in users:
-                    userEmails.append(user.email)
-                soldoutPrice = auction.bidprice
-                if auction.buyer != 0:
-                    soldoutPrice = auction.buyoutprice
-                text = \
+            statement = """SELECT DISTINCT userid FROM bid_history
+                                    WHERE auctionid=%s
+            """
+            arguments = (auction_id, )
+            rows = self.manager.query(statement, arguments)
+            users = Users().getUsers(rows)
+            userEmails = list()
+            for user in users:
+                userEmails.append(user.email)
+            soldoutPrice = auction.bidprice
+            if auction.soldout == 1:
+                soldoutPrice = auction.buyoutprice
+            text = \
 """Auction ID: %s
 
 Sold out at %s Baht
 """ % (auction.auction_id, soldoutPrice)
-                if len(userEmails) > 0:
-                    sendEmail(userEmails, "Auction End Notification", text)
-                self.sendNotificationSellerBuyer(seller, buyer, auction, soldoutPrice)
+            if len(userEmails) > 0:
+                sendEmail(userEmails, "Auction End Notification", text)
+            self.sendNotificationSellerBuyer(seller, buyer, auction, soldoutPrice)
         else:
             text = \
 """Auction ID: %s
 
 Auction does not sold out.
 """ % (auction.auction_id,)
-        sendEmail([seller.email,], "Auction Completed", text)
+            sendEmail([seller.email,], "Auction Completed", text)
 
     def sendNotificationSellerBuyer(self, seller, buyer, auction, price):
         text = \
 """Auction ID: %s
 
 Sold out at %s Baht
+
 Seller Information:
 %s %s
 %s
@@ -345,6 +344,7 @@ Seller Information:
 %s
 %s
 %s
+
 Buyer Information:
 %s %s
 %s
@@ -355,7 +355,7 @@ Buyer Information:
 """ % (auction.auction_id, price, seller.firstname, seller.lastname, seller.address1, seller.address2, seller.zipcode,
        seller.email, seller.phonenumber, buyer.firstname, buyer.lastname, buyer.address1, buyer.address2, buyer.zipcode,
        buyer.email, buyer.phonenumber)
-        sendEmail([seller.email, buyer.email], "Auction Completed", text)
+        sendEmail([seller.email, buyer.email], "Auction Completed Information", text)
 
 def main():
     try:
