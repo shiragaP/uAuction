@@ -240,3 +240,5 @@ if __name__ == '__main__':
         app.exec_()
     except ConnectionRefusedError:
         QtWidgets.QMessageBox.warning(None, "Error Occur", "Cannot start program because server is down.")
+    except:
+        QtWidgets.QMessageBox.warning(None, "Error Occur", "Something went wrong.")
